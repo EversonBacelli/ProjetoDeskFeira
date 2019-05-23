@@ -1,6 +1,7 @@
 package View;
 
-import Control.ControleDeLoteProduto;
+import Control.ControleProduto;
+import Model.LoteProduto;
 import Model.Produto;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,29 +15,48 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
-public class TelaEntradaEstoque extends Application {
-	ControleDeLoteProduto control = new ControleDeLoteProduto();
-	Label lblNome;
-	TextField txtNome;
+public class TelaEntradaLoteProduto extends Application {
+	ControleProduto control = new ControleProduto();
+	Produto p;
+	LoteProduto loteProduto;
+	
+	// Objetos que Fazem parte do Produto
 	Label lblID;
 	TextField txtID;
+	//
+	Label lblNome;
+	TextField txtNome;
+	//
 	Label lblDescricao;
 	TextArea txtDescricao;
+	// ----------------------------------
+	// Objetos que fazem parte do Lote Produto
+	Label lblIdLote;
+	TextField txtIdLote;
+	//
 	Label lblQtdMax;
 	TextField txtQtdMax;
+	//
 	Label lblQtdMin;
 	TextField txtQtdMin;
+	//
 	Label lblPreco;
 	TextField txtPreco;
+	//
 	Label lblTempoVida;
 	TextField txtTempoVida;
+	//
 	Label lblQtdDisponivel;
 	TextField txtQtdDisponivel;
+	//
 	Label lbldataEntrada;
 	TextField txtdataEntrada;
+	//
+	Label lblvalidade;
+	TextField txtvalidade; 
+	//
 	Button cadastrar;
 
-	Produto p;
 
 	@Override
 	public void start(Stage tela) throws Exception {
@@ -68,6 +88,9 @@ public class TelaEntradaEstoque extends Application {
 		lbldataEntrada = new Label("Data de Entrada");
 		txtdataEntrada = new TextField();
 		//
+		lblvalidade = new Label("Validade");
+		txtvalidade = new TextField();
+		//
 		cadastrar = new Button("Cadastrar");
 		// ------------------------------------------------------
 
@@ -94,6 +117,8 @@ public class TelaEntradaEstoque extends Application {
 		pane.getChildren().add(txtQtdDisponivel);
 		pane.getChildren().add(lbldataEntrada);
 		pane.getChildren().add(txtdataEntrada);
+		pane.getChildren().add(lblvalidade);
+		pane.getChildren().add(txtvalidade);
 		pane.getChildren().add(tpane);
 		tpane.getChildren().add(cadastrar);
 
@@ -117,14 +142,26 @@ public class TelaEntradaEstoque extends Application {
 		@Override
 		public void handle(ActionEvent e) {
 			p = telaParaProduto();
+			loteProduto = telaLoteProduto(p);
+			
+		}
+
+		private LoteProduto telaLoteProduto(Produto p) {
+			loteProduto.setProduto(p);
+			loteProduto.setId(Integer.parseInt(txtID.getText()));
+			loteProduto.setQtdMax(Integer.parseInt(txtQtdMax.getText()));
+			loteProduto.setQtdMax(Integer.parseInt(txtQtdMin.getText()));
+			loteProduto.setDataEntrada(txtdataEntrada.getText());
+			return loteProduto;
 		}
 
 		public Produto telaParaProduto() {
-			p = new Produto(Integer.parseInt(txtID.getId()), txtNome.getText(), txtDescricao.getText(),
-					Integer.parseInt(txtQtdMax.getText()), Integer.parseInt(txtQtdMin.getText()),
-					Float.parseFloat(txtPreco.getText()), txtTempoVida.getText(),
-					Integer.parseInt(txtQtdDisponivel.getText()), txtdataEntrada.getText());
-			        control.inserirProduto(p);
+			ControleProduto cp;
+			cp.pesquisarProduto(p)
+			p = new Produto(); 
+			p.setId(Integer.parseInt(txtID.getText()));
+			p.setNome(txtNome.getText());
+			p.setNome(txtDescricao.getText());
 			return p;
 		}
 	}
