@@ -7,31 +7,32 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import Model.LoteProduto;
 import Model.Produto;
 
 public class ControleProduto {
 
-	Set<Produto> listItem = new HashSet();
-	List<Produto> lista = new ArrayList();
+	Set<LoteProduto> listItem = new HashSet();
 	
 	
-	public void inserirProduto(Produto p) { listItem.add(p);}
+	public void inserirProduto(LoteProduto p) { listItem.add(p);}
 	
 	public void removerProduto(Produto p) { listItem.remove(p);}
 	
-	public List<Produto> pesquisarProduto(int id) 
+	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{
-		for(Produto item: listItem) 
+		List<LoteProduto> lista = new ArrayList();
+		for(LoteProduto item: listItem) 
 		{
-			if(item.getId() == id) { lista.add(item);}
+			if(item.getProduto().getId() == p.getProduto().getId()) { lista.add(item);}
 		}
 		return lista;
 	}
 	
-	public void alterarEstoque(Produto produto, int usuario) 
+	public void alterarEstoque(LoteProduto produto, int usuario) 
 	{
 		// reduzir do estoque
-		int reduzir = produto.getQtd();
+		int reduzir = produto.getQuantidade();
 		int qtdTotal = 0;
 		
 		pesquisarProduto(produto.getId());
