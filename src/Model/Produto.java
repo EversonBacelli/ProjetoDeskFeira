@@ -1,22 +1,28 @@
 package Model;
 
 public class Produto {
+	    private int id;
 		private String nome;
 		private String descricao;
 		private int estoqueMax;
 		private int estoqueMin;
 		private double preco;
 		private String tempoVida;
+		private int qtd;
+		private String dataEntrada;
 		
-		
-		public Produto(String nome, String descricao, int estoqueMax, int estoqueMin, double preco, String tempoVida)
+		public Produto(int id, String nome, String descricao, int estoqueMax, int estoqueMin, double preco, String tempoVida, int qtd,
+				String dataEntrada)
 		{
+			this.id = id;
 			this.nome = nome;
 			this.descricao = descricao;
 			this.estoqueMax = estoqueMax;
 			this.estoqueMin = estoqueMin;
 			this.preco = preco;
 			this.tempoVida = tempoVida;
+			this.qtd = qtd;
+			this.dataEntrada = dataEntrada;
 		}
 		
 		public String getNome() {
@@ -52,7 +58,33 @@ public class Produto {
 		public String getTempoVida() {
 			return tempoVida;
 		}
+		public int getQtd() {
+			return qtd;
+		}
+
+		public void setQtd(int qtd) {
+			this.qtd = qtd;
+		}
+
+		public String getDataEntrada() {
+			return dataEntrada;
+		}
+
+		public void setDataEntrada(String dataEntrada) {
+			this.dataEntrada = dataEntrada;
+		}
+
 		public void setTempoVida(String tempoVida) {
 			this.tempoVida = tempoVida;
 		}
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+		
+		
 }
