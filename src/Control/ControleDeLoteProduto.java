@@ -15,9 +15,9 @@ public class ControleDeLoteProduto {
 	Set<LoteProduto> listItem = new HashSet();
 	
 	
-	public void inserirProduto(LoteProduto p) { listItem.add(p);}
+	public void inserirLoteProduto(LoteProduto p) { listItem.add(p);}
 	
-	public void removerProduto(Produto p) { listItem.remove(p);}
+	public void removerLoteProduto(Produto p) { listItem.remove(p);}
 	
 	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Perda {
-         List<ProdutoEstoque> listPerda = new ArrayList();
+         List<LoteProduto> listPerda = new ArrayList();
          Perda perda;
          int qtdPerda;
          String data;
          
-	public Perda(ProdutoEstoque item, int qtdPerda, String data) 
+	public Perda(LoteProduto item, int qtdPerda, String data) 
 	    {
 			this.qtdPerda = qtdPerda;
 			this.data = data;
