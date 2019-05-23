@@ -1,6 +1,6 @@
 package View;
 
-import Control.ControleProduto;
+import Control.ControleDeLoteProduto;
 import Model.Produto;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -15,7 +15,7 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class TelaEntradaEstoque extends Application {
-	ControleProduto control = new ControleProduto();
+	ControleDeLoteProduto control = new ControleDeLoteProduto();
 	Label lblNome;
 	TextField txtNome;
 	Label lblID;
