@@ -29,40 +29,40 @@ public class ControleProduto {
 		return lista;
 	}
 	
-	public void alterarEstoque(LoteProduto produto, int usuario) 
+	public void alterarEstoque(LoteProduto prodLote, int usuario) 
 	{
 		// reduzir do estoque
-		int reduzir = produto.getQuantidade();
+		int reduzir = prodLote.getQuantidade();
 		int qtdTotal = 0;
 		
-		pesquisarProduto(produto.getId());
 		
 		// calcular quantidade de produto em estoque
-		for(Produto p: lista) {	qtdTotal += p.getQtd(); }
+		for(LoteProduto p: this.listItem) {	qtdTotal += p.getQuantidade(); }
 		
 		// verificar se o estoque é suficiente
-		if(qtdTotal< produto.getQtd()) 
+		if(qtdTotal< prodLote.getQuantidade()) 
 		{
-			JOptionPane.showMessageDialog(null, "Há apenas" + qtdTotal +" do "+ produto.getNome() +" em estoque");
+			JOptionPane.showMessageDialog(null, "Há apenas" + qtdTotal +" do "+ prodLote.getProduto().getDescricao() +" em estoque");
 			return;
 		}
 		
 		
-		if(lista.isEmpty()) {JOptionPane.showMessageDialog(null, "Não" + produto.getNome() + " em estoque");} 
-		else 
+		if(listItem.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Não temos " + prodLote.getProduto().getNome() + " em estoque");
+		} else 
 		{
 			// iterar lista até reduzir pedido a 0
 			while(reduzir>0) 
 			{
-				for(Produto p: lista) 
+				for(LoteProduto p: listItem) 
 				{
-				     if(reduzir >= p.getQtd()) 
+				     if(reduzir >= p.getQuantidade()) 
 				     {
-				    	 reduzir -= p.getQtd();
-				    	 p.setQtd(0);
+				    	 reduzir -= p.getQuantidade();
+				    	 p.setQuantidade(0);
 				     } else 
 				     {
-				    	 p.setQtd(p.getQtd() - reduzir);
+				    	 p.setQuantidade(p.getQuantidade() - reduzir);
 				    	 reduzir = 0 ;
 				     }
 				}
