@@ -157,7 +157,7 @@ public class TelaEntradaLoteProduto extends Application {
 
 		public Produto telaParaProduto() {
 			ControleProduto cp;
-			cp.pesquisarProduto(p)
+//			cp.pesquisarProduto(p)
 			p = new Produto(); 
 			p.setId(Integer.parseInt(txtID.getText()));
 			p.setNome(txtNome.getText());
