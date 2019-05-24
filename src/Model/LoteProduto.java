@@ -5,8 +5,6 @@ public class LoteProduto
 	Produto produto;
 	int id;
 	int quantidade;
-	int qtdMax;
-	int qtdMin;
 	String dataValidade;
 	String dataEntrada;
 	
@@ -43,21 +41,6 @@ public class LoteProduto
 		this.quantidade = quantidade;
 	}
 	
-	public int getQtdMax() {
-		return qtdMax;
-	}
-	
-	public void setQtdMax(int qtdMax) {
-		this.qtdMax = qtdMax;
-	}
-	
-	public int getQtdMin() {
-		return qtdMin;
-	}
-	
-	public void setQtdMin(int qtdMin) {
-		this.qtdMin = qtdMin;
-	}
 	
 	public String getDataValidade() {
 		return dataValidade;

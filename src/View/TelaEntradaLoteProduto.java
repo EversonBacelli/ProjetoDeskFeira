@@ -6,13 +6,18 @@ import Model.Produto;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application {
@@ -21,48 +26,175 @@ public class TelaEntradaLoteProduto extends Application {
 	LoteProduto loteProduto;
 	
 	// Objetos que Fazem parte do Produto
-	Label lblID;
-	TextField txtID;
+	static Label lblID;
+	static TextField txtID;
 	//
-	Label lblNome;
-	TextField txtNome;
+	static Label lblNome;
+	static ComboBox txtNome;
 	//
-	Label lblDescricao;
-	TextArea txtDescricao;
+	static Label lblDescricao;
+	static TextArea txtDescricao;
 	// ----------------------------------
 	// Objetos que fazem parte do Lote Produto
-	Label lblIdLote;
-	TextField txtIdLote;
+	static Label lblQtdMax;
+	static TextField txtQtdMax;
 	//
-	Label lblQtdMax;
-	TextField txtQtdMax;
+	static Label lblQtdMin;
+	static TextField txtQtdMin;
 	//
-	Label lblQtdMin;
-	TextField txtQtdMin;
+	static Label lblPreco;
+	static TextField txtPreco;
 	//
-	Label lblPreco;
-	TextField txtPreco;
+	static Label lblTempoVida;
+	static TextField txtTempoVida;
 	//
-	Label lblTempoVida;
-	TextField txtTempoVida;
+	static Label lblQtdDisponivel;
+	static TextField txtQtdDisponivel;
 	//
-	Label lblQtdDisponivel;
-	TextField txtQtdDisponivel;
+	static Label lbldataEntrada;
+	static TextField txtdataEntrada;
 	//
-	Label lbldataEntrada;
-	TextField txtdataEntrada;
+	static Label lblvalidade;
+	static TextField txtvalidade; 
 	//
-	Label lblvalidade;
-	TextField txtvalidade; 
-	//
-	Button cadastrar;
-
-
+	static Button cadastrar;
+	//---------------------------
+	// Estrutura
+	
+	
+	GridPane pane;
+	TilePane tpane;
+	
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+	
 	@Override
 	public void start(Stage tela) throws Exception {
+
+		iniciarObjetos();
+		// Estrutura da Tela
+		pane = new GridPane();
+		tpane = new TilePane();
+		//
+		inserirObjetosTela(pane, tpane);
+		editarTamanhoTXT();
+		
+		marginPaine();
+		adicionandoEstiloElementos();
+		
+		Scene scn = new Scene(pane, 700, 600);
+		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
+		tpane.addEventFilter(ActionEvent.ACTION, manipulador);
+
+		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
+		tela.setScene(scn);
+		tela.show();
+	}
+	
+	public class ManipuladorMouse implements EventHandler<ActionEvent> {
+		@Override
+		
+		public void handle(ActionEvent e) 
+		{
+			
+		}
+
+   }
+
+	// --------------- METODOS  --------------------//
+
+	private void marginPaine() {
+		Insets marginTop = new Insets(20, 20, 20, 150);
+		Insets margin = new Insets(20, 20, 20, 20);
+		Insets marginBot = new Insets(0, 0, 250,300);
+		
+		pane.setMargin(lblNome, margin);
+		pane.setMargin(txtNome, margin);
+		pane.setMargin(lblID, margin);
+		pane.setMargin(txtID, margin);
+		pane.setMargin(lblDescricao, margin);
+		pane.setMargin(txtDescricao, margin);
+		pane.setMargin(lblQtdMax, margin);
+		pane.setMargin(txtQtdMax, margin);
+		pane.setMargin(lblQtdMin, margin);
+		pane.setMargin(txtQtdMin, margin);
+		pane.setMargin(lblPreco, margin);
+		pane.setMargin(txtPreco, margin);
+		pane.setMargin(lblTempoVida, margin);
+		pane.setMargin(txtTempoVida, margin);
+		pane.setMargin(lblQtdDisponivel, margin);
+		pane.setMargin(txtQtdDisponivel, margin);
+		pane.setMargin(lbldataEntrada, margin);
+		pane.setMargin(txtdataEntrada, margin);
+		pane.setMargin(lblvalidade, margin);
+		pane.setMargin(txtvalidade, margin);
+		pane.setMargin(cadastrar, margin);
+		
+	}
+
+	
+	public void adicionandoEstiloElementos() {
+
+		lblID.setFont(new Font(12));
+		lblNome.setFont(new Font(12));
+		lblDescricao.setFont(new Font(12));
+		
+		lblID.setStyle("-fx-font-weight: bold");
+		lblNome.setStyle("-fx-font-weight: bold");
+		lblDescricao.setStyle("-fx-font-weight: bold");
+		
+		txtID.setFont(new Font(12));
+		txtDescricao.setFont(new Font(12));
+		
+		cadastrar.setStyle("-fx-font-weight: bold");
+		cadastrar.setFont(new Font(20));
+	}
+	
+	private void inserirObjetosTela(GridPane pane, TilePane tpane) 
+	{
+		pane.add(lblNome           , 0, 0);
+		pane.add(txtNome           , 1, 0);
+		pane.add(lblID             , 2, 0);
+		pane.add(txtID             , 3, 0);
+		pane.add(lblDescricao      , 0, 2);
+		pane.add(txtDescricao      , 1, 2);
+		pane.add(lblQtdMax         , 0, 3);
+		pane.add(txtQtdMax         , 1, 3);
+		pane.add(lblQtdMin         , 2, 3);
+		pane.add(txtQtdMin         , 3, 3);
+		pane.add(lblTempoVida      , 0, 5);
+		pane.add(txtTempoVida      , 1, 5);
+		pane.add(lblPreco          , 2, 5);
+		pane.add(txtPreco          , 3, 5);
+		pane.add(lblQtdDisponivel  , 0, 7);
+		pane.add(txtQtdDisponivel  , 1, 7);
+		pane.add(lbldataEntrada    , 2, 7);
+		pane.add(txtdataEntrada    , 3, 7);
+		pane.add(lblvalidade       , 0, 8);
+		pane.add(txtvalidade       , 1, 8);
+		pane.add(cadastrar         , 2, 9);
+	}
+	
+	
+	void editarTamanhoTXT()
+	{
+		txtID.setMaxSize(50,100);
+		txtNome.setMaxSize(400,30);
+		txtDescricao.setMaxSize(200, 100);
+		txtQtdMax.setMaxSize(50,40);
+		txtQtdMin.setMaxSize(50,40);
+		txtPreco.setMaxSize(50,40);
+		txtTempoVida.setMaxSize(50,40);
+		txtQtdDisponivel.setMaxSize(50,40);
+		txtdataEntrada.setMaxSize(50,40);
+		txtvalidade.setMaxSize(50,40);
+	}
+	
+	private void iniciarObjetos() {
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
-		txtNome = new TextField();
+		txtNome = new ComboBox();
 		//
 		lblID = new Label("Numero de Identificação");
 		txtID = new TextField();
@@ -93,76 +225,5 @@ public class TelaEntradaLoteProduto extends Application {
 		//
 		cadastrar = new Button("Cadastrar");
 		// ------------------------------------------------------
-
-		// Estrutura da Tela
-		FlowPane pane = new FlowPane();
-		TilePane tpane = new TilePane();
-		//
-		// Inserindo os elementos na tela:
-		pane.getChildren().add(lblNome);
-		pane.getChildren().add(txtNome);
-		pane.getChildren().add(lblID);
-		pane.getChildren().add(txtID);
-		pane.getChildren().add(lblDescricao);
-		pane.getChildren().add(txtDescricao);
-		pane.getChildren().add(lblQtdMax);
-		pane.getChildren().add(txtQtdMax);
-		pane.getChildren().add(lblQtdMin);
-		pane.getChildren().add(txtQtdMin);
-		pane.getChildren().add(lblTempoVida);
-		pane.getChildren().add(txtTempoVida);
-		pane.getChildren().add(lblPreco);
-		pane.getChildren().add(txtPreco);
-		pane.getChildren().add(lblQtdDisponivel);
-		pane.getChildren().add(txtQtdDisponivel);
-		pane.getChildren().add(lbldataEntrada);
-		pane.getChildren().add(txtdataEntrada);
-		pane.getChildren().add(lblvalidade);
-		pane.getChildren().add(txtvalidade);
-		pane.getChildren().add(tpane);
-		tpane.getChildren().add(cadastrar);
-
-		// ------------------------------------------------------
-
-		Scene scn = new Scene(pane, 600, 400);
-		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
-		tpane.addEventFilter(ActionEvent.ACTION, manipulador);
-
-		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
-		tela.setScene(scn);
-		tela.show();
-
-	}
-
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
-
-	public class ManipuladorMouse implements EventHandler<ActionEvent> {
-		@Override
-		public void handle(ActionEvent e) {
-			p = telaParaProduto();
-			loteProduto = telaLoteProduto(p);
-			
-		}
-
-		private LoteProduto telaLoteProduto(Produto p) {
-			loteProduto.setProduto(p);
-			loteProduto.setId(Integer.parseInt(txtID.getText()));
-			loteProduto.setQtdMax(Integer.parseInt(txtQtdMax.getText()));
-			loteProduto.setQtdMax(Integer.parseInt(txtQtdMin.getText()));
-			loteProduto.setDataEntrada(txtdataEntrada.getText());
-			return loteProduto;
-		}
-
-		public Produto telaParaProduto() {
-			ControleProduto cp;
-//			cp.pesquisarProduto(p)
-			p = new Produto(); 
-			p.setId(Integer.parseInt(txtID.getText()));
-			p.setNome(txtNome.getText());
-			p.setNome(txtDescricao.getText());
-			return p;
-		}
 	}
 }

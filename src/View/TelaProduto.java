@@ -40,10 +40,17 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	Label lblId = new Label("ID : ");
 	Label lblNome = new Label("NOME : ");
 	Label lblDescricao = new Label("DESCRICAO : ");
+	Label lblMax = new Label("Quantidade Maxima");
+	Label lblMin = new Label("Quantidade Minima");
+	Label lblTempoVida = new Label("Tempo de Vida");
+	
 	
 	TextField tfId = new TextField();
 	TextField tfNome = new TextField();
 	TextArea tfDescricao = new TextArea();
+	TextArea tfMax = new TextArea();
+	TextArea tfMin = new TextArea();
+	TextArea tfTempoVida = new TextArea();
 	
     Button btnPesquisar = new Button("PESQUISAR");
     Button btnSalvar = new Button("SALVAR");
@@ -76,17 +83,19 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		textoCabecalho.setStyle("-fx-font-weight: bold");
 		textoCabecalho.setFont(new Font(40));
 		
-		lblId.setFont(new Font(30));
-		lblNome.setFont(new Font(30));
-		lblDescricao.setFont(new Font(30));
+		lblId.setFont(new Font(20));
+		lblNome.setFont(new Font(20));
+		lblDescricao.setFont(new Font(20));
+		lblMax.setFont(new Font(20));
+		lblMin.setFont(new Font(20));
+		lblTempoVida.setFont(new Font(20));
 		
 		lblId.setStyle("-fx-font-weight: bold");
 		lblNome.setStyle("-fx-font-weight: bold");
 		lblDescricao.setStyle("-fx-font-weight: bold");
-		
-		tfId.setFont(new Font(20));
-		tfNome.setFont(new Font(20));
-		tfDescricao.setFont(new Font(20));
+		lblMax.setStyle("-fx-font-weight: bold");
+		lblMin.setStyle("-fx-font-weight: bold");
+		lblTempoVida.setStyle("-fx-font-weight: bold");
 		
 		btnPesquisar.setFont(new Font(20));
 		btnSalvar.setFont(new Font(20));
@@ -104,10 +113,16 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelLbl.setMargin(lblId, margin);
 		painelLbl.setMargin(lblNome, margin);
 		painelLbl.setMargin(lblDescricao, margin);
+		painelLbl.setMargin(lblMax, margin);
+		painelLbl.setMargin(lblMin, margin);
+		painelLbl.setMargin(lblTempoVida, margin);
 		
 		painelManipulavel.setMargin(tfId, margin);
 		painelManipulavel.setMargin(tfNome, margin);
 		painelManipulavel.setMargin(tfDescricao, margin);
+		painelManipulavel.setMargin(tfMax, margin);
+		painelManipulavel.setMargin(tfMin, margin);
+		painelManipulavel.setMargin(tfTempoVida, margin);
 		
 		painelBtn.setMargin(btnPesquisar, margin);
 		painelBtn.setMargin(btnSalvar, margin);
@@ -126,10 +141,17 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelLbl.add(lblId, 0, 0);
 		painelLbl.add(lblNome, 0, 1);
 		painelLbl.add(lblDescricao, 0, 2);
+		painelLbl.add(lblMax, 0, 3);
+		painelLbl.add(lblMin, 0, 4);
+		painelLbl.add(lblTempoVida, 0, 5);
+		
 		
 		painelManipulavel.add(tfId, 0, 0);
 		painelManipulavel.add(tfNome, 0, 1);
 		painelManipulavel.add(tfDescricao, 0, 2);
+		painelManipulavel.add(tfMax, 0, 3);
+		painelManipulavel.add(tfMin, 0, 4);
+		painelManipulavel.add(tfTempoVida, 0, 5);
 		
 		painelBtn.getChildren().add(btnPesquisar);
 		painelBtn.getChildren().add(btnSalvar);
@@ -188,9 +210,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			limparCampos();
 			cp.removerProduto(p);
 
-		}
-		
+		}	
 	}
-
-
 }
