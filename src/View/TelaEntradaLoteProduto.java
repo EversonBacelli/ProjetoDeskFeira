@@ -21,49 +21,49 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application {
-	ControleProduto control = new ControleProduto();
-	Produto p;
-	LoteProduto loteProduto;
+	private ControleProduto control = new ControleProduto();
+	private Produto p;
+	private LoteProduto loteProduto;
 	
 	// Objetos que Fazem parte do Produto
-	static Label lblID;
-	static TextField txtID;
+	private Label lblID;
+	private TextField txtID;
 	//
-	static Label lblNome;
-	static ComboBox txtNome;
+	private Label lblNome;
+	private ComboBox txtNome;
 	//
-	static Label lblDescricao;
-	static TextArea txtDescricao;
+	private Label lblDescricao;
+	private TextArea txtDescricao;
 	// ----------------------------------
 	// Objetos que fazem parte do Lote Produto
-	static Label lblQtdMax;
-	static TextField txtQtdMax;
+	private Label lblQtdMax;
+	private TextField txtQtdMax;
 	//
-	static Label lblQtdMin;
-	static TextField txtQtdMin;
+	private Label lblQtdMin;
+	private TextField txtQtdMin;
 	//
-	static Label lblPreco;
-	static TextField txtPreco;
+	private Label lblPreco;
+	private TextField txtPreco;
 	//
-	static Label lblTempoVida;
-	static TextField txtTempoVida;
+	private Label lblTempoVida;
+	private TextField txtTempoVida;
 	//
-	static Label lblQtdDisponivel;
-	static TextField txtQtdDisponivel;
+	private Label lblQtdDisponivel;
+	private TextField txtQtdDisponivel;
 	//
-	static Label lbldataEntrada;
-	static TextField txtdataEntrada;
+	private Label lbldataEntrada;
+	private TextField txtdataEntrada;
 	//
-	static Label lblvalidade;
-	static TextField txtvalidade; 
+	private Label lblvalidade;
+	private TextField txtvalidade; 
 	//
-	static Button cadastrar;
+	private Button cadastrar;
 	//---------------------------
 	// Estrutura
 	
 	
-	GridPane pane;
-	TilePane tpane;
+	private GridPane pane;
+	private TilePane tpane;
 	
 	public static void main(String[] args) {
 		Application.launch(args);

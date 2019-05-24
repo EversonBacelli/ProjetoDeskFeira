@@ -29,32 +29,32 @@ import javafx.stage.Stage;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent>{
 	
-	BorderPane painelPrincipal = new BorderPane();
-	GridPane painelLbl = new GridPane();
-	GridPane painelManipulavel = new GridPane();
-	FlowPane painelBtn = new FlowPane();
-	Scene scn = new Scene(painelPrincipal, 800, 900);
-	TilePane topo = new TilePane();
-	Text textoCabecalho = new Text("Gerenciamento de produto");
+	private BorderPane painelPrincipal = new BorderPane();
+	private GridPane painelLbl = new GridPane();
+	private GridPane painelManipulavel = new GridPane();
+	private FlowPane painelBtn = new FlowPane();
+	private Scene scn = new Scene(painelPrincipal, 800, 900);
+	private TilePane topo = new TilePane();
+	private Text textoCabecalho = new Text("Gerenciamento de produto");
 	
-	Label lblId = new Label("ID : ");
-	Label lblNome = new Label("NOME : ");
-	Label lblDescricao = new Label("DESCRICAO : ");
-	Label lblMax = new Label("Quantidade Maxima");
-	Label lblMin = new Label("Quantidade Minima");
-	Label lblTempoVida = new Label("Tempo de Vida");
+	private Label lblId = new Label("ID : ");
+	private Label lblNome = new Label("Nome : ");
+	private Label lblDescricao = new Label("Descricao : ");
+	private Label lblMax = new Label("Quantidade Maxima");
+	private Label lblMin = new Label("Quantidade Minima");
+	private Label lblTempoVida = new Label("Tempo de Vida");
 	
 	
-	TextField tfId = new TextField();
-	TextField tfNome = new TextField();
-	TextArea tfDescricao = new TextArea();
-	TextArea tfMax = new TextArea();
-	TextArea tfMin = new TextArea();
-	TextArea tfTempoVida = new TextArea();
+	private TextField tfId = new TextField();
+	private TextField tfNome = new TextField();
+	private TextArea tfDescricao = new TextArea();
+	private TextArea tfMax = new TextArea();
+	private TextArea tfMin = new TextArea();
+	private TextArea tfTempoVida = new TextArea();
 	
-    Button btnPesquisar = new Button("PESQUISAR");
-    Button btnSalvar = new Button("SALVAR");
-    Button btnExcluir = new Button("EXCLUIR");
+	private Button btnPesquisar = new Button("PESQUISAR");
+	private Button btnSalvar = new Button("SALVAR");
+	private Button btnExcluir = new Button("EXCLUIR");
 	
 	ControleProduto cp = new ControleProduto();
 
@@ -65,7 +65,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		adicionandoFilhosPainel();
 		adicionandoMarginsPainel();
 		adicionarEventos();
-		
 		
 		stage.setResizable(false);
 		stage.setScene(scn);

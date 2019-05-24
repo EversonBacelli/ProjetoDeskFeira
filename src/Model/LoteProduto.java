@@ -1,6 +1,6 @@
 package Model;
 
-public class LoteProduto 
+public class LoteProduto
 {
 	Produto produto;
 	int id;
