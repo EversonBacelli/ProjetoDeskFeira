@@ -6,11 +6,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import Model.Produto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ControleProduto {
-	
-	private List<Produto> listaProd = new ArrayList<Produto>();
-	
+
+
+	private ObservableList<Produto> listaProd = FXCollections.observableArrayList();
+
 	public void inserirProduto(Produto p) {
 		this.listaProd.add(p);
 		JOptionPane.showMessageDialog(null,  "Produto adicionado com sucesso");
@@ -59,5 +62,12 @@ public class ControleProduto {
 			}
 		}
 		return existe;
+	}
+	
+	public ObservableList<Produto> getListaProd() {
+		return listaProd;
+	}
+	public void setListaProd(ObservableList<Produto> listaProd) {
+		this.listaProd = listaProd;
 	}
 }

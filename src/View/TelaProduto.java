@@ -2,38 +2,41 @@ package View;
 
 
 
-import java.text.ParseException;
-
-import com.sun.media.jfxmedia.events.NewFrameEvent;
-import com.sun.rowset.internal.InsertRow;
-
 import Control.ControleProduto;
 import Model.Produto;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyLongWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent>{
+	private TableView<Produto> table = new TableView<>();
 	
 	private BorderPane painelPrincipal = new BorderPane();
 	private GridPane painelLbl = new GridPane();
 	private GridPane painelManipulavel = new GridPane();
 	private FlowPane painelBtn = new FlowPane();
-	private Scene scn = new Scene(painelPrincipal, 800, 900);
+	private Scene scn = new Scene(painelPrincipal, 1600, 900);
 	private TilePane topo = new TilePane();
 	private Text textoCabecalho = new Text("Gerenciamento de produto");
 	
@@ -65,6 +68,13 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		adicionandoFilhosPainel();
 		adicionandoMarginsPainel();
 		adicionarEventos();
+		definirColunas();
+		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Produto>() {
+			@Override
+			public void changed(ObservableValue<? extends Produto> arg0, Produto arg1, Produto arg2) {
+				produtoParaView(arg2);
+			}
+		});
 		
 		stage.setResizable(false);
 		stage.setScene(scn);
@@ -105,27 +115,29 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		Insets marginTop = new Insets(20, 20, 20, 150);
 		Insets margin = new Insets(20, 20, 20, 20);
 		Insets marginBot = new Insets(0, 0, 250,300);
+		Insets marginRight = new Insets(0, 250, 0, 0);
 		
-		painelPrincipal.setMargin(topo, marginTop);
-		painelPrincipal.setMargin(painelBtn, marginBot);
+		this.painelPrincipal.setMargin(topo, marginTop);
+		this.painelPrincipal.setMargin(painelBtn, marginBot);
+		this.painelPrincipal.setMargin(table, marginRight);
 		
-		painelLbl.setMargin(lblId, margin);
-		painelLbl.setMargin(lblNome, margin);
-		painelLbl.setMargin(lblDescricao, margin);
-		painelLbl.setMargin(lblMax, margin);
-		painelLbl.setMargin(lblMin, margin);
-		painelLbl.setMargin(lblTempoVida, margin);
+		this.painelLbl.setMargin(lblId, margin);
+		this.painelLbl.setMargin(lblNome, margin);
+		this.painelLbl.setMargin(lblDescricao, margin);
+		this.painelLbl.setMargin(lblMax, margin);
+		this.painelLbl.setMargin(lblMin, margin);
+		this.painelLbl.setMargin(lblTempoVida, margin);
 		
-		painelManipulavel.setMargin(tfId, margin);
-		painelManipulavel.setMargin(tfNome, margin);
-		painelManipulavel.setMargin(tfDescricao, margin);
-		painelManipulavel.setMargin(tfMax, margin);
-		painelManipulavel.setMargin(tfMin, margin);
-		painelManipulavel.setMargin(tfTempoVida, margin);
+		this.painelManipulavel.setMargin(tfId, margin);
+		this.painelManipulavel.setMargin(tfNome, margin);
+		this.painelManipulavel.setMargin(tfDescricao, margin);
+		this.painelManipulavel.setMargin(tfMax, margin);
+		this.painelManipulavel.setMargin(tfMin, margin);
+		this.painelManipulavel.setMargin(tfTempoVida, margin);
 		
-		painelBtn.setMargin(btnPesquisar, margin);
-		painelBtn.setMargin(btnSalvar, margin);
-		painelBtn.setMargin(btnExcluir, margin);
+		this.painelBtn.setMargin(btnPesquisar, margin);
+		this.painelBtn.setMargin(btnSalvar, margin);
+		this.painelBtn.setMargin(btnExcluir, margin);
 	}
 
 	public void adicionandoFilhosPainel() {
@@ -135,6 +147,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelPrincipal.setLeft(painelLbl);
 		painelPrincipal.setCenter(painelManipulavel);
 		painelPrincipal.setBottom(painelBtn);
+		painelPrincipal.setRight(table);
 		
 		
 		painelLbl.add(lblId, 0, 0);
@@ -182,6 +195,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tfId.setText("");
 		tfNome.setText("");
 		tfDescricao.setText("");
+		tfMax.setText("");
+		tfMin.setText("");
 	}
 	
 	public static void main(String[] args) {
@@ -210,5 +225,39 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			cp.removerProduto(p);
 
 		}	
+	}
+	
+	public void definirColunas() {
+
+		
+		TableColumn<Produto, Number> colunaId = new TableColumn<>("Id");
+		colunaId.setCellValueFactory(itemData -> new ReadOnlyLongWrapper(itemData.getValue().getId()));
+		colunaId.setPrefWidth(60);
+
+		TableColumn<Produto, String> colunaNome = new TableColumn<>("Nome");
+		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getNome()));
+		colunaNome.setPrefWidth(70);
+		
+		TableColumn<Produto, String> colunaDescricao = new TableColumn<>("Descricao");
+		colunaDescricao.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDescricao()));
+		colunaDescricao.setPrefWidth(70);
+
+		TableColumn<Produto, Number> qtdMaxColuna = new TableColumn<>("Qtd maxima");
+		qtdMaxColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMax()));
+		qtdMaxColuna.setPrefWidth(70);
+		
+		TableColumn<Produto, Number> qtdMinColuna = new TableColumn<>("Qtd minima");
+		qtdMinColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMin()));
+		qtdMinColuna.setPrefWidth(100);
+		
+		TableColumn<Produto, Number> tempoDeVidaColuna = new TableColumn<>("Tempo de vida");
+		tempoDeVidaColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdTempoVida()));
+		tempoDeVidaColuna.setPrefWidth(100);
+		
+
+		table.getColumns().addAll(colunaId, colunaNome, colunaDescricao, qtdMaxColuna, qtdMinColuna, tempoDeVidaColuna);
+
+		table.setItems(cp.getListaProd());
+		
 	}
 }
