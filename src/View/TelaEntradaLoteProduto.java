@@ -1,7 +1,14 @@
 package View;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.swing.JOptionPane;
 
+import Control.ControleDeLoteProduto;
 import Control.ControleProduto;
 import Model.LoteProduto;
 import Model.Produto;
@@ -25,6 +32,7 @@ import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application {
 	private ControleProduto controlProd = new ControleProduto();
+	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
 	private Produto p;
 	private LoteProduto loteProduto;
 	
@@ -90,10 +98,11 @@ public class TelaEntradaLoteProduto extends Application {
 		Produto p1= new Produto();
 		p1.setId(1);
 		p1.setNome("Helio Pinto");
-		p1.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p1.setDescricao("Helio Pinto Pequeno");
 		p1.setQtdMax(12);
 		p1.setQtdMin(2);
 		p1.setQtdTempoVida(5);
+		p1.setPreco(100);
 		controlProd.inserirProduto(p1);
 		Produto p2= new Produto();
 		p2.setId(2);
@@ -102,6 +111,7 @@ public class TelaEntradaLoteProduto extends Application {
 		p2.setQtdMax(12);
 		p2.setQtdMin(2);
 		p2.setQtdTempoVida(5);
+		p2.setPreco(50);
 		controlProd.inserirProduto(p2);
 		Produto p3= new Produto();
 		p3.setId(1);
@@ -110,7 +120,8 @@ public class TelaEntradaLoteProduto extends Application {
 		p3.setQtdMax(12);
 		p3.setQtdMin(2);
 		p3.setQtdTempoVida(5);
-		controlProd.inserirProduto(p1);
+		p3.setPreco(400);
+		controlProd.inserirProduto(p3);
 		Produto p4= new Produto();
 		p4.setId(2);
 		p4.setNome("Helio Pinto2");
@@ -118,14 +129,12 @@ public class TelaEntradaLoteProduto extends Application {
 		p4.setQtdMax(12);
 		p4.setQtdMin(2);
 		p4.setQtdTempoVida(5);
+		p4.setPreco(500);
 		controlProd.inserirProduto(p4);
 		
 		ObservableList<Produto> data = comboNome.getItems();
 		
-		for(Produto x: controlProd.getListaProd()) 
-		{
-			data.add(x);
-		}
+		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
 		
 		
 		marginPaine();
@@ -143,16 +152,43 @@ public class TelaEntradaLoteProduto extends Application {
 	}
 	
 	public class ManipuladorMouse implements EventHandler<ActionEvent> {
-		@Override
+		boolean campos;
 		
+		@Override
 		public void handle(ActionEvent e) 
 		{
 			if(e.getTarget() == comboNome) {
-				System.out.println("Acehhtooo mizeravi");
-			}else if(e.getTarget() == cadastrar) {
-				System.out.println("Apertei o Botão");	
-				txtID.appendText("5");
-			}
+				if(comboNome.getValue() != null) {
+					p = comboNome.getValue();
+					preencherDadosProdutoSelecionado();
+				}
+			}else 
+				if(e.getTarget() == cadastrar) {
+					if(verificarCampos()) {
+						ControleLote.inserirLoteProduto(loteProduto);
+						limparCampos();
+					}
+				}
+		}
+		
+		public void telaParaLoteProduto() {
+			loteProduto.setProduto(p);
+			loteProduto.setId(Integer.parseInt(txtID.getText()));
+			loteProduto.setDataValidade(txtvalidade.getText());
+			loteProduto.setDataEntrada(txtdataEntrada.getText());
+			loteProduto.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
+		}
+
+		public void preencherDadosProdutoSelecionado() {
+			txtID.setText(Integer.toString(p.getId()));
+			txtDescricao.setText(p.getDescricao());
+			txtQtdMax.setText(Integer.toString(p.getQtdMax()));
+			txtQtdMin.setText(Integer.toString(p.getQtdMin()));
+			txtTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
+			txtPreco.setText(Double.toString(p.getPreco()));
+			String data = getDateTime();
+			txtdataEntrada.setText(data);
+			txtvalidade.setText(getDataVencimento());
 		}
 
    }
@@ -242,8 +278,8 @@ public class TelaEntradaLoteProduto extends Application {
 		txtPreco.setMaxSize(50,40);
 		txtTempoVida.setMaxSize(50,40);
 		txtQtdDisponivel.setMaxSize(50,40);
-		txtdataEntrada.setMaxSize(50,40);
-		txtvalidade.setMaxSize(50,40);
+		txtdataEntrada.setMaxSize(80,80);
+		txtvalidade.setMaxSize(80,80);
 	}
 	
 	private void iniciarObjetos() {
@@ -253,27 +289,35 @@ public class TelaEntradaLoteProduto extends Application {
 		//
 		lblID = new Label("Numero de Identificação");
 		txtID = new TextField();
+		txtID.setEditable(false);
 		//
 		lblDescricao = new Label("Descricao Produto");
 		txtDescricao = new TextArea();
+		txtDescricao.setEditable(false);
 		//
 		lblQtdMax = new Label("Quantidade Máxima");
 		txtQtdMax = new TextField();
+		txtQtdMax.setEditable(false);
 		//
 		lblQtdMin = new Label("Quantidade Minima");
 		txtQtdMin = new TextField();
+		txtQtdMin.setEditable(false);
 		//
 		lblPreco = new Label("Preco");
 		txtPreco = new TextField();
+		txtPreco.setEditable(false);
 		//
 		lblTempoVida = new Label("Tempo de vida");
 		txtTempoVida = new TextField();
+		txtTempoVida.setEditable(false);
 		//
-		lblQtdDisponivel = new Label("Quantidade disponivel");
-		txtQtdDisponivel = new TextField();
+		lblQtdDisponivel = new Label("Quantidade de Entrada");
+		txtQtdDisponivel = new TextField("");
 		//
 		lbldataEntrada = new Label("Data de Entrada");
 		txtdataEntrada = new TextField();
+		txtdataEntrada.setEditable(false);
+		txtdataEntrada.setEditable(false);
 		//
 		lblvalidade = new Label("Validade");
 		txtvalidade = new TextField();
@@ -294,14 +338,23 @@ public class TelaEntradaLoteProduto extends Application {
 	
 	boolean verificarCampos() 
 	{
-		if(txtID.getText() == "" || comboNome.getPromptText() == "" || txtDescricao.getText() == "" || txtQtdMax.getText() == ""
-		   || txtQtdMin.getText() == "" || txtTempoVida.getText() == "" || txtPreco.getText()== ""|| txtQtdDisponivel.getText() ==""
-		   || txtdataEntrada.getText() == "" || txtvalidade.getText() == "") 
+		System.out.println("Passei aqui");
+		if(txtID.getText().equals("") ) 
 		{
-			JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos");
+			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
 			return false;
-		}
-		return true;
+			
+		} else
+		{
+			if(txtQtdDisponivel.getText().equals("")) 
+			{
+				JOptionPane.showMessageDialog(null, "Preencher todos os campos");
+				return false;
+			} else 
+			{
+				return true;
+			}
+		} 
 	}
 	
 	void limparCampos() 
@@ -316,6 +369,22 @@ public class TelaEntradaLoteProduto extends Application {
 	    txtQtdDisponivel.setText("");
 		txtdataEntrada.setText("");
 		txtvalidade.setText("");
+	}
+	
+	private String getDateTime() { 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+		Date date = new Date();
+		return dateFormat.format(date); 
+	}
+	
+	private String getDataVencimento() 
+	{
+		GregorianCalendar vencimento = new GregorianCalendar();
+		DateFormat dateFormatada = new SimpleDateFormat("dd/MM/yyyy"); 
+		int inteiro = Integer.parseInt(txtTempoVida.getText());
+		vencimento.add(Calendar.DAY_OF_MONTH, inteiro);
+		String dataFutura = dateFormatada.format(vencimento.getTime());
+		return dataFutura;
 	}
 	
 }

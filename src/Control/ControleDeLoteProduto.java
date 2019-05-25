@@ -15,7 +15,11 @@ public class ControleDeLoteProduto {
 	Set<LoteProduto> listItem = new HashSet();
 	
 	
-	public void inserirLoteProduto(LoteProduto p) { listItem.add(p);}
+	public void inserirLoteProduto(LoteProduto p) 
+	{ 
+		listItem.add(p);
+		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
+	}
 	
 	public void removerLoteProduto(Produto p) { listItem.remove(p);}
 	
