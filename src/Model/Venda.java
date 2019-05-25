@@ -6,8 +6,8 @@ import java.util.List;
 public class Venda {
 
 	private int id;
-	private List<LoteProduto> listaLoteProduto;
 	private String dataVenda;
+	private List<LoteProduto> listaLoteProduto;
 	private double valorTotal;
 	private int qtdVenda;
 
