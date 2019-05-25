@@ -13,7 +13,7 @@ public interface ProdutoDAO {
 
 	List<Produto> listar(Produto p) throws DAOException;
 
-	void excluir(int id) throws DAOException;
+	void excluir(Produto produto) throws DAOException;
 
 	void alterar(Produto p) throws DAOException;
 }

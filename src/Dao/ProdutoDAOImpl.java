@@ -91,12 +91,12 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 	}
 
 	@Override
-	public void excluir(int id) throws DAOException {
+	public void excluir(Produto p) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "delete produto where ra like ?";
+			String sql = "delete produto where id like ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setInt(1, p.getId());
 			stmt.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
