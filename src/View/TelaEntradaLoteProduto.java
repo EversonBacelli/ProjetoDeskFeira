@@ -1,9 +1,12 @@
 package View;
 
+import javax.swing.JOptionPane;
+
 import Control.ControleProduto;
 import Model.LoteProduto;
 import Model.Produto;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,16 +24,17 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application {
-	private ControleProduto control = new ControleProduto();
+	private ControleProduto controlProd = new ControleProduto();
 	private Produto p;
 	private LoteProduto loteProduto;
+	
 	
 	// Objetos que Fazem parte do Produto
 	private Label lblID;
 	private TextField txtID;
 	//
 	private Label lblNome;
-	private ComboBox txtNome;
+	private ComboBox<Produto> comboNome;
 	//
 	private Label lblDescricao;
 	private TextArea txtDescricao;
@@ -80,10 +84,52 @@ public class TelaEntradaLoteProduto extends Application {
 		inserirObjetosTela(pane, tpane);
 		editarTamanhoTXT();
 		
+		
+		Produto p1= new Produto();
+		p1.setId(1);
+		p1.setNome("Helio Pinto");
+		p1.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p1.setQtdMax(12);
+		p1.setQtdMin(2);
+		p1.setQtdTempoVida(5);
+		controlProd.inserirProduto(p1);
+		Produto p2= new Produto();
+		p2.setId(2);
+		p2.setNome("Helio Pinto2");
+		p2.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p2.setQtdMax(12);
+		p2.setQtdMin(2);
+		p2.setQtdTempoVida(5);
+		controlProd.inserirProduto(p2);
+		Produto p3= new Produto();
+		p3.setId(1);
+		p3.setNome("Helio Pinto");
+		p3.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p3.setQtdMax(12);
+		p3.setQtdMin(2);
+		p3.setQtdTempoVida(5);
+		controlProd.inserirProduto(p1);
+		Produto p4= new Produto();
+		p4.setId(2);
+		p4.setNome("Helio Pinto2");
+		p4.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p4.setQtdMax(12);
+		p4.setQtdMin(2);
+		p4.setQtdTempoVida(5);
+		controlProd.inserirProduto(p4);
+		
+		ObservableList<Produto> data = comboNome.getItems();
+		
+		for(Produto x: controlProd.getListaProd()) 
+		{
+			data.add(x);
+		}
+		
+		
 		marginPaine();
 		adicionandoEstiloElementos();
 		
-		Scene scn = new Scene(pane, 700, 600);
+		Scene scn = new Scene(pane, 1000, 563);
 		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
 		tpane.addEventFilter(ActionEvent.ACTION, manipulador);
 
@@ -97,7 +143,9 @@ public class TelaEntradaLoteProduto extends Application {
 		
 		public void handle(ActionEvent e) 
 		{
-			
+			p.setId(5);
+			p.setDescricao("Cabra safado que que usa o tinder");
+			preencherInformacaoProduto();
 		}
 
    }
@@ -110,7 +158,7 @@ public class TelaEntradaLoteProduto extends Application {
 		Insets marginBot = new Insets(0, 0, 250,300);
 		
 		pane.setMargin(lblNome, margin);
-		pane.setMargin(txtNome, margin);
+		pane.setMargin(comboNome, margin);
 		pane.setMargin(lblID, margin);
 		pane.setMargin(txtID, margin);
 		pane.setMargin(lblDescricao, margin);
@@ -129,7 +177,7 @@ public class TelaEntradaLoteProduto extends Application {
 		pane.setMargin(txtdataEntrada, margin);
 		pane.setMargin(lblvalidade, margin);
 		pane.setMargin(txtvalidade, margin);
-		pane.setMargin(cadastrar, margin);
+		//pane.setMargin(cadastrar, margin);
 		
 	}
 
@@ -147,14 +195,14 @@ public class TelaEntradaLoteProduto extends Application {
 		txtID.setFont(new Font(12));
 		txtDescricao.setFont(new Font(12));
 		
-		cadastrar.setStyle("-fx-font-weight: bold");
-		cadastrar.setFont(new Font(20));
+		//cadastrar.setStyle("-fx-font-weight: bold");
+		//cadastrar.setFont(new Font(20));
 	}
 	
 	private void inserirObjetosTela(GridPane pane, TilePane tpane) 
 	{
 		pane.add(lblNome           , 0, 0);
-		pane.add(txtNome           , 1, 0);
+		pane.add(comboNome           , 1, 0);
 		pane.add(lblID             , 2, 0);
 		pane.add(txtID             , 3, 0);
 		pane.add(lblDescricao      , 0, 2);
@@ -180,7 +228,7 @@ public class TelaEntradaLoteProduto extends Application {
 	void editarTamanhoTXT()
 	{
 		txtID.setMaxSize(50,100);
-		txtNome.setMaxSize(400,30);
+		comboNome.setMaxSize(400,30);
 		txtDescricao.setMaxSize(200, 100);
 		txtQtdMax.setMaxSize(50,40);
 		txtQtdMin.setMaxSize(50,40);
@@ -194,7 +242,7 @@ public class TelaEntradaLoteProduto extends Application {
 	private void iniciarObjetos() {
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
-		txtNome = new ComboBox();
+		comboNome = new ComboBox<Produto>();
 		//
 		lblID = new Label("Numero de Identificação");
 		txtID = new TextField();
@@ -226,4 +274,41 @@ public class TelaEntradaLoteProduto extends Application {
 		cadastrar = new Button("Cadastrar");
 		// ------------------------------------------------------
 	}
+	
+	void preencherInformacaoProduto() 
+	{
+		txtID.appendText(Integer.toString(p.getId()));
+		txtDescricao.appendText(p.getDescricao());
+		txtQtdMax.appendText(Integer.toString(p.getQtdMax()));
+		txtQtdMin.appendText(Integer.toString(p.getQtdMin()));
+		txtTempoVida.appendText(Integer.toString(p.getQtdTempoVida()));
+	}
+	
+	
+	boolean verificarCampos() 
+	{
+		if(txtID.getText() == "" || comboNome.getPromptText() == "" || txtDescricao.getText() == "" || txtQtdMax.getText() == ""
+		   || txtQtdMin.getText() == "" || txtTempoVida.getText() == "" || txtPreco.getText()== ""|| txtQtdDisponivel.getText() ==""
+		   || txtdataEntrada.getText() == "" || txtvalidade.getText() == "") 
+		{
+			JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos");
+			return false;
+		}
+		return true;
+	}
+	
+	void limparCampos() 
+	{
+		txtID.setText("");
+		comboNome.setPromptText("");
+		txtDescricao.setText(""); 
+		txtQtdMax.setText("");
+	    txtQtdMin.setText("");
+	    txtTempoVida.setText("");
+	    txtPreco.setText("");
+	    txtQtdDisponivel.setText("");
+		txtdataEntrada.setText("");
+		txtvalidade.setText("");
+	}
+	
 }
