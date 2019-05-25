@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class GerenciamentoConexao {
 	
-	private String url = "jdbc:mariadb://localhost:3306/cartoon?allowMultiQueries=true";
+	private String url = "jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=crudTapioca;namedPipes=true";
 	private String user = "root";
 	private String password = "";
 	private Connection con;
@@ -14,7 +14,7 @@ public class GerenciamentoConexao {
 
 	private GerenciamentoConexao() { 
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
+			Class.forName("net.sourceforge.jtds.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
