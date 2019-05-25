@@ -35,6 +35,7 @@ public class TelaEntradaLoteProduto extends Application {
 	//
 	private Label lblNome;
 	private ComboBox<Produto> comboNome;
+	
 	//
 	private Label lblDescricao;
 	private TextArea txtDescricao;
@@ -84,6 +85,7 @@ public class TelaEntradaLoteProduto extends Application {
 		inserirObjetosTela(pane, tpane);
 		editarTamanhoTXT();
 		
+
 		
 		Produto p1= new Produto();
 		p1.setId(1);
@@ -131,8 +133,10 @@ public class TelaEntradaLoteProduto extends Application {
 		
 		Scene scn = new Scene(pane, 1000, 563);
 		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
-		tpane.addEventFilter(ActionEvent.ACTION, manipulador);
+		pane.addEventFilter(ActionEvent.ANY, manipulador);
 
+		comboNome.addEventHandler(ActionEvent.ANY, manipulador);
+		
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
 		tela.show();
@@ -143,9 +147,12 @@ public class TelaEntradaLoteProduto extends Application {
 		
 		public void handle(ActionEvent e) 
 		{
-			p.setId(5);
-			p.setDescricao("Cabra safado que que usa o tinder");
-			preencherInformacaoProduto();
+			if(e.getTarget() == comboNome) {
+				System.out.println("Acehhtooo mizeravi");
+			}else if(e.getTarget() == cadastrar) {
+				System.out.println("Apertei o Botão");	
+				txtID.appendText("5");
+			}
 		}
 
    }

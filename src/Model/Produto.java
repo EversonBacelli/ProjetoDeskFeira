@@ -55,5 +55,9 @@ public class Produto {
 		}
 		
 		
+		public String toString() 
+		{
+			return this.getNome();
+		}
 		
 }
