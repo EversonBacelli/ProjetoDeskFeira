@@ -47,7 +47,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Label lblMax = new Label("Quantidade Maxima");
 	private Label lblMin = new Label("Quantidade Minima");
 	private Label lblTempoVida = new Label("Tempo de Vida");
-	
+	private Label lblPreco = new Label("Preco");	
 	
 	private TextField tfId = new TextField();
 	private TextField tfNome = new TextField();
@@ -55,6 +55,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private TextField tfMax = new TextField();
 	private TextField tfMin = new TextField();
 	private TextField tfTempoVida = new TextField();
+	private TextField tfPreco = new TextField();	
 	
 	private Button btnPesquisar = new Button("PESQUISAR");
 	private Button btnSalvar = new Button("SALVAR");
@@ -109,6 +110,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelLbl2.add(lblMax, 0, 0);
 		painelLbl2.add(lblMin, 0, 1);
 		painelLbl2.add(lblTempoVida, 0, 2);
+		painelLbl2.add(lblPreco, 0, 3);
 		
 		
 		painelManipulavel.add(tfId, 0, 0);
@@ -117,6 +119,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelManipulavel.add(tfMax, 0, 3);
 		painelManipulavel.add(tfMin, 0, 4);
 		painelManipulavel.add(tfTempoVida, 0, 5);
+		painelManipulavel.add(tfPreco, 0, 6);
 		
 		painelBtn.getChildren().add(btnPesquisar);
 		painelBtn.getChildren().add(btnSalvar);
@@ -125,13 +128,14 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 
 	public void adicionandoEstiloElementos() {
 		painelPrincipal.setStyle("-fx-background-color: #9d95d0;");
-
+		
 		lblId.setFont(new Font(20));
 		lblNome.setFont(new Font(20));
 		lblDescricao.setFont(new Font(20));
 		lblMax.setFont(new Font(20));
 		lblMin.setFont(new Font(20));
 		lblTempoVida.setFont(new Font(20));
+		lblPreco.setFont(new Font(20));
 		
 		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
 		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
@@ -139,6 +143,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
 		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
 		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblPreco.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
 		
 		btnPesquisar.setFont(new Font(20));
 		btnSalvar.setFont(new Font(20));
@@ -148,7 +153,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	public void adicionandoMarginsPainel() {
 		Insets marginTop = new Insets(20, 20, 20, 550);
 		Insets margin = new Insets(20, 20, 20, 20);
-		Insets marginBot = new Insets(0, 0, 150,230);
+		Insets marginBot = new Insets(0, 0, 150,200);
 		Insets marginRight = new Insets(0, 50, 0, 100);
 		Insets marginTiraDesc = new Insets(160, 0, 0, 0);
 	
@@ -166,6 +171,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelLbl2.setMargin(lblMax, margin);
 		this.painelLbl2.setMargin(lblMin, margin);
 		this.painelLbl2.setMargin(lblTempoVida, margin);
+		this.painelLbl2.setMargin(lblPreco, margin);
 		
 		this.painelManipulavel.setMargin(tfId, margin);
 		this.painelManipulavel.setMargin(tfNome, margin);
@@ -173,6 +179,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelManipulavel.setMargin(tfMax, margin);
 		this.painelManipulavel.setMargin(tfMin, margin);
 		this.painelManipulavel.setMargin(tfTempoVida, margin);
+		this.painelManipulavel.setMargin(tfPreco, margin);
 		
 		this.painelBtn.setMargin(btnPesquisar, margin);
 		this.painelBtn.setMargin(btnSalvar, margin);
@@ -201,6 +208,11 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 				p.setQtdTempoVida(Integer.parseInt(tfTempoVida.getText()));
 				
 			}
+			if(!tfPreco.getText().equals("")) {
+				
+				p.setPreco(Double.parseDouble(tfPreco.getText()));
+				
+			}
 			p.setNome(tfNome.getText());
 			p.setDescricao(tfDescricao.getText());
 
@@ -218,6 +230,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			tfMax.setText(Integer.toString(p.getQtdMax()));
 			tfMin.setText(Integer.toString(p.getQtdMin()));
 			tfTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
+			tfPreco.setText(Double.toString(p.getPreco()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -232,6 +245,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tfMax.setText("");
 		tfMin.setText("");
 		tfTempoVida.setText("");
+		tfPreco.setText("");
 	}
 	
 	public static void main(String[] args) {
@@ -274,7 +288,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		
 		TableColumn<Produto, String> colunaDescricao = new TableColumn<>("Descricao");
 		colunaDescricao.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDescricao()));
-		colunaDescricao.setPrefWidth(200);
+		colunaDescricao.setPrefWidth(170);
 
 		TableColumn<Produto, Number> qtdMaxColuna = new TableColumn<>("Qtd maxima");
 		qtdMaxColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMax()));
@@ -288,8 +302,14 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tempoDeVidaColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdTempoVida()));
 		tempoDeVidaColuna.setPrefWidth(130);
 		
+		
+		TableColumn<Produto, Number> colunaPreco = new TableColumn<>("Preco");
+		colunaPreco.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getPreco()));
+		colunaPreco.setPrefWidth(100);
+		
+		
 
-		table.getColumns().addAll(colunaId, colunaNome, colunaDescricao, qtdMaxColuna, qtdMinColuna, tempoDeVidaColuna);
+		table.getColumns().addAll(colunaId, colunaNome, colunaDescricao, qtdMaxColuna, qtdMinColuna, tempoDeVidaColuna, colunaPreco);
 
 		table.setItems(cp.getListaProd());
 		

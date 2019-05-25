@@ -7,6 +7,7 @@ public class Produto {
 		private int qtdMax;
 		private int qtdMin;
 		private int qtdTempoVida;
+		private double preco;
 		
 		public int getQtdMax() {
 			return qtdMax;
@@ -45,6 +46,12 @@ public class Produto {
 
 		public void setId(int id) {
 			this.id = id;
+		}
+		public double getPreco() {
+			return preco;
+		}
+		public void setPreco(double preco) {
+			this.preco = preco;
 		}
 		
 		
