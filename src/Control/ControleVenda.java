@@ -7,20 +7,22 @@ import Model.LoteProduto;
 import Model.Venda;
 
 public class ControleVenda {
-	List<LoteProduto> listaLoteProdutos = new ArrayList<>();
+	
 	List<Venda> lista_venda = new ArrayList<>();
 	
 	public void realizarVenda(Venda venda) {
-
 		// criando o metodo para usar a alteração da quantidade dentro do
 		// estoque
 		ControleDeLoteProduto controleProduto = new ControleDeLoteProduto();
+		
 		List<LoteProduto> listaLoteProdutos = venda.getListaLoteProduto();
+		
 		double valorTotal = 0;
 		int qtdTotalProdutos = 0;
 
 		// diminuindo o valor dos LoteProdutos comprados
 		for (LoteProduto loteProduto : listaLoteProdutos) {
+
 			// 0 = administrador
 			// 1 = vendedor
 			// 2 = estoquista
@@ -31,7 +33,7 @@ public class ControleVenda {
 			// diminuido no lote?
 
 			// se estoque foi alterado, entao vamos somar o valor da compra
-			valorTotal += loteProduto.getproduto.getValor() * loteProduto.getQuantidade();
+			valorTotal += loteProduto.getValorTortal();
 
 			// se estoque foi alterado, gravar a quantidade total de um produto
 			qtdTotalProdutos += loteProduto.getQuantidade();
