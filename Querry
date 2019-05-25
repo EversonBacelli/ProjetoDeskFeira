@@ -1,0 +1,48 @@
+create database bd_deskfeira;
+use bd_deskfeira;
+
+create table produto(
+id int not null,
+nome varchar(100) not null,
+descricao varchar(max) not null,
+qtdMax smallint not null,
+qtdMin smallint not null,
+qtdTempoVida smallint not null,
+preco decimal(7,2) not null,
+primary key(id)
+)
+
+create table loteProduto(
+id int not null,
+quantidade int not null,
+dataValidade char(10) not null,
+dataEntrada char(10) not null,
+id_produto int not null,
+primary key(id),
+foreign key(id_produto) references produto(id)
+)
+
+create table venda(
+id int not null,
+dataVenda char(10) not null,
+valorTotal decimal(7,2) not null,
+qtdVenda int not null,
+primary key(id),
+)
+
+select * from produto;
+select * from loteProduto;
+
+
+INSERT INTO produto VALUES
+(1,'abc','descri1',100,1,25,10.50),
+(2,'def','descri2',20,1,100,11.50),
+(3,'ghi','descri3',35,1,120,1.50),
+(4,'jkl','descri4',24,1,109,100.00),
+(5,'mno','descri5',57,10,309,1.00),
+(6,'pqr','descri6',29,1,136,90.00)
+
+Insert into loteProduto values
+(1,0,'1990-09-09','1990-09-09',1)
+
+delete loteProduto where id = 1;
