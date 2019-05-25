@@ -124,7 +124,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	}
 
 	public void adicionandoEstiloElementos() {
-		painelPrincipal.setStyle("-fx-background-color: #00ade0;");
+		painelPrincipal.setStyle("-fx-background-color: #9d95d0;");
 
 		lblId.setFont(new Font(20));
 		lblNome.setFont(new Font(20));
@@ -133,12 +133,12 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		lblMin.setFont(new Font(20));
 		lblTempoVida.setFont(new Font(20));
 		
-		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
-		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
-		lblDescricao.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
-		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
-		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
-		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblDescricao.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
 		
 		btnPesquisar.setFont(new Font(20));
 		btnSalvar.setFont(new Font(20));
