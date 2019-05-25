@@ -21,7 +21,7 @@ public class ControleDeLoteProduto {
 		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 	}
 	
-	public void removerLoteProduto(Produto p) { listItem.remove(p);}
+	public void removerLoteProduto(LoteProduto p) { listItem.remove(p);}
 	
 	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{
@@ -64,7 +64,7 @@ public class ControleDeLoteProduto {
 				     {
 				    	 reduzir -= p.getQuantidade();
 				    	 p.setQuantidade(0);
-				    	 
+				    	 removerLoteProduto(p);
 				     } else 
 				     {
 				    	 p.setQuantidade(p.getQuantidade() - reduzir);
