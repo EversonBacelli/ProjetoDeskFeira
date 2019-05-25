@@ -64,6 +64,7 @@ public class ControleDeLoteProduto {
 				     {
 				    	 reduzir -= p.getQuantidade();
 				    	 p.setQuantidade(0);
+				    	 
 				     } else 
 				     {
 				    	 p.setQuantidade(p.getQuantidade() - reduzir);

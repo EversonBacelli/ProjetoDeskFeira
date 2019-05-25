@@ -36,14 +36,12 @@ public class TelaEntradaLoteProduto extends Application {
 	private Produto p;
 	private LoteProduto loteProduto;
 	
-	
 	// Objetos que Fazem parte do Produto
 	private Label lblID;
 	private TextField txtID;
 	//
 	private Label lblNome;
 	private ComboBox<Produto> comboNome;
-	
 	//
 	private Label lblDescricao;
 	private TextArea txtDescricao;
@@ -72,13 +70,13 @@ public class TelaEntradaLoteProduto extends Application {
 	//
 	private Button cadastrar;
 	//---------------------------
+	
 	// Estrutura
-	
-	
 	private GridPane pane;
 	private TilePane tpane;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Application.launch(args);
 	}
 	
@@ -93,7 +91,6 @@ public class TelaEntradaLoteProduto extends Application {
 		inserirObjetosTela(pane, tpane);
 		editarTamanhoTXT();
 		
-
 		
 		Produto p1= new Produto();
 		p1.setId(1);
