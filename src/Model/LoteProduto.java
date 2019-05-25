@@ -49,4 +49,8 @@ public class LoteProduto
 	public void setDataValidade(String dataValidade) {
 		this.dataValidade = dataValidade;
 	}
+	
+	public double getValorTortal(){
+		return this.produto.getPreco() * this.quantidade;
+	}
 }

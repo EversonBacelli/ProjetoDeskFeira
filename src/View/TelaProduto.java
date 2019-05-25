@@ -2,6 +2,8 @@ package View;
 
 
 
+import javax.swing.JOptionPane;
+
 import Control.ControleProduto;
 import Model.Produto;
 import javafx.application.Application;
@@ -14,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -215,7 +218,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			}
 			p.setNome(tfNome.getText());
 			p.setDescricao(tfDescricao.getText());
-
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -275,6 +278,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 
 		}	
 	}
+	
+
 	
 	public void definirColunas() {
 
