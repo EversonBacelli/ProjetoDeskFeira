@@ -21,6 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -31,14 +33,13 @@ import javafx.stage.Stage;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent>{
 	private TableView<Produto> table = new TableView<>();
-	
+	private ImageView img = new ImageView(new Image("file:Images/gerenciamento_prod.png"));		
 	private BorderPane painelPrincipal = new BorderPane();
 	private GridPane painelLbl = new GridPane();
+	private GridPane painelLbl2 = new GridPane();
 	private GridPane painelManipulavel = new GridPane();
 	private FlowPane painelBtn = new FlowPane();
 	private Scene scn = new Scene(painelPrincipal, 1600, 900);
-	private TilePane topo = new TilePane();
-	private Text textoCabecalho = new Text("Gerenciamento de produto");
 	
 	private Label lblId = new Label("ID : ");
 	private Label lblNome = new Label("Nome : ");
@@ -51,9 +52,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private TextField tfId = new TextField();
 	private TextField tfNome = new TextField();
 	private TextArea tfDescricao = new TextArea();
-	private TextArea tfMax = new TextArea();
-	private TextArea tfMin = new TextArea();
-	private TextArea tfTempoVida = new TextArea();
+	private TextField tfMax = new TextField();
+	private TextField tfMin = new TextField();
+	private TextField tfTempoVida = new TextField();
 	
 	private Button btnPesquisar = new Button("PESQUISAR");
 	private Button btnSalvar = new Button("SALVAR");
@@ -89,63 +90,11 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		btnSalvar.addEventHandler(ActionEvent.ANY, this);
 		btnExcluir.addEventHandler(ActionEvent.ANY, this);
 	}
-
-	public void adicionandoEstiloElementos() {
-		textoCabecalho.setStyle("-fx-font-weight: bold");
-		textoCabecalho.setFont(new Font(40));
-		
-		lblId.setFont(new Font(20));
-		lblNome.setFont(new Font(20));
-		lblDescricao.setFont(new Font(20));
-		lblMax.setFont(new Font(20));
-		lblMin.setFont(new Font(20));
-		lblTempoVida.setFont(new Font(20));
-		
-		lblId.setStyle("-fx-font-weight: bold");
-		lblNome.setStyle("-fx-font-weight: bold");
-		lblDescricao.setStyle("-fx-font-weight: bold");
-		lblMax.setStyle("-fx-font-weight: bold");
-		lblMin.setStyle("-fx-font-weight: bold");
-		lblTempoVida.setStyle("-fx-font-weight: bold");
-		
-		btnPesquisar.setFont(new Font(20));
-		btnSalvar.setFont(new Font(20));
-		btnExcluir.setFont(new Font(20));
-	}
-
-	public void adicionandoMarginsPainel() {
-		Insets marginTop = new Insets(20, 20, 20, 550);
-		Insets margin = new Insets(20, 20, 20, 20);
-		Insets marginBot = new Insets(0, 0, 250,300);
-		Insets marginRight = new Insets(0, 150, 0, 0);
-		
-		this.painelPrincipal.setMargin(topo, marginTop);
-		this.painelPrincipal.setMargin(painelBtn, marginBot);
-		this.painelPrincipal.setMargin(table, marginRight);
-		
-		this.painelLbl.setMargin(lblId, margin);
-		this.painelLbl.setMargin(lblNome, margin);
-		this.painelLbl.setMargin(lblDescricao, margin);
-		this.painelLbl.setMargin(lblMax, margin);
-		this.painelLbl.setMargin(lblMin, margin);
-		this.painelLbl.setMargin(lblTempoVida, margin);
-		
-		this.painelManipulavel.setMargin(tfId, margin);
-		this.painelManipulavel.setMargin(tfNome, margin);
-		this.painelManipulavel.setMargin(tfDescricao, margin);
-		this.painelManipulavel.setMargin(tfMax, margin);
-		this.painelManipulavel.setMargin(tfMin, margin);
-		this.painelManipulavel.setMargin(tfTempoVida, margin);
-		
-		this.painelBtn.setMargin(btnPesquisar, margin);
-		this.painelBtn.setMargin(btnSalvar, margin);
-		this.painelBtn.setMargin(btnExcluir, margin);
-	}
-
+	
 	public void adicionandoFilhosPainel() {
-		topo.getChildren().add(textoCabecalho);
+
 		
-		painelPrincipal.setTop(topo);
+		painelPrincipal.setTop(img);
 		painelPrincipal.setLeft(painelLbl);
 		painelPrincipal.setCenter(painelManipulavel);
 		painelPrincipal.setBottom(painelBtn);
@@ -155,9 +104,11 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelLbl.add(lblId, 0, 0);
 		painelLbl.add(lblNome, 0, 1);
 		painelLbl.add(lblDescricao, 0, 2);
-		painelLbl.add(lblMax, 0, 3);
-		painelLbl.add(lblMin, 0, 4);
-		painelLbl.add(lblTempoVida, 0, 5);
+		painelLbl.add(painelLbl2, 0, 5);
+		
+		painelLbl2.add(lblMax, 0, 0);
+		painelLbl2.add(lblMin, 0, 1);
+		painelLbl2.add(lblTempoVida, 0, 2);
 		
 		
 		painelManipulavel.add(tfId, 0, 0);
@@ -171,6 +122,64 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		painelBtn.getChildren().add(btnSalvar);
 		painelBtn.getChildren().add(btnExcluir);
 	}
+
+	public void adicionandoEstiloElementos() {
+		painelPrincipal.setStyle("-fx-background-color: #00ade0;");
+
+		lblId.setFont(new Font(20));
+		lblNome.setFont(new Font(20));
+		lblDescricao.setFont(new Font(20));
+		lblMax.setFont(new Font(20));
+		lblMin.setFont(new Font(20));
+		lblTempoVida.setFont(new Font(20));
+		
+		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblDescricao.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		
+		btnPesquisar.setFont(new Font(20));
+		btnSalvar.setFont(new Font(20));
+		btnExcluir.setFont(new Font(20));
+	}
+
+	public void adicionandoMarginsPainel() {
+		Insets marginTop = new Insets(20, 20, 20, 550);
+		Insets margin = new Insets(20, 20, 20, 20);
+		Insets marginBot = new Insets(0, 0, 150,230);
+		Insets marginRight = new Insets(0, 50, 0, 100);
+		Insets marginTiraDesc = new Insets(160, 0, 0, 0);
+	
+		
+		this.painelPrincipal.setMargin(painelBtn, marginBot);
+		this.painelPrincipal.setMargin(table, marginRight);
+
+		
+		this.painelLbl.setMargin(lblId, margin);
+		this.painelLbl.setMargin(lblNome, margin);
+		this.painelLbl.setMargin(lblDescricao, margin);
+		this.painelLbl.setMargin(painelLbl2, marginTiraDesc);
+		
+
+		this.painelLbl2.setMargin(lblMax, margin);
+		this.painelLbl2.setMargin(lblMin, margin);
+		this.painelLbl2.setMargin(lblTempoVida, margin);
+		
+		this.painelManipulavel.setMargin(tfId, margin);
+		this.painelManipulavel.setMargin(tfNome, margin);
+		this.painelManipulavel.setMargin(tfDescricao, margin);
+		this.painelManipulavel.setMargin(tfMax, margin);
+		this.painelManipulavel.setMargin(tfMin, margin);
+		this.painelManipulavel.setMargin(tfTempoVida, margin);
+		
+		this.painelBtn.setMargin(btnPesquisar, margin);
+		this.painelBtn.setMargin(btnSalvar, margin);
+		this.painelBtn.setMargin(btnExcluir, margin);
+	}
+
+
 	
 	public Produto viewParaProduto() {
 		Produto p = new Produto();
@@ -257,27 +266,27 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 
 		TableColumn<Produto, Number> colunaId = new TableColumn<>("Id");
 		colunaId.setCellValueFactory(itemData -> new ReadOnlyLongWrapper(itemData.getValue().getId()));
-		colunaId.setPrefWidth(60);
+		colunaId.setPrefWidth(80);
 
 		TableColumn<Produto, String> colunaNome = new TableColumn<>("Nome");
 		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getNome()));
-		colunaNome.setPrefWidth(70);
+		colunaNome.setPrefWidth(100);
 		
 		TableColumn<Produto, String> colunaDescricao = new TableColumn<>("Descricao");
 		colunaDescricao.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDescricao()));
-		colunaDescricao.setPrefWidth(70);
+		colunaDescricao.setPrefWidth(200);
 
 		TableColumn<Produto, Number> qtdMaxColuna = new TableColumn<>("Qtd maxima");
 		qtdMaxColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMax()));
-		qtdMaxColuna.setPrefWidth(70);
+		qtdMaxColuna.setPrefWidth(130);
 		
 		TableColumn<Produto, Number> qtdMinColuna = new TableColumn<>("Qtd minima");
 		qtdMinColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMin()));
-		qtdMinColuna.setPrefWidth(100);
+		qtdMinColuna.setPrefWidth(130);
 		
 		TableColumn<Produto, Number> tempoDeVidaColuna = new TableColumn<>("Tempo de vida");
 		tempoDeVidaColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdTempoVida()));
-		tempoDeVidaColuna.setPrefWidth(100);
+		tempoDeVidaColuna.setPrefWidth(130);
 		
 
 		table.getColumns().addAll(colunaId, colunaNome, colunaDescricao, qtdMaxColuna, qtdMinColuna, tempoDeVidaColuna);

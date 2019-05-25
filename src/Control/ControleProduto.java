@@ -35,7 +35,8 @@ public class ControleProduto {
 	public void alterarProduto(Produto produtoAlterado) {
 		for(Produto p : listaProd) {
 			if(p.getNome().equals(produtoAlterado.getNome())) {
-				p = produtoAlterado;
+				listaProd.remove(p);
+				listaProd.add(produtoAlterado);
 				JOptionPane.showMessageDialog(null,  "Produto alterado com sucesso");
 			}
 		}
