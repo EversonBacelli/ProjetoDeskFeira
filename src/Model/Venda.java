@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Venda {
 
-	int id;
-	List<LoteProduto> listaLoteProduto;
-	String dataVenda;
-	double valorTotal;
-	int qtdVenda;
+	private int id;
+	private List<LoteProduto> listaLoteProduto;
+	private String dataVenda;
+	private double valorTotal;
+	private int qtdVenda;
 
 	public int getId() {
 		return id;
