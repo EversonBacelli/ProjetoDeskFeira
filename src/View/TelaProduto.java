@@ -72,7 +72,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Produto>() {
 			@Override
 			public void changed(ObservableValue<? extends Produto> arg0, Produto arg1, Produto arg2) {
-				produtoParaView(arg2);
+				if (arg2 != null) {
+				produtoParaView(arg2);					
+				}
 			}
 		});
 		
@@ -112,10 +114,10 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	}
 
 	public void adicionandoMarginsPainel() {
-		Insets marginTop = new Insets(20, 20, 20, 150);
+		Insets marginTop = new Insets(20, 20, 20, 550);
 		Insets margin = new Insets(20, 20, 20, 20);
 		Insets marginBot = new Insets(0, 0, 250,300);
-		Insets marginRight = new Insets(0, 250, 0, 0);
+		Insets marginRight = new Insets(0, 150, 0, 0);
 		
 		this.painelPrincipal.setMargin(topo, marginTop);
 		this.painelPrincipal.setMargin(painelBtn, marginBot);
@@ -175,9 +177,24 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		try {
 			if(!tfId.getText().equals("")) {
 				p.setId(Integer.parseInt(tfId.getText()));
+				
+			}
+			if(!tfMax.getText().equals("")) {
+				p.setQtdMax(Integer.parseInt(tfMax.getText()));
+				
+			}
+			if(!tfMin.getText().equals("")) {
+				p.setQtdMin(Integer.parseInt(tfMin.getText()));
+				
+			}
+			if(!tfTempoVida.getText().equals("")) {
+				
+				p.setQtdTempoVida(Integer.parseInt(tfTempoVida.getText()));
+				
 			}
 			p.setNome(tfNome.getText());
 			p.setDescricao(tfDescricao.getText());
+
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -185,9 +202,17 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	}
 	
 	public void produtoParaView(Produto p) {
-		tfId.setText(Integer.toString(p.getId()));
-		tfNome.setText(p.getNome());
-		tfDescricao.setText(p.getDescricao());
+		try {
+			tfId.setText(Integer.toString(p.getId()));
+			tfNome.setText(p.getNome());
+			tfDescricao.setText(p.getDescricao());
+			tfMax.setText(Integer.toString(p.getQtdMax()));
+			tfMin.setText(Integer.toString(p.getQtdMin()));
+			tfTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -197,6 +222,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tfDescricao.setText("");
 		tfMax.setText("");
 		tfMin.setText("");
+		tfTempoVida.setText("");
 	}
 	
 	public static void main(String[] args) {
@@ -209,7 +235,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		if(e.getTarget() == btnPesquisar) {
 			Produto p = viewParaProduto();
 			Produto p2 = new Produto();
-			p2 = cp.pesquisarProduto(p);
+			p2 = cp.pesquisarProdutoNome(p);
 			produtoParaView(p2);
 		}else if(e.getTarget() == btnSalvar) {
 			Produto p = viewParaProduto();
@@ -229,7 +255,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	
 	public void definirColunas() {
 
-		
 		TableColumn<Produto, Number> colunaId = new TableColumn<>("Id");
 		colunaId.setCellValueFactory(itemData -> new ReadOnlyLongWrapper(itemData.getValue().getId()));
 		colunaId.setPrefWidth(60);

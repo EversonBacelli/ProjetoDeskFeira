@@ -18,7 +18,7 @@ public class ControleProduto {
 		this.listaProd.add(p);
 		JOptionPane.showMessageDialog(null,  "Produto adicionado com sucesso");
 	}
-	public Produto pesquisarProduto(Produto produtoPesquisado) {
+	public Produto pesquisarProdutoNome(Produto produtoPesquisado) {
 		Produto retornado = new Produto();
 		for(Produto p : listaProd) {
 			if(p.getNome().equals(produtoPesquisado.getNome())) {
@@ -46,13 +46,12 @@ public class ControleProduto {
 			if(p.getNome().equals(prod.getNome())) {
 				listaProd.remove(p);
 				JOptionPane.showMessageDialog(null,  "Produto removido com sucesso");
+				break;
 			}
 		}
 	}
 	
-	public List<Produto> pesquisarProdutos() {
-		return this.listaProd;
-	}
+
 	
 	public boolean produtoExiste(Produto prod) {
 		boolean existe = false;
@@ -63,6 +62,24 @@ public class ControleProduto {
 		}
 		return existe;
 	}
+
+	public Produto pesquisarProdutoNomeId(Produto produtoPesquisado) {
+		Produto retornado = new Produto();
+		for(Produto p : listaProd) {
+			if(p.getId() == produtoPesquisado.getId()) {
+				JOptionPane.showMessageDialog(null,  "Produto Encontrado");
+				return p;
+			}
+		}
+		if(retornado.getId() == 0) {
+			JOptionPane.showMessageDialog(null,"PRODUTO NÃO ENCONTRADO");
+		}
+		return retornado;
+	}
+	
+	public List<Produto> pesquisarProdutos() {
+		return this.listaProd;
+	}
 	
 	public ObservableList<Produto> getListaProd() {
 		return listaProd;
@@ -70,4 +87,6 @@ public class ControleProduto {
 	public void setListaProd(ObservableList<Produto> listaProd) {
 		this.listaProd = listaProd;
 	}
+	
+	
 }
