@@ -7,7 +7,7 @@ public class Venda {
 
 	private int id;
 	private String dataVenda;
-	private List<LoteProduto> listaLoteProduto;
+	private List<ProdutoVendido> listaLoteProduto;
 	private double valorTotal;
 	private int qtdVenda;
 
@@ -19,12 +19,12 @@ public class Venda {
 		this.id = id;
 	}
 
-	public List<LoteProduto> getListaLoteProduto() {
+	public List<ProdutoVendido> getListaLoteProduto() {
 		return listaLoteProduto;
 	}
 
-	public void setListaLoteProduto(List<LoteProduto> listaLoteProduto) {
-		this.listaLoteProduto = listaLoteProduto;
+	public void setListaLoteProduto(List<ProdutoVendido> listaProdutoVendido) {
+		this.listaLoteProduto = listaProdutoVendido;
 	}
 
 	public String getDataVenda() {
