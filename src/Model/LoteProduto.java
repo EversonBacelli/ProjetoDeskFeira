@@ -53,4 +53,8 @@ public class LoteProduto
 	public double getValorTortal(){
 		return this.produto.getPreco() * this.quantidade;
 	}
-}
+	
+	public String toString() {
+		return this.produto.getNome();
+	}
+	}

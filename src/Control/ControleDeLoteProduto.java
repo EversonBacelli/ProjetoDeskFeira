@@ -9,11 +9,14 @@ import javax.swing.JOptionPane;
 
 import Model.LoteProduto;
 import Model.Produto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ControleDeLoteProduto {
 
 	Set<LoteProduto> listItem = new HashSet();
-	
+
+	private ObservableList<LoteProduto> produtoAdicionados = FXCollections.observableArrayList();
 	
 	public void inserirLoteProduto(LoteProduto p) 
 	{ 
@@ -75,4 +78,12 @@ public class ControleDeLoteProduto {
 		}
 		
 	}
+	public ObservableList<LoteProduto> getProdutoAdicionados() {
+		return produtoAdicionados;
+	}
+
+	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
+		this.produtoAdicionados = produtoAdicionados;
+	}
+
 }

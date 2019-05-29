@@ -30,7 +30,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TelaEntradaLoteProduto extends Application {
+public class TelaEntradaLoteProduto extends Application implements EventHandler<ActionEvent>{
 	private ControleProduto controlProd = new ControleProduto();
 	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
 	private Produto p;
@@ -84,14 +84,27 @@ public class TelaEntradaLoteProduto extends Application {
 	public void start(Stage tela) throws Exception {
 
 		iniciarObjetos();
-		// Estrutura da Tela
-		pane = new GridPane();
-		tpane = new TilePane();
-		//
 		inserirObjetosTela(pane, tpane);
 		editarTamanhoTXT();
+		adicionandoProdutosTeste();
+		marginPaine();
+		adicionandoEstiloElementos();
 		
+		ObservableList<Produto> data = comboNome.getItems();	
+		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
 		
+		Scene scn = new Scene(pane, 1000, 563);
+		
+		pane.addEventFilter(ActionEvent.ANY, this);
+
+		comboNome.addEventHandler(ActionEvent.ANY, this);
+		
+		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
+		tela.setScene(scn);
+		tela.show();
+	}
+
+	public void adicionandoProdutosTeste() {
 		Produto p1= new Produto();
 		p1.setId(1);
 		p1.setNome("Helio Pinto");
@@ -128,67 +141,8 @@ public class TelaEntradaLoteProduto extends Application {
 		p4.setQtdTempoVida(5);
 		p4.setPreco(500);
 		controlProd.inserirProduto(p4);
-		
-		ObservableList<Produto> data = comboNome.getItems();
-		
-		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
-		
-		
-		marginPaine();
-		adicionandoEstiloElementos();
-		
-		Scene scn = new Scene(pane, 1000, 563);
-		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
-		pane.addEventFilter(ActionEvent.ANY, manipulador);
-
-		comboNome.addEventHandler(ActionEvent.ANY, manipulador);
-		
-		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
-		tela.setScene(scn);
-		tela.show();
 	}
 	
-	public class ManipuladorMouse implements EventHandler<ActionEvent> {
-		boolean campos;
-		
-		@Override
-		public void handle(ActionEvent e) 
-		{
-			if(e.getTarget() == comboNome) {
-				if(comboNome.getValue() != null) {
-					p = comboNome.getValue();
-					preencherDadosProdutoSelecionado();
-				}
-			}else 
-				if(e.getTarget() == cadastrar) {
-					if(verificarCampos()) {
-						ControleLote.inserirLoteProduto(loteProduto);
-						limparCampos();
-					}
-				}
-		}
-		
-		public void telaParaLoteProduto() {
-			loteProduto.setProduto(p);
-			loteProduto.setId(Integer.parseInt(txtID.getText()));
-			loteProduto.setDataValidade(txtvalidade.getText());
-			loteProduto.setDataEntrada(txtdataEntrada.getText());
-			loteProduto.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
-		}
-
-		public void preencherDadosProdutoSelecionado() {
-			txtID.setText(Integer.toString(p.getId()));
-			txtDescricao.setText(p.getDescricao());
-			txtQtdMax.setText(Integer.toString(p.getQtdMax()));
-			txtQtdMin.setText(Integer.toString(p.getQtdMin()));
-			txtTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
-			txtPreco.setText(Double.toString(p.getPreco()));
-			String data = getDateTime();
-			txtdataEntrada.setText(data);
-			txtvalidade.setText(getDataVencimento());
-		}
-
-   }
 
 	// --------------- METODOS  --------------------//
 
@@ -219,6 +173,25 @@ public class TelaEntradaLoteProduto extends Application {
 		pane.setMargin(txtvalidade, margin);
 		//pane.setMargin(cadastrar, margin);
 		
+	}
+	public void telaParaLoteProduto() {
+		loteProduto.setProduto(p);
+		loteProduto.setId(Integer.parseInt(txtID.getText()));
+		loteProduto.setDataValidade(txtvalidade.getText());
+		loteProduto.setDataEntrada(txtdataEntrada.getText());
+		loteProduto.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
+	}
+
+	public void preencherDadosProdutoSelecionado() {
+		txtID.setText(Integer.toString(p.getId()));
+		txtDescricao.setText(p.getDescricao());
+		txtQtdMax.setText(Integer.toString(p.getQtdMax()));
+		txtQtdMin.setText(Integer.toString(p.getQtdMin()));
+		txtTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
+		txtPreco.setText(Double.toString(p.getPreco()));
+		String data = getDateTime();
+		txtdataEntrada.setText(data);
+		txtvalidade.setText(getDataVencimento());
 	}
 
 	
@@ -272,7 +245,7 @@ public class TelaEntradaLoteProduto extends Application {
 		txtDescricao.setMaxSize(200, 100);
 		txtQtdMax.setMaxSize(50,40);
 		txtQtdMin.setMaxSize(50,40);
-		txtPreco.setMaxSize(50,40);
+		txtPreco.setMaxSize(70,40);
 		txtTempoVida.setMaxSize(50,40);
 		txtQtdDisponivel.setMaxSize(50,40);
 		txtdataEntrada.setMaxSize(80,80);
@@ -280,6 +253,9 @@ public class TelaEntradaLoteProduto extends Application {
 	}
 	
 	private void iniciarObjetos() {
+		//paineis
+		pane = new GridPane();
+		tpane = new TilePane();
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
 		comboNome = new ComboBox<Produto>();
@@ -382,6 +358,22 @@ public class TelaEntradaLoteProduto extends Application {
 		vencimento.add(Calendar.DAY_OF_MONTH, inteiro);
 		String dataFutura = dateFormatada.format(vencimento.getTime());
 		return dataFutura;
+	}
+
+	@Override
+	public void handle(ActionEvent e) {
+		if(e.getTarget() == comboNome) {
+			if(comboNome.getValue() != null) {
+				p = comboNome.getValue();
+				preencherDadosProdutoSelecionado();
+			}
+		}else 
+			if(e.getTarget() == cadastrar) {
+				if(verificarCampos()) {
+					ControleLote.inserirLoteProduto(loteProduto);
+					limparCampos();
+				}
+			}
 	}
 	
 }

@@ -74,6 +74,15 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		adicionandoMarginsPainel();
 		adicionarEventos();
 		definirColunas();
+		responsividadeLista();
+		
+		stage.setResizable(false);
+		stage.setScene(scn);
+		stage.setTitle("Gerenciamento de produto");
+		stage.show();
+	}
+
+	public void responsividadeLista() {
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Produto>() {
 			@Override
 			public void changed(ObservableValue<? extends Produto> arg0, Produto arg1, Produto arg2) {
@@ -82,11 +91,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 				}
 			}
 		});
-		
-		stage.setResizable(false);
-		stage.setScene(scn);
-		stage.setTitle("Gerenciamento de produto");
-		stage.show();
 	}
 
 	public void adicionarEventos() {
