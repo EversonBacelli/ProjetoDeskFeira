@@ -8,14 +8,19 @@ import javafx.collections.ObservableList;
 public class ControleProdutoVendido {
 	
 	private ObservableList<ProdutoVendido> listaProd = FXCollections.observableArrayList();
-
+	
+	private int id = 0;
 
 	public void adicionar(ProdutoVendido p) {
 		this.listaProd.add(p);
 	}
 	
-	public void remover(Produto p) {
+	public void remover(ProdutoVendido p) {
 		this.listaProd.remove(p);
+	}
+	
+	public int getProximoId() {
+		return this.id++;
 	}
 	
 	public ObservableList<ProdutoVendido> getListaProd() {

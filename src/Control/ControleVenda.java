@@ -8,7 +8,16 @@ import Model.Venda;
 
 public class ControleVenda {
 	
-	List<Venda> lista_venda = new ArrayList<>();
+	
+	
+	
+	public void realizarVenda() {
+		
+	}
+	
+	public boolean validarVenda() {
+		return false;
+	}
 	
 //	public void realizarVenda(Venda venda) {
 //		// criando o metodo para usar a alteração da quantidade dentro do

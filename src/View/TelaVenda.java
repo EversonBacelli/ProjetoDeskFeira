@@ -1,14 +1,18 @@
 package View;
 
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import com.sun.org.apache.bcel.internal.generic.LALOAD;
 
 import Control.ControleDeLoteProduto;
 import Control.ControleProduto;
 import Control.ControleProdutoVendido;
+import Control.ControleVenda;
 import Model.LoteProduto;
 import Model.Produto;
 import Model.ProdutoVendido;
@@ -18,6 +22,8 @@ import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyLongWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,13 +45,15 @@ import javafx.stage.Stage;
 
 
 public class TelaVenda extends Application implements EventHandler<ActionEvent>{
-	private ControleProduto CProduto = new ControleProduto();
-	ObservableList<Produto> ProdutoVenda;
+	private ControleProduto cProduto = new ControleProduto();
+	private ControleVenda cVenda = new ControleVenda();
+	private ObservableList<Produto> ProdutoVenda;
+	
 	private GridPane topoPainel2 = new GridPane();
 	private GridPane topoPainel3 = new GridPane();
 	private GridPane topoPainel4 = new GridPane();
 	private GridPane paneButtons = new GridPane();
-
+	
 	
 	private VBox topoPainel = new VBox();
 	private VBox painelCentral = new VBox();
@@ -66,28 +74,39 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 
 	private Button btnAdicionarQtd = new Button("+");
 	private Button btnRemoverQtd = new Button("-");
-	private Button btnAdicionarNaLista = new Button("Adicionar Produto");
-	private Button btnRemoverNaLista = new Button("Remover Produto");
+	private Button btnAdicionarProduto = new Button("Adicionar Produto");
+	private Button btnRemoverProduto = new Button("Remover Produto");
 	private Button btnRealizarVenda = new Button("Realizar Venda");
+	private Button btnPesquisarProduto = new Button("?");
 	
 	private TextField tfIdVenda = new TextField();
 	private TextField tfQtdVendida = new TextField();
 	private TextField tfValorTotal = new TextField();
 	private TextField tfDataVenda = new TextField();
 	private TextField tfPesquisarProd = new TextField();
+	
+	private ProdutoVendido prodVend;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		CProduto.getListaProd();
+		cProduto.getListaProd();
 		ProdutoVenda = comboProd.getItems();
-		adicionandoProdutosTeste(); 
-		for(Produto x: CProduto.getListaProd()) 	{ProdutoVenda.add(x);}
 		
+		adicionandoProdutosTeste(); 
+		
+		for(Produto x: cProduto.getListaProd()) 	{
+			ProdutoVenda.add(x);
+		}
+		
+		
+		adicionarEventos();
 		adicionandoElementosPaineis();
 		mudandoEstilo();
 		definirColunas();
 		adicionandoMargins();
 		adicionandoEstiloVenda();
+		responsividadeLista();
+		
 		stage.setScene(scn);
 		stage.setTitle("Venda");
 		stage.show();
@@ -95,7 +114,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	
 	public void adicionandoEstiloVenda() {
 		//this.tfValorTotal.setMaxSize(70, 70);
-		this.comboProd.setPrefWidth(100);
+		this.comboProd.setPrefWidth(130);
 		this.tfQtdVendida.setPrefWidth(80);
 	}
 	
@@ -122,14 +141,17 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		
 		this.topoPainel3.add(this.lblProduto, 0, 0);
 		this.topoPainel3.add(this.comboProd, 1, 0);
-		this.topoPainel3.add(this.lblPesquisarProduto, 2, 0);
-		this.topoPainel3.add(this.tfPesquisarProd, 3, 0);
-		this.topoPainel3.add(this.lblQtdVendida, 4, 0);
-		this.topoPainel3.add(this.tfQtdVendida, 5, 0);
-		this.topoPainel3.add(this.paneButtons, 6, 0);
+		this.topoPainel3.add(this.lblQtdVendida, 2, 0);
+		this.topoPainel3.add(this.tfQtdVendida, 3, 0);
+		this.topoPainel3.add(this.paneButtons, 4, 0);
+		this.topoPainel3.add(this.lblPesquisarProduto, 5, 0);
+		this.topoPainel3.add(this.tfPesquisarProd, 6, 0);
+		this.topoPainel3.add(this.btnPesquisarProduto, 7, 0);
+
+
 		
-		this.topoPainel4.add(this.btnAdicionarNaLista, 1, 0);
-		this.topoPainel4.add(this.btnRemoverNaLista, 2, 0);
+		this.topoPainel4.add(this.btnAdicionarProduto, 1, 0);
+		this.topoPainel4.add(this.btnRemoverProduto, 2, 0);
 
 		this.painelBottom.getChildren().add(this.lblValorTotal);
 		this.painelBottom.getChildren().add(this.tfValorTotal);
@@ -144,10 +166,10 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	public void adicionandoMargins() {
 		Insets marginTop = new Insets(30, 0, 0, 50);
 		Insets margin = new Insets(20, 20, 20, 20);
-		Insets marginTable = new Insets(20, 100, 50, 100);
+		Insets marginTable = new Insets(20, 80, 50, 100);
 		Insets marginTop2 = new Insets(0, 0, 0, 55);
 		Insets marginTop3 = new Insets(0, 20, 0, 55);
-		Insets marginRight = new Insets(0, 20, 0, 0);
+		Insets marginRight = new Insets(0, 15, 0, 0);
 
 		
 		this.painelPrincipal.setMargin(this.topoPainel, marginTop);
@@ -158,13 +180,14 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel.setMargin(this.topoPainel4, marginTop3);
 		
 		this.topoPainel2.setMargin(this.lblIdVenda, marginRight);
-		this.topoPainel2.setMargin(this.tfIdVenda, new Insets(0, 65, 0, 0));
-		this.topoPainel2.setMargin(this.lblDataVenda, new Insets(0, 50, 0, 0));
+		this.topoPainel2.setMargin(this.tfIdVenda, new Insets(0, 90, 0, 0));
+		this.topoPainel2.setMargin(this.lblDataVenda, new Insets(0, 10, 0, 0));
 		
 		this.topoPainel3.setMargin(this.lblProduto, marginRight);
 		this.topoPainel3.setMargin(this.comboProd, marginRight);
+		this.topoPainel3.setMargin(this.paneButtons, marginRight);
 		this.topoPainel3.setMargin(this.lblPesquisarProduto, marginRight);
-		this.topoPainel3.setMargin(this.tfPesquisarProd, marginRight);
+
 		
 	
 		
@@ -174,6 +197,17 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.painelBottom.setMargin(this.tfValorTotal, new Insets(0, 20, 0, 0));
 
 	}
+	
+	public void responsividadeLista() {
+		
+		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProdutoVendido>() {
+			@Override
+			public void changed(ObservableValue<? extends ProdutoVendido> arg0, ProdutoVendido arg1, ProdutoVendido arg2) {
+				prodVend = arg2;
+			}
+		});
+	}
+
 	
 	public void mudandoEstilo() {
 		this.lblProduto.setFont(new Font(20));
@@ -189,14 +223,116 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		//this.btnAdicionar.setPrefWidth(20);
 		this.btnRemoverQtd.setMaxWidth(30);
 	}
+
 	
+	public void adicionarEventos() {
+		this.btnAdicionarProduto.addEventHandler(ActionEvent.ANY, this);
+		this.btnRemoverProduto.addEventHandler(ActionEvent.ANY, this);
+		this.btnAdicionarQtd.addEventHandler(ActionEvent.ANY, this);
+		this.btnRemoverQtd.addEventFilter(ActionEvent.ANY, this);
+	}
 	
-	@Override
-	public void handle(ActionEvent event) {
+	public void incrementarQuantidade() {
 		
+		try {
+			if(Integer.parseInt(this.tfQtdVendida.getText()) >= 0) {
+				int valor = Integer.parseInt(this.tfQtdVendida.getText()) + 1;
+				this.tfQtdVendida.setText(""+valor);
+			}else {
+				JOptionPane.showMessageDialog(null, "Você não pode vender quantidades negativas");
+				this.tfQtdVendida.setText("0");
+			}
+		} catch (NumberFormatException e) {
+			if(this.tfQtdVendida.getText().equals("")){
+				this.tfQtdVendida.setText(""+1);
+			}else {
+				JOptionPane.showMessageDialog(null, "Você deve digitar um valor numerico");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public void decrementarQuantidade() {
+		
+		try {
+			if (Integer.parseInt(this.tfQtdVendida.getText()) > 0){
+				int valor = Integer.parseInt(this.tfQtdVendida.getText()) - 1;
+				this.tfQtdVendida.setText(""+valor);
+			}else {
+				JOptionPane.showMessageDialog(null, "Você não pode vender quantidades negativas");
+				this.tfQtdVendida.setText("0");
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	
 	}
 
+	
+	@Override
+	public void handle(ActionEvent e) {
+		if(e.getTarget() == btnAdicionarProduto) {
+			adicionarProduto();
+			System.out.println("passei aqui");
+		}
+		if(e.getTarget() == btnRemoverProduto) {
+			removerProduto();
+		}
+		if(e.getTarget() == btnRealizarVenda) {
+			Venda v = telaParaVenda();
+			
+		}
+		if(e.getTarget() == btnAdicionarQtd) {
+			if(comboProd.getValue() != null) {
+				incrementarQuantidade();
+			}
+		}
+		if(e.getTarget() == btnRemoverQtd) {
+			if(comboProd.getValue() != null) {
+				decrementarQuantidade();
+			}
+		}
+		if(e.getTarget() == btnPesquisarProduto) {
+			
+		}
+	}
+	
+	public void adicionarProduto() {
+		
+			if(!this.tfQtdVendida.getText().equals("")) {
+				ProdutoVendido pv = new ProdutoVendido();
+				pv.setIdProduto(cpv.getProximoId());
+				pv.setProduto(comboProd.getValue());
+				pv.setQuantidade(Integer.parseInt(this.tfQtdVendida.getText()));
+				cpv.adicionar(pv);
+			}else {
+				JOptionPane.showMessageDialog(null, "Você não pode adicionar um produto sem inserir sua quantidade");
+			}
+	
+	}
+	
+	public Venda telaParaVenda() {
+		Venda v = new Venda();
+		if(cpv.getListaProd() != null) {
+			v.setId(Integer.parseInt(this.tfIdVenda.getText()));
+			v.setDataVenda(this.tfDataVenda.getText());
+			v.setListaLoteProduto(cpv.getListaProd());
+			v.setQtdVenda(Integer.parseInt(this.tfQtdVendida.getText()));
+			v.setValorTotal(Double.parseDouble(this.tfValorTotal.getText()));
+		}
+		return v;
+	}
+	
+	public void removerProduto() {
+		if(this.prodVend != null) {
+			cpv.remover(prodVend);
+			this.prodVend = null;
+		}
+	}
 
+	//public void remove
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -222,16 +358,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		
 	}
 	
-	public Venda telaParaVenda() {
-		Venda v = new Venda();
-		v.setId(Integer.parseInt(this.tfIdVenda.getText()));
-		v.setDataVenda(this.tfDataVenda.getText());
-		v.setListaLoteProduto(cpv.getListaProd());
-		v.setQtdVenda(Integer.parseInt(this.tfQtdVendida.getText()));
-		v.setValorTotal(Double.parseDouble(this.tfValorTotal.getText()));
-		return v;
-	}
-	
+
 
 	public void adicionandoProdutosTeste() {
 		Produto p1= new Produto();
@@ -242,34 +369,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		p1.setQtdMin(2);
 		p1.setQtdTempoVida(5);
 		p1.setPreco(100);
-		CProduto.inserirProduto(p1);
-		Produto p2= new Produto();
-		p2.setId(2);
-		p2.setNome("Helio Pinto2");
-		p2.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
-		p2.setQtdMax(12);
-		p2.setQtdMin(2);
-		p2.setQtdTempoVida(5);
-		p2.setPreco(50);
-		CProduto.inserirProduto(p2);
-		Produto p3= new Produto();
-		p3.setId(1);
-		p3.setNome("Helio Pinto");
-		p3.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
-		p3.setQtdMax(12);
-		p3.setQtdMin(2);
-		p3.setQtdTempoVida(5);
-		p3.setPreco(400);
-		CProduto.inserirProduto(p3);
-		Produto p4= new Produto();
-		p4.setId(2);
-		p4.setNome("Helio Pinto2");
-		p4.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
-		p4.setQtdMax(12);
-		p4.setQtdMin(2);
-		p4.setQtdTempoVida(5);
-		p4.setPreco(500);
-		CProduto.inserirProduto(p4);
+		cProduto.inserirProduto(p1);
 	}
 
 }
