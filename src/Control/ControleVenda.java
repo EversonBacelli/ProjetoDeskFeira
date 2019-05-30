@@ -4,19 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.LoteProduto;
+import Model.Produto;
 import Model.Venda;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ControleVenda {
+	int id_venda = 0;
 	
+	private ObservableList<Venda> listaProd = FXCollections.observableArrayList();	
 	
+	public void realizarVenda(Venda v) {
+		this.listaProd.add(v);
+	}
 	
-	
-	public void realizarVenda() {
-		
+	public void removerVenda(Venda v) {
+		this.listaProd.remove(v);
 	}
 	
 	public boolean validarVenda() {
 		return false;
+	}
+	
+	public int proximoId() {
+		return this.id_venda++;
 	}
 	
 //	public void realizarVenda(Venda venda) {

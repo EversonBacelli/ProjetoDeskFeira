@@ -30,4 +30,12 @@ public class ControleProdutoVendido {
 	public void setListaProd(ObservableList<ProdutoVendido> listaProd) {
 		this.listaProd = listaProd;
 	}
+	
+	public double calcularValorTotal() {
+		double valorTotal = 0;
+		for(ProdutoVendido p : this.listaProd) {
+			valorTotal += p.getValorTortal();
+		}
+		return valorTotal;
+	}
 }

@@ -229,11 +229,11 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.btnAdicionarProduto.addEventHandler(ActionEvent.ANY, this);
 		this.btnRemoverProduto.addEventHandler(ActionEvent.ANY, this);
 		this.btnAdicionarQtd.addEventHandler(ActionEvent.ANY, this);
-		this.btnRemoverQtd.addEventFilter(ActionEvent.ANY, this);
+		this.btnRemoverQtd.addEventHandler(ActionEvent.ANY, this);
+		this.btnRealizarVenda.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	public void incrementarQuantidade() {
-		
 		try {
 			if(Integer.parseInt(this.tfQtdVendida.getText()) >= 0) {
 				int valor = Integer.parseInt(this.tfQtdVendida.getText()) + 1;
@@ -264,7 +264,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 				this.tfQtdVendida.setText("0");
 			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Você deve digitar um valor numerico");
 			e.printStackTrace();
 		} 
 	
@@ -275,13 +275,18 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent e) {
 		if(e.getTarget() == btnAdicionarProduto) {
 			adicionarProduto();
+			if(!this.tfQtdVendida.getText().equals("") && this.comboProd.getValue() != null) {
+				this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
+			}
 			System.out.println("passei aqui");
 		}
 		if(e.getTarget() == btnRemoverProduto) {
 			removerProduto();
+			this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
 		}
 		if(e.getTarget() == btnRealizarVenda) {
 			Venda v = telaParaVenda();
+			this.cVenda.realizarVenda(v);
 			
 		}
 		if(e.getTarget() == btnAdicionarQtd) {
@@ -295,22 +300,26 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			}
 		}
 		if(e.getTarget() == btnPesquisarProduto) {
-			
+			pesquisarProduto();
+		}
+	}
+	
+	public void removerProduto() {
+		if(this.prodVend != null) {
+			cpv.remover(prodVend);
 		}
 	}
 	
 	public void adicionarProduto() {
-		
-			if(!this.tfQtdVendida.getText().equals("")) {
-				ProdutoVendido pv = new ProdutoVendido();
-				pv.setIdProduto(cpv.getProximoId());
-				pv.setProduto(comboProd.getValue());
-				pv.setQuantidade(Integer.parseInt(this.tfQtdVendida.getText()));
-				cpv.adicionar(pv);
-			}else {
-				JOptionPane.showMessageDialog(null, "Você não pode adicionar um produto sem inserir sua quantidade");
-			}
-	
+		if(!this.tfQtdVendida.getText().equals("") && this.comboProd.getValue() != null) {
+			ProdutoVendido pv = new ProdutoVendido();
+			pv.setIdProduto(cpv.getProximoId());
+			pv.setProduto(comboProd.getValue());
+			pv.setQuantidade(Integer.parseInt(this.tfQtdVendida.getText()));
+			cpv.adicionar(pv);
+		}else {
+			JOptionPane.showMessageDialog(null, "Você não pode adicionar um produto sem inserir sua quantidade");
+		}
 	}
 	
 	public Venda telaParaVenda() {
@@ -325,10 +334,14 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		return v;
 	}
 	
-	public void removerProduto() {
-		if(this.prodVend != null) {
-			cpv.remover(prodVend);
-			this.prodVend = null;
+	public void pesquisarProduto() {
+		if(!this.tfPesquisarProd.getText().equals("")) {
+			Produto p  = new Produto();
+			p.setNome(this.tfPesquisarProd.getText());
+			if(cProduto.produtoExiste(p)) {
+				p = cProduto.pesquisarProdutoNome(p);
+				
+			}
 		}
 	}
 
@@ -342,15 +355,15 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		
 		TableColumn<ProdutoVendido, String> colunaNome = new TableColumn<>("Nome");
 		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
-		colunaNome.setPrefWidth(240);
+		colunaNome.setPrefWidth(260);
 
 		TableColumn<ProdutoVendido, Number> colunaQuantidade = new TableColumn<>("Quantidade");
 		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
-		colunaQuantidade.setPrefWidth(240);
+		colunaQuantidade.setPrefWidth(260);
 		
 		TableColumn<ProdutoVendido, Number> colunaPreco = new TableColumn<>("Preco");
 		colunaPreco.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getValorTortal()));
-		colunaPreco.setPrefWidth(250);
+		colunaPreco.setPrefWidth(260);
 		
 		table.getColumns().addAll(colunaNome, colunaQuantidade, colunaPreco);
 
