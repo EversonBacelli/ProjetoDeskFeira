@@ -36,7 +36,6 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		stageAux = telaCadastro;
 		// Elementos de Estrutura
 		pane = new GridPane();
-		// -------------------------------------
 
 		// Elementos da tela
 		lblLogin = new Label(" LOGIN ");
