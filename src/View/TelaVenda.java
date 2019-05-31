@@ -43,7 +43,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private VBox topoPainel = new VBox();
 	private VBox painelCentral = new VBox();
@@ -91,7 +90,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		cProduto.getListaProd();
+		//cProduto.getListaProd();
 		ProdutoVenda = comboProd.getItems();
 		
 		this.tfIdVenda.setText(Integer.toString(this.cVenda.proximoId()));
@@ -162,7 +161,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.painelPrincipal.setBottom(this.painelBottom);
 
 		
-		
 		this.painelCentral.getChildren().add(table);
 		this.painelCentral.getChildren().add(this.painelBottom);
 
@@ -186,18 +184,18 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel3.add(this.btnPesquisarProduto, 7, 0);
 
 
-		
 		this.topoPainel4.add(this.btnAdicionarProduto, 1, 0);
 		this.topoPainel4.add(this.btnRemoverProduto, 2, 0);
 
+		
 		this.painelBottom.getChildren().add(this.lblValorTotal);
 		this.painelBottom.getChildren().add(this.tfValorTotal);
 		//this.painelBottom.getChildren().add(this.paneButtons);
 		this.painelBottom.getChildren().add(this.btnRealizarVenda);
-//		
+        //		
 		this.paneButtons.add(this.btnAdicionarQtd, 0, 0);
 		this.paneButtons.add(this.btnRemoverQtd, 1, 0);
-//	
+        //	
 	}
 	
 	public void adicionandoMargins() {
@@ -335,8 +333,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.tfValorTotal.clear();
 	}
 
-
-	
 	public void pesquisarProduto() {
 		if(!this.tfPesquisarProd.getText().equals("")) {
 			Produto p  = new Produto();

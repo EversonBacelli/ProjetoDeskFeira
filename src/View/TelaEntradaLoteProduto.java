@@ -12,7 +12,11 @@ import Control.ControleDeLoteProduto;
 import Control.ControleProduto;
 import Model.LoteProduto;
 import Model.Produto;
+import Model.ProdutoVendido;
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyDoubleWrapper;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,11 +26,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -38,6 +46,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	// Objetos que Fazem parte do Produto
 	private Label lblID;
+	
 	private TextField txtID;
 	//
 	private Label lblNome;
@@ -45,6 +54,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	//
 	private Label lblDescricao;
 	private TextArea txtDescricao;
+	//
+	private TableView<LoteProduto> table = new TableView<>();
 	// ----------------------------------
 	// Objetos que fazem parte do Lote Produto
 	private Label lblQtdMax;
@@ -73,7 +84,9 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	// Estrutura
 	private GridPane pane;
-	private TilePane tpane;
+	private BorderPane panePrincipal;
+	private GridPane topo;
+	private VBox paneRight;
 	
 	public static void main(String[] args) 
 	{
@@ -84,16 +97,17 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	public void start(Stage tela) throws Exception {
 
 		iniciarObjetos();
-		inserirObjetosTela(pane, tpane);
+		inserirObjetosTela();
 		editarTamanhoTXT();
 		adicionandoProdutosTeste();
 		marginPaine();
 		adicionandoEstiloElementos();
-		
+		definirColunas();
+				
 		ObservableList<Produto> data = comboNome.getItems();	
 		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
 		
-		Scene scn = new Scene(pane, 1000, 563);
+		Scene scn = new Scene(panePrincipal, 1000, 563);
 		
 		pane.addEventFilter(ActionEvent.ANY, this);
 
@@ -147,33 +161,33 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	// --------------- METODOS  --------------------//
 
 	private void marginPaine() {
-		Insets marginTop = new Insets(20, 20, 20, 150);
-		Insets margin = new Insets(20, 20, 20, 20);
-		Insets marginBot = new Insets(0, 0, 250,300);
+		Insets marginPane = new Insets(0, 20, 20, 20);
+		Insets margin = new Insets(20, 20, 60, 20);
+		Insets marginRight = new Insets(0, 120, 40,20);
 		
-		pane.setMargin(lblNome, margin);
-		pane.setMargin(comboNome, margin);
-		pane.setMargin(lblID, margin);
-		pane.setMargin(txtID, margin);
-		pane.setMargin(lblDescricao, margin);
-		pane.setMargin(txtDescricao, margin);
-		pane.setMargin(lblQtdMax, margin);
-		pane.setMargin(txtQtdMax, margin);
-		pane.setMargin(lblQtdMin, margin);
-		pane.setMargin(txtQtdMin, margin);
-		pane.setMargin(lblPreco, margin);
-		pane.setMargin(txtPreco, margin);
-		pane.setMargin(lblTempoVida, margin);
-		pane.setMargin(txtTempoVida, margin);
-		pane.setMargin(lblQtdDisponivel, margin);
-		pane.setMargin(txtQtdDisponivel, margin);
-		pane.setMargin(lbldataEntrada, margin);
-		pane.setMargin(txtdataEntrada, margin);
-		pane.setMargin(lblvalidade, margin);
-		pane.setMargin(txtvalidade, margin);
-		//pane.setMargin(cadastrar, margin);
-		
+		topo.setMargin(lblNome, margin);
+		topo.setMargin(comboNome, margin);
+		topo.setMargin(lblID, margin);
+		topo.setMargin(txtID, margin);
+		topo.setMargin(lblDescricao, margin);
+		topo.setMargin(txtDescricao, margin);
+		pane.setMargin(lblQtdMax, marginPane);
+		pane.setMargin(txtQtdMax, marginPane);
+		pane.setMargin(lblQtdMin, marginPane);
+		pane.setMargin(txtQtdMin, marginPane);
+		pane.setMargin(lblPreco, marginPane);
+		pane.setMargin(txtPreco, marginPane);
+		pane.setMargin(lblTempoVida, marginPane);
+		pane.setMargin(txtTempoVida, marginPane);
+		pane.setMargin(lblQtdDisponivel, marginPane);
+		pane.setMargin(txtQtdDisponivel, marginPane);
+		pane.setMargin(lbldataEntrada, marginPane);
+		pane.setMargin(txtdataEntrada, marginPane);
+		pane.setMargin(lblvalidade, marginPane);
+		pane.setMargin(txtvalidade, marginPane);
+		paneRight.setMargin(table, marginRight);
 	}
+	
 	public void telaParaLoteProduto() {
 		loteProduto.setProduto(p);
 		loteProduto.setId(Integer.parseInt(txtID.getText()));
@@ -212,14 +226,18 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		//cadastrar.setFont(new Font(20));
 	}
 	
-	private void inserirObjetosTela(GridPane pane, TilePane tpane) 
+	private void inserirObjetosTela() 
 	{
-		pane.add(lblNome           , 0, 0);
-		pane.add(comboNome           , 1, 0);
-		pane.add(lblID             , 2, 0);
-		pane.add(txtID             , 3, 0);
-		pane.add(lblDescricao      , 0, 2);
-		pane.add(txtDescricao      , 1, 2);
+		// Objetos do Topo
+		topo.add(lblID             , 0, 0);
+		topo.add(txtID             , 1, 0);
+		topo.add(lblNome           ,2, 0 );
+		topo.add(comboNome         , 3, 0);
+		topo.add(lblDescricao      , 4, 0);
+		topo.add(txtDescricao      , 5, 0);
+		//---------------------------------
+		
+		//Objetos da Direita
 		pane.add(lblQtdMax         , 0, 3);
 		pane.add(txtQtdMax         , 1, 3);
 		pane.add(lblQtdMin         , 2, 3);
@@ -235,6 +253,15 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.add(lblvalidade       , 0, 8);
 		pane.add(txtvalidade       , 1, 8);
 		pane.add(cadastrar         , 2, 9);
+		//---------------------------------
+		
+		// Obsjeto da Direita
+		paneRight.getChildren().add(table);
+		
+		// inserir objetos na tela
+		panePrincipal.setTop(topo);
+		panePrincipal.setLeft(pane);
+		panePrincipal.setRight(paneRight);
 	}
 	
 	
@@ -255,7 +282,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private void iniciarObjetos() {
 		//paineis
 		pane = new GridPane();
-		tpane = new TilePane();
+		panePrincipal = new BorderPane();
+		topo = new GridPane();
+		paneRight = new VBox();
+		
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
 		comboNome = new ComboBox<Produto>();
@@ -374,6 +404,28 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 					limparCampos();
 				}
 			}
+	}
+	
+	public void definirColunas() {
+		
+		TableColumn<LoteProduto, String> colunaNome = new TableColumn<>("Nome");
+		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
+		colunaNome.setPrefWidth(250);
+
+		TableColumn<LoteProduto, Number> colunaQuantidade = new TableColumn<>("Quantidade");
+		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
+		colunaQuantidade.setPrefWidth(90);
+		
+		/*
+		TableColumn<LoteProduto, Number> colunaPreco = new TableColumn<>("Preco");
+		colunaPreco.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getValorTortal()));
+		colunaPreco.setPrefWidth(80);
+		*/
+		
+		table.getColumns().addAll(colunaNome, colunaQuantidade);
+
+		//table.setItems(cpv.getListaProd());
+	
 	}
 	
 }
