@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Perda {
          List<LoteProduto> listPerda = new ArrayList();
-         Perda perda;
+
          int qtdPerda;
          String data;
          
