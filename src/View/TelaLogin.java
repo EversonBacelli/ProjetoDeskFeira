@@ -1,7 +1,5 @@
 package View;
 
-
-
 import javax.swing.JOptionPane;
 
 import javafx.application.Application;
@@ -19,8 +17,9 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TelaLogin extends 	Application implements EventHandler<ActionEvent>{
-	
+public class TelaLogin extends Application implements EventHandler<ActionEvent> {
+
+	static Stage stageAux;
 	GridPane pane;
 	Label lblLogin;
 	TextField txtLogin;
@@ -30,43 +29,41 @@ public class TelaLogin extends 	Application implements EventHandler<ActionEvent>
 	Button btnInsetirEstoque;
 	Button btnRealizarVenda;
 	Button btnConsultarRelatorio;
-	
-	
+
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
-	
-	
+
 	@Override
-	public void start(Stage telaCadastro) throws Exception 
-	{
+	public void start(Stage telaCadastro) throws Exception {
+		stageAux = telaCadastro;
 		// Elementos de Estrutura
 		pane = new GridPane();
-		//-------------------------------------
-		
+		// -------------------------------------
+
 		// Elementos da tela
-		lblLogin   =  new Label(" LOGIN ");
-		txtLogin  =  new TextField("");
-		
+		lblLogin = new Label(" LOGIN ");
+		txtLogin = new TextField("");
+
 		lblSenha = new Label(" SENHA ");
 		txtSenha = new TextField("");
-		
+
 		btnEntrar = new Button(" ENTRAR ");
-		btnInsetirEstoque = new Button     ("  -- INSERIR ESTOQUE --");
+		btnInsetirEstoque = new Button("  -- INSERIR ESTOQUE --");
 		btnInsetirEstoque.setVisible(false);
-		btnRealizarVenda = new Button      ("  --  INSERIR VENDA -- ");
+		btnRealizarVenda = new Button("  --  INSERIR VENDA -- ");
 		btnRealizarVenda.setVisible(false);
-		btnConsultarRelatorio = new Button (" -CONSULTAR RELATÓRIO -");
+		btnConsultarRelatorio = new Button(" -CONSULTAR RELATÓRIO -");
 		btnConsultarRelatorio.setVisible(false);
 		// -----------------------------------------------------------
-		
+
 		// Inserindo elementos
 		pane.add(lblLogin, 0, 0);
 		pane.add(lblSenha, 0, 2);
-		
+
 		pane.add(txtLogin, 2, 0);
 		pane.add(txtSenha, 2, 2);
-		
+
 		pane.add(btnEntrar, 2, 8);
 		pane.add(btnInsetirEstoque, 4, 0);
 		pane.add(btnRealizarVenda, 4, 2);
@@ -79,59 +76,49 @@ public class TelaLogin extends 	Application implements EventHandler<ActionEvent>
 		Scene scn = new Scene(pane, 1000, 563);
 		telaCadastro.setTitle("                                              TELA DE CADASTRO DE FUNCIONARIO  ");
 		telaCadastro.setScene(scn);
-		telaCadastro.show();	
+		telaCadastro.show();
 	}
-	
-	
+
 	@Override
 	public void handle(ActionEvent arg0) {
-		if(verificarCampos()) 
-		{
-			btnInsetirEstoque.setVisible(true);
-			btnRealizarVenda.setVisible(true);
-			btnConsultarRelatorio.setVisible(true);
-			limparCampos();
-			ocultarCampos();
-		}
+		verificarCampos();
 	}
-	
-	
-	boolean verificarCampos() 
-	{
-		if(txtLogin.getText().equals("")) 
-		{
+
+	public void verificarCampos() {
+		if (txtLogin.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Insira o Login");
-			return false;
-		} else 
-		{
-			if(txtSenha.getText().equals("")) 
-			{
-				JOptionPane.showMessageDialog(null, "Insira a Senha");
-				return false;
-			} else {return true;}
+		} else if (txtSenha.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Insira a Senha");
+		} else {
+			if (txtLogin.getText().equals("adm") && (txtSenha.getText().equals("adm"))) {
+				TelaProduto tprod = new TelaProduto();
+				try {
+					tprod.start(stageAux);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
-	
-	void limparCampos() 
-	{
+
+	void limparCampos() {
 		txtSenha.setText("");
 		txtLogin.setText("");
 	}
-	
-	void ocultarCampos() 
-	{
+
+	void ocultarCampos() {
 		lblLogin.setVisible(false);
 		lblSenha.setVisible(false);
 		txtLogin.setVisible(false);
 		txtSenha.setVisible(false);
 		btnEntrar.setVisible(false);
 	}
-	
-	// Estilos dos Objetos  ------------------------------------------
+
+	// Estilos dos Objetos ------------------------------------------
 	private void marginPaine() {
 		Insets marginTop = new Insets(50, 30, 0, 0);
 		Insets margin = new Insets(20, 20, 20, 40);
-		Insets marginBot = new Insets(0, 0, 20,20);
+		Insets marginBot = new Insets(0, 0, 20, 20);
 		Insets margin1 = new Insets(50, 30, 0, 60);
 		//
 		pane.setMargin(lblLogin, margin);
@@ -157,7 +144,7 @@ public class TelaLogin extends 	Application implements EventHandler<ActionEvent>
 		pane.setMargin(btnConsultarRelatorio, margin);
 		pane.setMargin(btnConsultarRelatorio, margin1);
 	}
-	
+
 	public void adicionandoEstiloElementos() {
 
 		lblLogin.setFont(new Font(15));
@@ -167,12 +154,9 @@ public class TelaLogin extends 	Application implements EventHandler<ActionEvent>
 		btnRealizarVenda.setFont(new Font(18));
 		btnConsultarRelatorio.setFont(new Font(18));
 
-		
 		lblLogin.setStyle("-fx-font-weight: bold");
 		lblSenha.setStyle("-fx-font-weight: bold");
 		btnEntrar.setStyle("-fx-font-weight: bold");
 	}
-
-
 
 }
