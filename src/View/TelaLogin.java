@@ -19,7 +19,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class Principal extends 	Application{
+public class TelaLogin extends 	Application implements EventHandler<ActionEvent>{
 	
 	GridPane pane;
 	Label lblLogin;
@@ -74,31 +74,24 @@ public class Principal extends 	Application{
 		// -------------------------------------
 		marginPaine();
 		adicionandoEstiloElementos();
-		
-		EventHandler<ActionEvent> manipulador = new ManipuladorMouse();
-		pane.addEventFilter(ActionEvent.ACTION, manipulador);
-				
-		Scene scn = new Scene(pane, 800, 400);
+
+		pane.addEventFilter(ActionEvent.ACTION, this);
+		Scene scn = new Scene(pane, 1000, 563);
 		telaCadastro.setTitle("                                              TELA DE CADASTRO DE FUNCIONARIO  ");
 		telaCadastro.setScene(scn);
 		telaCadastro.show();	
 	}
 	
 	
-	public class ManipuladorMouse implements EventHandler <ActionEvent>
-	{
-
-		@Override
-		public void handle(ActionEvent arg0) 
-		{			
-			if(verificarCampos()) 
-			{
-				btnInsetirEstoque.setVisible(true);
-				btnRealizarVenda.setVisible(true);
-				btnConsultarRelatorio.setVisible(true);
-				limparCampos();
-				ocultarCampos();
-			}
+	@Override
+	public void handle(ActionEvent arg0) {
+		if(verificarCampos()) 
+		{
+			btnInsetirEstoque.setVisible(true);
+			btnRealizarVenda.setVisible(true);
+			btnConsultarRelatorio.setVisible(true);
+			limparCampos();
+			ocultarCampos();
 		}
 	}
 	
@@ -179,4 +172,7 @@ public class Principal extends 	Application{
 		lblSenha.setStyle("-fx-font-weight: bold");
 		btnEntrar.setStyle("-fx-font-weight: bold");
 	}
+
+
+
 }
