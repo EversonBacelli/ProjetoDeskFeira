@@ -27,8 +27,9 @@ public class ControleVenda {
 	}
 	
 	public int proximoId() {
-		return this.id_venda++;
+		return ++this.id_venda;
 	}
+	
 	
 //	public void realizarVenda(Venda venda) {
 //		// criando o metodo para usar a alteração da quantidade dentro do

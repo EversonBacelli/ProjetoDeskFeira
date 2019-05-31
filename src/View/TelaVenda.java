@@ -45,16 +45,6 @@ import javafx.stage.Stage;
 
 
 public class TelaVenda extends Application implements EventHandler<ActionEvent>{
-	private ControleProduto cProduto = new ControleProduto();
-	private ControleVenda cVenda = new ControleVenda();
-	private ObservableList<Produto> ProdutoVenda;
-	
-	private GridPane topoPainel2 = new GridPane();
-	private GridPane topoPainel3 = new GridPane();
-	private GridPane topoPainel4 = new GridPane();
-	private GridPane paneButtons = new GridPane();
-	
-	
 	private VBox topoPainel = new VBox();
 	private VBox painelCentral = new VBox();
 	private TilePane painelBottom = new TilePane();
@@ -63,6 +53,11 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private Scene scn = new Scene(painelPrincipal, 1000, 563);
 	private ControleProdutoVendido cpv = new ControleProdutoVendido();
 	private ComboBox<Produto> comboProd = new ComboBox<Produto>();
+	
+	private GridPane topoPainel2 = new GridPane();
+	private GridPane topoPainel3 = new GridPane();
+	private GridPane topoPainel4 = new GridPane();
+	private GridPane paneButtons = new GridPane();
 	
 	private Label lblIdVenda = new Label("Id venda");
 	private Label lblQtdVendida = new Label("Qtd");
@@ -85,12 +80,21 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private TextField tfDataVenda = new TextField();
 	private TextField tfPesquisarProd = new TextField();
 	
+	private ControleProduto cProduto = new ControleProduto();
+	private ControleVenda cVenda = new ControleVenda();
+	private ObservableList<Produto> ProdutoVenda;
 	private ProdutoVendido prodVend;
 
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		cProduto.getListaProd();
 		ProdutoVenda = comboProd.getItems();
+		
+		this.tfIdVenda.setText(Integer.toString(this.cVenda.proximoId()));
 		
 		adicionandoProdutosTeste(); 
 		
@@ -110,6 +114,39 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		stage.setScene(scn);
 		stage.setTitle("Venda");
 		stage.show();
+	}
+
+	
+	@Override
+	public void handle(ActionEvent e) {
+		if(e.getTarget() == btnAdicionarProduto) {
+			adicionarProduto();
+			if(!this.tfQtdVendida.getText().equals("") && this.comboProd.getValue() != null) {
+				this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
+			}
+		}
+		else if(e.getTarget() == btnRemoverProduto) {
+			removerProduto();
+			this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
+		}
+		else if(e.getTarget() == btnAdicionarQtd) {
+			if(comboProd.getValue() != null) {
+				incrementarQuantidade();
+			}
+		}
+		else if(e.getTarget() == btnRemoverQtd) {
+			if(comboProd.getValue() != null) {
+				decrementarQuantidade();
+			}
+		}
+		else if(e.getTarget() == btnPesquisarProduto) {
+			pesquisarProduto();
+		}
+		else if(e.getTarget() == btnRealizarVenda) {
+			Venda v = telaParaVenda();
+			this.cVenda.realizarVenda(v);
+			limparCampos();
+		}
 	}
 	
 	public void adicionandoEstiloVenda() {
@@ -188,24 +225,10 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel3.setMargin(this.paneButtons, marginRight);
 		this.topoPainel3.setMargin(this.lblPesquisarProduto, marginRight);
 
-		
-	
-		
-		
+
 		this.painelCentral.setMargin(this.painelBottom, new Insets(10, 0, 0, 0));
-		
 		this.painelBottom.setMargin(this.tfValorTotal, new Insets(0, 20, 0, 0));
 
-	}
-	
-	public void responsividadeLista() {
-		
-		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProdutoVendido>() {
-			@Override
-			public void changed(ObservableValue<? extends ProdutoVendido> arg0, ProdutoVendido arg1, ProdutoVendido arg2) {
-				prodVend = arg2;
-			}
-		});
 	}
 
 	
@@ -231,6 +254,20 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.btnAdicionarQtd.addEventHandler(ActionEvent.ANY, this);
 		this.btnRemoverQtd.addEventHandler(ActionEvent.ANY, this);
 		this.btnRealizarVenda.addEventHandler(ActionEvent.ANY, this);
+		this.btnPesquisarProduto.addEventHandler(ActionEvent.ANY, this);
+	}
+	
+	public Venda telaParaVenda() {
+		Venda v = new Venda();
+		if(cpv.getListaProd() != null) {
+			v.setId(Integer.parseInt(this.tfIdVenda.getText()));
+			v.setDataVenda(this.tfDataVenda.getText());
+			v.setListaLoteProduto(cpv.getListaProd());
+			v.setQtdVenda(Integer.parseInt(this.tfQtdVendida.getText()));
+			v.setValorTotal(Double.parseDouble(this.tfValorTotal.getText()));
+			JOptionPane.showMessageDialog(null, "Venda realizada com sucesso");
+		}
+		return v;
 	}
 	
 	public void incrementarQuantidade() {
@@ -238,20 +275,16 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			if(Integer.parseInt(this.tfQtdVendida.getText()) >= 0) {
 				int valor = Integer.parseInt(this.tfQtdVendida.getText()) + 1;
 				this.tfQtdVendida.setText(""+valor);
-			}else {
-				JOptionPane.showMessageDialog(null, "Você não pode vender quantidades negativas");
-				this.tfQtdVendida.setText("0");
 			}
 		} catch (NumberFormatException e) {
 			if(this.tfQtdVendida.getText().equals("")){
 				this.tfQtdVendida.setText(""+1);
 			}else {
 				JOptionPane.showMessageDialog(null, "Você deve digitar um valor numerico");
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
-	
 	
 	public void decrementarQuantidade() {
 		
@@ -259,54 +292,24 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			if (Integer.parseInt(this.tfQtdVendida.getText()) > 0){
 				int valor = Integer.parseInt(this.tfQtdVendida.getText()) - 1;
 				this.tfQtdVendida.setText(""+valor);
-			}else {
-				JOptionPane.showMessageDialog(null, "Você não pode vender quantidades negativas");
-				this.tfQtdVendida.setText("0");
 			}
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Você deve digitar um valor numerico");
-			e.printStackTrace();
+			//e.printStackTrace();
 		} 
 	
-	}
-
-	
-	@Override
-	public void handle(ActionEvent e) {
-		if(e.getTarget() == btnAdicionarProduto) {
-			adicionarProduto();
-			if(!this.tfQtdVendida.getText().equals("") && this.comboProd.getValue() != null) {
-				this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
-			}
-			System.out.println("passei aqui");
-		}
-		if(e.getTarget() == btnRemoverProduto) {
-			removerProduto();
-			this.tfValorTotal.setText(Double.toString(cpv.calcularValorTotal()));
-		}
-		if(e.getTarget() == btnRealizarVenda) {
-			Venda v = telaParaVenda();
-			this.cVenda.realizarVenda(v);
-			
-		}
-		if(e.getTarget() == btnAdicionarQtd) {
-			if(comboProd.getValue() != null) {
-				incrementarQuantidade();
-			}
-		}
-		if(e.getTarget() == btnRemoverQtd) {
-			if(comboProd.getValue() != null) {
-				decrementarQuantidade();
-			}
-		}
-		if(e.getTarget() == btnPesquisarProduto) {
-			pesquisarProduto();
-		}
 	}
 	
 	public void removerProduto() {
 		if(this.prodVend != null) {
-			cpv.remover(prodVend);
+			this.cpv.remover(prodVend);
+		}
+		setaObjetoComoNull();
+	}
+	
+	public void setaObjetoComoNull() {
+		if(this.cpv.getListaProd().isEmpty()) {
+			this.prodVend = null;
 		}
 	}
 	
@@ -322,17 +325,17 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		}
 	}
 	
-	public Venda telaParaVenda() {
-		Venda v = new Venda();
-		if(cpv.getListaProd() != null) {
-			v.setId(Integer.parseInt(this.tfIdVenda.getText()));
-			v.setDataVenda(this.tfDataVenda.getText());
-			v.setListaLoteProduto(cpv.getListaProd());
-			v.setQtdVenda(Integer.parseInt(this.tfQtdVendida.getText()));
-			v.setValorTotal(Double.parseDouble(this.tfValorTotal.getText()));
-		}
-		return v;
+	
+	public void limparCampos() {
+		this.table.getItems().clear();
+		this.tfIdVenda.setText(Integer.toString(this.cVenda.proximoId()));
+		this.tfDataVenda.clear();
+		this.tfPesquisarProd.clear();
+		this.tfQtdVendida.clear();
+		this.tfValorTotal.clear();
 	}
+
+
 	
 	public void pesquisarProduto() {
 		if(!this.tfPesquisarProd.getText().equals("")) {
@@ -340,16 +343,35 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			p.setNome(this.tfPesquisarProd.getText());
 			if(cProduto.produtoExiste(p)) {
 				p = cProduto.pesquisarProdutoNome(p);
-				
+				this.comboProd.getSelectionModel().select(p);
 			}
 		}
 	}
-
-	//public void remove
 	
-	public static void main(String[] args) {
-		Application.launch(args);
+	public void adicionandoProdutosTeste() {
+		Produto p1= new Produto();
+		p1.setId(1);
+		p1.setNome("Helio Pinto");
+		p1.setDescricao("Helio Pinto Pequeno");
+		p1.setQtdMax(12);
+		p1.setQtdMin(2);
+		p1.setQtdTempoVida(5);
+		p1.setPreco(100);
+		cProduto.inserirProduto(p1);
 	}
+	
+	
+	public void responsividadeLista() {
+		
+		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProdutoVendido>() {
+			@Override
+			public void changed(ObservableValue<? extends ProdutoVendido> arg0, ProdutoVendido selecaoAntes, ProdutoVendido selecaoDepois) {
+				prodVend = selecaoDepois;
+			}
+		});
+	}
+
+
 	
 	public void definirColunas() {
 		
@@ -371,18 +393,4 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		
 	}
 	
-
-
-	public void adicionandoProdutosTeste() {
-		Produto p1= new Produto();
-		p1.setId(1);
-		p1.setNome("Helio Pinto");
-		p1.setDescricao("Helio Pinto Pequeno");
-		p1.setQtdMax(12);
-		p1.setQtdMin(2);
-		p1.setQtdTempoVida(5);
-		p1.setPreco(100);
-		cProduto.inserirProduto(p1);
-	}
-
 }

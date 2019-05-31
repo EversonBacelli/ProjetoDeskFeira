@@ -20,7 +20,7 @@ public class ControleProdutoVendido {
 	}
 	
 	public int getProximoId() {
-		return this.id++;
+		return ++this.id;
 	}
 	
 	public ObservableList<ProdutoVendido> getListaProd() {
@@ -38,4 +38,6 @@ public class ControleProdutoVendido {
 		}
 		return valorTotal;
 	}
+	
+	
 }

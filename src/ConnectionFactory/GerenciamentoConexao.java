@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class GerenciamentoConexao {
 	
-	private String url = "jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=crudTapioca;namedPipes=true";
+	private String url = "jdbc:jtds:sqlserver://127.0.0.1:1433;DatabaseName=deskfeira;namedPipes=true";
 	private String user = "root";
 	private String password = "";
 	private Connection con;
