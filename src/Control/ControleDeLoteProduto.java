@@ -11,10 +11,11 @@ import Model.LoteProduto;
 import Model.Produto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 
 public class ControleDeLoteProduto {
 
-	Set<LoteProduto> listItem = new HashSet();
+	private ObservableList<LoteProduto> listItem = FXCollections.observableArrayList();
 
 	private ObservableList<LoteProduto> produtoAdicionados = FXCollections.observableArrayList();
 	
@@ -84,6 +85,14 @@ public class ControleDeLoteProduto {
 
 	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
 		this.produtoAdicionados = produtoAdicionados;
+	}
+	
+	public ObservableList<LoteProduto> getListItem() {
+		return listItem;
+	}
+
+	public void setListItem(ObservableList<LoteProduto> listItem) {
+		this.listItem = listItem;
 	}
 
 }

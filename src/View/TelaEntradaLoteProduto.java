@@ -121,8 +121,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	public void adicionandoProdutosTeste() {
 		Produto p1= new Produto();
 		p1.setId(1);
-		p1.setNome("Helio Pinto");
-		p1.setDescricao("Helio Pinto Pequeno");
+		p1.setNome("Banana");
+		p1.setDescricao("Produto amarelo de aproximadamente de 30 gramas");
 		p1.setQtdMax(12);
 		p1.setQtdMin(2);
 		p1.setQtdTempoVida(5);
@@ -130,8 +130,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		controlProd.inserirProduto(p1);
 		Produto p2= new Produto();
 		p2.setId(2);
-		p2.setNome("Helio Pinto2");
-		p2.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p2.setNome("Maça");
+		p2.setDescricao("Fruta vermelha de aparência próxima uma pequena esfera, de aproximadamente de 50 gramas");
 		p2.setQtdMax(12);
 		p2.setQtdMin(2);
 		p2.setQtdTempoVida(5);
@@ -139,8 +139,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		controlProd.inserirProduto(p2);
 		Produto p3= new Produto();
 		p3.setId(1);
-		p3.setNome("Helio Pinto");
-		p3.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p3.setNome("Larajna");
+		p3.setDescricao("Produto Laranja de 100 gramas");
 		p3.setQtdMax(12);
 		p3.setQtdMin(2);
 		p3.setQtdTempoVida(5);
@@ -148,13 +148,39 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		controlProd.inserirProduto(p3);
 		Produto p4= new Produto();
 		p4.setId(2);
-		p4.setNome("Helio Pinto2");
-		p4.setDescricao("Cabra safado, usuário habitual do badoo e do tinder");
+		p4.setNome("Abacaxi");
+		p4.setDescricao("xxxxxxxxxxxxxxxxxxxxxxxx");
 		p4.setQtdMax(12);
 		p4.setQtdMin(2);
 		p4.setQtdTempoVida(5);
 		p4.setPreco(500);
 		controlProd.inserirProduto(p4);
+		
+	
+		LoteProduto lote1 = new LoteProduto();
+		lote1.setDataEntrada("31/05/2019");
+		lote1.setDataValidade("10/06/2019");
+		lote1.setId(1);
+		lote1.setProduto(p1);
+		lote1.setQuantidade(50);
+		ControleLote.inserirLoteProduto(lote1);
+		
+		LoteProduto lote2 = new LoteProduto();
+		lote1.setDataEntrada("31/05/2019");
+		lote1.setDataValidade("10/06/2019");
+		lote1.setId(2);
+		lote1.setProduto(p1);
+		lote1.setQuantidade(50);
+		ControleLote.inserirLoteProduto(lote2);
+		
+		LoteProduto lote3 = new LoteProduto();
+		lote1.setDataEntrada("31/05/2019");
+		lote1.setDataValidade("10/06/2019");
+		lote1.setId(3);
+		lote1.setProduto(p2);
+		lote1.setQuantidade(50);
+		ControleLote.inserirLoteProduto(lote3);
+		
 	}
 	
 
@@ -424,7 +450,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		table.getColumns().addAll(colunaNome, colunaQuantidade);
 
-		//table.setItems(cpv.getListaProd());
+		table.setItems(ControleLote.getListItem());
 	
 	}
 	
