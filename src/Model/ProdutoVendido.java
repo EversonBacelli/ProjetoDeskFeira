@@ -1,16 +1,16 @@
 package Model;
 
 public class ProdutoVendido {
-	private int idProduto;
+	private int idProdutoVendido;
 	private int quantidade;
 	private Produto produto;
 	
 	
 	public int getIdProduto() {
-		return idProduto;
+		return idProdutoVendido;
 	}
 	public void setIdProduto(int idProduto) {
-		this.idProduto = idProduto;
+		this.idProdutoVendido = idProduto;
 	}
 	public int getQuantidade() {
 		return quantidade;
