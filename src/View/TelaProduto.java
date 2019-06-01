@@ -39,6 +39,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private VBox painelTopo = new VBox();
 	private VBox painelLateral = new VBox();
 	private VBox painelCentral = new VBox();
+
 	private FlowPane painelLateral1 = new FlowPane();
 	private FlowPane painelLateral2 = new FlowPane();
 	private FlowPane painelLateral3 = new FlowPane();
@@ -75,6 +76,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Button btnExcluir = new Button("EXCLUIR");
 	
 	private Line linha = new Line();
+	private Line linha2 = new Line();
 	
 	ControleProduto cp = new ControleProduto();
 
@@ -176,6 +178,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelPesquisarElementos.getChildren().add(this.btnPesquisar);
 		
 		this.painelTopo.getChildren().add(img);
+		this.painelTopo.getChildren().add(linha2);
+
 
 	}
 	
@@ -193,7 +197,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	}
 
 	public void adicionandoEstiloElementos() {
-		painelPrincipal.setStyle("-fx-background-color: #9d95d0;");
+		painelPrincipal.setStyle("-fx-background-color: #fd8b06;");
+		//painelLateral.setStyle("-fx-background-color: #064490;");
 		
 		lblId.setFont(new Font(20));
 		lblNome.setFont(new Font(20));
@@ -204,14 +209,21 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		lblPreco.setFont(new Font(20));
 
 		
-		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblDescricao.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
-		lblPreco.setStyle("-fx-font-weight: bold;-fx-text-fill: #000000;");
+		lblId.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblNome.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblDescricao.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblMax.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblMin.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblPreco.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 
+		tfPesquisar.setStyle("-fx-background-radius: 20");
+		tfId.setStyle("-fx-background-radius: 4");
+		tfNome.setStyle("-fx-background-radius: 4");
+		tfMax.setStyle("-fx-background-radius: 4");
+		tfMin.setStyle("-fx-background-radius: 4");
+		tfTempoVida.setStyle("-fx-background-radius: 4");
+		tfPreco.setStyle("-fx-background-radius: 4");
 		
 		btnPesquisar.setFont(new Font(15));
 		btnSalvar.setFont(new Font(15));
@@ -226,9 +238,11 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.tfPreco.setPrefSize(200, 30);
 		this.tfPesquisar.setPrefSize(200, 32);
 		
-		//this.linha.setFill(Paint.valueOf(STYLESHEET_MODENA));
-		this.linha.setStroke(Color.BLACK);
+		this.linha.setStroke(Color.WHITE);
         this.linha.setStrokeWidth(5.0f);
+        
+		this.linha2.setStroke(Color.WHITE);
+        this.linha2.setStrokeWidth(5.0f);
         
 		this.btnExcluir.setPrefWidth(145);
 		this.btnSalvar.setPrefWidth(200);
@@ -236,18 +250,21 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		
 		this.linha.setStartX(0);
 		this.linha.setEndX(530);
+		
+		this.linha2.setStartX(0);
+		this.linha2.setEndX(980);
+		
 	}
 
 	public void adicionandoMarginsPainel() {
 
 		Insets margin = new Insets(20, 20, 20, 20);
 		Insets marginRight = new Insets(0, 50, 0, 0);
-		Insets marginLeft = new Insets(0, 0, 0, 50);
+		Insets marginLeft = new Insets(0, 0, 0, 15);
 		Insets marginBottom = new Insets(0, 0, 20, 0);
 		Insets marginTable = new Insets(40, 40, 40, 40);
 		
         BorderPane.setMargin(this.painelLateral, margin);
-
 		
 		this.painelLateral1.setHgap(140);
 		this.painelLateral2.setHgap(104);
@@ -274,6 +291,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelPrincipal.setMargin(this.painelCentral, margin);
 		
 		this.painelCentral.setMargin(this.table,  marginBottom);
+		
+		this.painelTopo.setMargin(this.linha2, marginLeft);
 
 	}
 
@@ -322,7 +341,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			tfTempoVida.setText(Integer.toString(p.getQtdTempoVida()));
 			tfPreco.setText(Double.toString(p.getPreco()));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -363,17 +381,17 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		
 		TableColumn<Produto, String> colunaDescricao = new TableColumn<>("Descricao");
 		colunaDescricao.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDescricao()));
-		colunaDescricao.setPrefWidth(130);
+		colunaDescricao.setPrefWidth(110);
 
 		TableColumn<Produto, Number> qtdMaxColuna = new TableColumn<>("Qtd Max");
 		qtdMaxColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMax()));
-		qtdMaxColuna.setPrefWidth(65);
+		qtdMaxColuna.setPrefWidth(75);
 		
 		TableColumn<Produto, Number> qtdMinColuna = new TableColumn<>("Qtd Min");
 		qtdMinColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdMin()));
-		qtdMinColuna.setPrefWidth(65);
+		qtdMinColuna.setPrefWidth(75);
 		
-		TableColumn<Produto, Number> tempoDeVidaColuna = new TableColumn<>("Tempo de vida");
+		TableColumn<Produto, Number> tempoDeVidaColuna = new TableColumn<>("T. de Vida");
 		tempoDeVidaColuna.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtdTempoVida()));
 		tempoDeVidaColuna.setPrefWidth(100);
 		
