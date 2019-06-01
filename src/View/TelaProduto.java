@@ -218,7 +218,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		lblTempoVida.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 		lblPreco.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 
-		tfPesquisar.setStyle("-fx-background-radius: 20");
+		tfPesquisar.setStyle("-fx-background-radius: 8");
 		tfId.setStyle("-fx-background-radius: 4");
 		tfNome.setStyle("-fx-background-radius: 4");
 		tfMax.setStyle("-fx-background-radius: 4");
@@ -226,18 +226,22 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tfTempoVida.setStyle("-fx-background-radius: 4");
 		tfPreco.setStyle("-fx-background-radius: 4");
 		
+		this.btnSalvar.setStyle("-fx-background-color: #ffffff");
+		this.btnExcluir.setStyle("-fx-background-color: #ffffff");
+		this.btnPesquisar.setStyle("-fx-background-color: #ffffff");
+		
 		btnPesquisar.setFont(new Font(15));
 		btnSalvar.setFont(new Font(15));
 		btnExcluir.setFont(new Font(15));
 		
-		this.tfId.setPrefSize(200, 30);
-		this.tfNome.setPrefSize(200, 30);
-		this.tfDescricao.setPrefSize(200, 100);
-		this.tfMax.setPrefSize(200, 30);
-		this.tfMin.setPrefSize(200, 30);
-		this.tfTempoVida.setPrefSize(200, 30);
-		this.tfPreco.setPrefSize(200, 30);
-		this.tfPesquisar.setPrefSize(200, 32);
+		this.tfId.setPrefSize(230, 30);
+		this.tfNome.setPrefSize(230, 30);
+		this.tfDescricao.setPrefSize(230, 100);
+		this.tfMax.setPrefSize(230, 30);
+		this.tfMin.setPrefSize(230, 30);
+		this.tfTempoVida.setPrefSize(230, 30);
+		this.tfPreco.setPrefSize(230, 30);
+		this.tfPesquisar.setPrefSize(230, 32);
 		
 		this.linha.setStroke(Color.WHITE);
         this.linha.setStrokeWidth(5.0f);
@@ -246,7 +250,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
         this.linha2.setStrokeWidth(5.0f);
         
 		this.btnExcluir.setPrefWidth(145);
-		this.btnSalvar.setPrefWidth(200);
+		this.btnSalvar.setPrefWidth(230);
 		this.btnPesquisar.setPrefHeight(10);
 		
 		this.linha.setStartX(0);

@@ -1,63 +1,151 @@
 package View;
 
+import Model.TipoUsuario;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TelaCadastroFuncionario extends Application {
+public class TelaCadastroFuncionario extends Application implements EventHandler<ActionEvent>{
 
-	@Override
-	public void start(Stage telaCadastro) throws Exception 
-	{
-		// Esrutura
-		FlowPane pane = new FlowPane();
-		
-		
-		// Objetos da tela
-		Label lblfuncionario     =  new Label ("FUNÇÃO");
-		ComboBox boxFuncionario  =  new ComboBox();
-		//
-		
-		Label lblnome = new Label();
-		TextField txtnome = new TextField();
-		//
-		Label lblID = new Label("ID");
-		TextField txtID = new TextField();
-		
-		//
-		Button btnInserir   = new Button("INSERIR FUNCIONARIO");
-		Button btnPesquisar = new Button("PESQUISAR FUNCIONARIO");
-		Button btnExcluir   = new Button("EXCLUIR FUNCIONARIO");
-		Button btnEditar   = new Button("EDITAR FUNCIONARIO");
-		//
-		// Inserir objetos na tela
-		pane.getChildren().add(lblfuncionario);
-		pane.getChildren().add(boxFuncionario);
-		pane.getChildren().add(lblnome);
-		pane.getChildren().add(txtnome);
-		pane.getChildren().add(lblID);
-		pane.getChildren().add(txtID);
-		pane.getChildren().add(btnInserir);
-		pane.getChildren().add(btnPesquisar);
-		pane.getChildren().add(btnExcluir);
-		pane.getChildren().add(btnEditar);
-		
-		
-		Scene scn = new Scene(pane, 400, 400);
-		
-		telaCadastro.setTitle("TELA DE SAIDA DE ESTOQUE");
-		telaCadastro.setScene(scn);
-		telaCadastro.show();
-	}
+	private Label lblId = new Label("Id");
+	private Label lblNome = new Label("Nome");
+	private Label lblLogin = new Label("Login");
+	private Label lblSenha = new Label("Senha");
+	private Label lblTipoUsuario = new Label("Tipo de Usuario");
+	private Label lblCpf = new Label("CPF");
+	private Label lblRg = new Label("RG");
+	private Label lblEmail = new Label("Email");
 	
-	public static void main(String[] args) 
-	{
+	private TextField tfId = new TextField();
+	private TextField tfNome = new TextField();
+	private TextField tfLogin = new TextField();
+	private TextField tfSenha = new TextField();
+	private TextField tfCpf = new TextField();
+	private TextField tfRg = new TextField();
+	private TextField tfEmail = new TextField();
+	
+	private BorderPane painelPrincipal = new BorderPane();
+	private VBox painelCentral = new VBox();
+	private FlowPane painelCentral1 = new FlowPane();
+	private FlowPane painelCentral2 = new FlowPane();
+	private FlowPane painelCentral3 = new FlowPane();
+	private FlowPane painelCentral4 = new FlowPane();
+	private FlowPane painelCentral5 = new FlowPane();
+	private FlowPane painelBotoes = new FlowPane();
+	
+	private Button botaoSalvar = new Button("Salvar");
+
+
+	
+	private Scene scn = new Scene(painelPrincipal, 1000, 563);
+	
+	private ComboBox<TipoUsuario> comboTipoUsuario = new ComboBox<TipoUsuario>();
+	
+	public static void main(String[] args){
 		Application.launch(args);
 	}
+	
+	@Override
+	public void start(Stage stage) throws Exception{
+		adicionandoElementos();
+		adicionandoMargens();
+		adicionandoEstilos();
+		
+		stage.setTitle("Cadastro de Funcionario");
+		stage.setScene(scn);
+		stage.show();
+	}
+	
+	@Override
+	public void handle(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void adicionandoElementos() {
+		this.painelPrincipal.setCenter(this.painelCentral);
+		
+		this.painelCentral.getChildren().add(this.painelCentral1);
+		this.painelCentral.getChildren().add(this.painelCentral2);
+		this.painelCentral.getChildren().add(this.painelCentral3);
+		this.painelCentral.getChildren().add(this.painelCentral4);
+		this.painelCentral.getChildren().add(this.painelCentral5);
+		this.painelCentral.getChildren().add(this.painelBotoes);
+
+		
+		this.painelCentral1.getChildren().add(this.lblId);
+		this.painelCentral1.getChildren().add(this.tfId);
+		
+		this.painelCentral1.getChildren().add(this.lblNome);
+		this.painelCentral1.getChildren().add(this.tfNome);
+		
+		this.painelCentral2.getChildren().add(this.lblLogin);
+		this.painelCentral2.getChildren().add(this.tfLogin);
+		this.painelCentral2.getChildren().add(this.lblSenha);
+		this.painelCentral2.getChildren().add(this.tfSenha);
+		
+		this.painelCentral3.getChildren().add(this.lblTipoUsuario);
+		this.painelCentral3.getChildren().add(this.comboTipoUsuario);
+		
+		this.painelCentral4.getChildren().add(this.lblCpf);
+		this.painelCentral4.getChildren().add(this.tfCpf);
+		this.painelCentral4.getChildren().add(this.lblRg);
+		this.painelCentral4.getChildren().add(this.tfRg);
+
+		this.painelCentral5.getChildren().add(this.lblEmail);
+		this.painelCentral5.getChildren().add(this.tfEmail);
+		
+		this.painelBotoes.getChildren().add(this.botaoSalvar);
+	}
+	
+	
+	public void adicionandoMargens() {
+		Insets marginPainelCentro = new Insets(100, 0, 0, 130);
+		Insets marginBotaoSalvar = new Insets(0,0,0,260);
+		this.painelCentral1.setHgap(20);
+		this.painelCentral2.setHgap(20);
+		this.painelCentral3.setHgap(20);
+		this.painelCentral4.setHgap(20);
+		this.painelCentral5.setHgap(20);
+		
+		this.painelBotoes.setMargin(this.botaoSalvar, marginBotaoSalvar);
+		
+		this.painelPrincipal.setMargin(this.painelCentral, marginPainelCentro);
+	}
+	
+	public void adicionandoEstilos() {
+		this.lblId.setFont(new Font(30));
+		this.lblNome.setFont(new Font(30));
+		this.lblLogin.setFont(new Font(30));
+		this.lblSenha.setFont(new Font(30));
+		this.lblTipoUsuario.setFont(new Font(30));
+		this.lblCpf.setFont(new Font(30));
+		this.lblRg.setFont(new Font(30));
+		this.lblEmail.setFont(new Font(30));
+		
+		this.tfId.setPrefWidth(50);
+		this.tfNome.setPrefWidth(500);
+		this.tfLogin.setPrefWidth(252);
+		this.tfSenha.setPrefWidth(252);
+		this.comboTipoUsuario.setPrefWidth(490);
+		this.tfCpf.setPrefWidth(285);
+		this.tfRg.setPrefWidth(285);
+		this.tfEmail.setPrefWidth(630);
+		
+		this.botaoSalvar.setPrefHeight(40);
+		this.botaoSalvar.setPrefWidth(200);
+	}
+	
 
 }
