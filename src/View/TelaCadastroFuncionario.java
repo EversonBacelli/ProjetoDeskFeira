@@ -1,7 +1,12 @@
 package View;
 
+import javax.swing.JOptionPane;
+
+import Control.ControleDeFuncionario;
+import Model.Funcionario;
 import Model.TipoUsuario;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -52,6 +57,8 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	
 	private ComboBox<TipoUsuario> comboTipoUsuario = new ComboBox<TipoUsuario>();
 	
+	ControleDeFuncionario cf = new ControleDeFuncionario();
+	
 	public static void main(String[] args){
 		Application.launch(args);
 	}
@@ -61,6 +68,10 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		adicionandoElementos();
 		adicionandoMargens();
 		adicionandoEstilos();
+		adicionandoEventos();
+		
+		comboTipoUsuario.setItems(cf.getListaTipo());
+
 		
 		stage.setTitle("Cadastro de Funcionario");
 		stage.setScene(scn);
@@ -69,10 +80,22 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	
 	@Override
 	public void handle(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(e.getTarget() == botaoSalvar) {
+			Funcionario f = telaParaFuncionario();
+			if(f.getId() != 0) {
+				if(!cf.funcionarioExiste(f)) {
+					cf.inserirFuncionario(f);
+				}else {
+					cf.alterarFuncionario(f);
+				}
+				limparCampos();
+			}else {
+				System.out.println("não foi possivel adicionar esse funcionario");
+			}
+		}
 	}
 
+	
 	public void adicionandoElementos() {
 		this.painelPrincipal.setCenter(this.painelCentral);
 		
@@ -147,5 +170,37 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		this.botaoSalvar.setPrefWidth(200);
 	}
 	
-
+	public void adicionandoEventos() {
+		this.botaoSalvar.addEventHandler(ActionEvent.ANY, this);
+	}
+	
+	public Funcionario telaParaFuncionario() {
+		Funcionario f = new Funcionario();
+		try {
+			f.setId(Integer.parseInt(tfId.getText()));
+			f.setNome(tfNome.getText());
+			f.setLogin(tfLogin.getText());
+			f.setSenha(tfSenha.getText());
+			f.setTp(comboTipoUsuario.getValue());
+			f.setCpf(tfCpf.getText());
+			f.setRg(tfRg.getText());
+			f.setEmail(tfEmail.getText());
+		} catch (NumberFormatException e) {
+			
+		}
+		
+		return f;
+	}
+	
+	public void limparCampos() {
+		this.tfId.clear();
+		this.tfNome.clear();
+		this.tfLogin.clear();
+		this.tfSenha.clear();
+		this.comboTipoUsuario.getSelectionModel().clearSelection();
+		this.tfCpf.clear();
+		this.tfRg.clear();
+		this.tfEmail.clear();
+	}
+	
 }

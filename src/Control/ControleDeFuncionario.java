@@ -4,18 +4,24 @@ import javax.swing.JOptionPane;
 
 import Model.Funcionario;
 import Model.Produto;
+import Model.TipoUsuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 
 public class ControleDeFuncionario {
 	
+
+
 	private ObservableList<Funcionario> listaFunc = FXCollections.observableArrayList();
+	private ObservableList<TipoUsuario> listaTipo = FXCollections.observableArrayList(TipoUsuario.values());
+	
 	
 	public void inserirFuncionario(Funcionario f) {
 		this.listaFunc.add(f);
 		JOptionPane.showMessageDialog(null,  "Funcionario adicionado com sucesso");
 	}
+	
 	public Funcionario pesquisarFuncionarioNome(Funcionario func) {
 		Funcionario retornado = new Funcionario();
 		for(Funcionario f : listaFunc) {
@@ -74,5 +80,18 @@ public class ControleDeFuncionario {
 			JOptionPane.showMessageDialog(null,"FUNCIONARIO NÃO ENCONTRADO");
 		}
 		return retornado;
+	}
+	
+	public ObservableList<Funcionario> getListaFunc() {
+		return listaFunc;
+	}
+	public void setListaFunc(ObservableList<Funcionario> listaFunc) {
+		this.listaFunc = listaFunc;
+	}
+	public ObservableList<TipoUsuario> getListaTipo() {
+		return listaTipo;
+	}
+	public void setListaTipo(ObservableList<TipoUsuario> listaTipo) {
+		this.listaTipo = listaTipo;
 	}
 }

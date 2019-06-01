@@ -391,6 +391,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	void limparCampos() 
 	{
+		comboNome.getSelectionModel().clearSelection();
 		txtID.setText("");
 		txtDescricao.setText(""); 
 		txtQtdMax.setText("");

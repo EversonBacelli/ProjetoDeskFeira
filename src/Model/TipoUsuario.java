@@ -14,4 +14,5 @@ public enum TipoUsuario {
 	public int getValor() {
 		return valor;
 	}
+	
 }
