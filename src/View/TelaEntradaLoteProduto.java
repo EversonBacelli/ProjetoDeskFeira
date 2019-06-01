@@ -45,6 +45,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
 	private Produto p;
 	private LoteProduto loteProduto;
+	LoteProduto lote;
 	
 	// Objetos que Fazem parte do Produto
 	private Label lblID;
@@ -82,6 +83,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private TextField txtvalidade; 
 	//
 	private Button cadastrar;
+	private Button excluir;
 	//---------------------------
 	
 	// Estrutura
@@ -107,8 +109,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		definirColunas();
 		responsividadeLista();
 				
-		ObservableList<Produto> data = comboNome.getItems();	
-		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
+		ObservableList<Produto> listProduto = comboNome.getItems();	
+		for(Produto x: controlProd.getListaProd()) 	{listProduto.add(x);}
 		
 		Scene scn = new Scene(panePrincipal, 1000, 563);
 		
@@ -116,11 +118,54 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 
 		comboNome.addEventHandler(ActionEvent.ANY, this);
 		
+		table.addEventHandler(ActionEvent.ANY, this);
+		
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
 		tela.show();
 	}
 
+	
+	@Override
+	public void handle(ActionEvent e) {
+		if(e.getTarget() == comboNome) 
+		{
+			if(comboNome.getValue() != null) 
+			{
+				p = comboNome.getValue();
+				preencherDadosProdutoSelecionado();
+			}
+		}
+		
+		if(e.getTarget() == cadastrar) 
+		{
+				if(verificarCampos()) 
+				{
+					lote = new LoteProduto();
+					lote.setProduto(comboNome.getValue());
+					lote.setId(Integer.parseInt(txtID.getText())); 
+					lote.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
+					lote.setDataValidade(txtTempoVida.getText());
+					lote.setDataEntrada(txtdataEntrada.getText());
+					ControleLote.inserirLoteProduto(lote);
+					limparCampos();
+	      	    }
+		}
+		
+		if(e.getTarget() == excluir) 
+		{
+			if(this.lote.equals(null) )
+			{
+				JOptionPane.showMessageDialog(null, "Selecione um lote");
+			} else 
+			{
+				ControleLote.removerLoteProduto(lote);
+			}
+		}
+	}	
+	
+	
+	
 	public void adicionandoProdutosTeste() {
 		Produto p1= new Produto();
 		p1.setId(1);
@@ -281,7 +326,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.add(txtdataEntrada    , 3, 7);
 		pane.add(lblvalidade       , 0, 8);
 		pane.add(txtvalidade       , 1, 8);
-		pane.add(cadastrar         , 2, 9);
+		pane.add(cadastrar         , 1, 9);
+		pane.add(excluir           ,2 ,9);
 		//---------------------------------
 		
 		// Obsjeto da Direita
@@ -355,6 +401,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		txtvalidade = new TextField();
 		//
 		cadastrar = new Button("Cadastrar");
+		excluir   = new Button(" Excluir ");
 		// ------------------------------------------------------
 	}
 	
@@ -419,34 +466,12 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		return dataFutura;
 	}
 
-	@Override
-	public void handle(ActionEvent e) {
-		if(e.getTarget() == comboNome) {
-			if(comboNome.getValue() != null) {
-				p = comboNome.getValue();
-				preencherDadosProdutoSelecionado();
-			}
-		}else 
-			if(e.getTarget() == cadastrar) {
-				if(verificarCampos()) {
-					LoteProduto lote = new LoteProduto();
-					lote.setProduto(comboNome.getValue());
-					lote.setId(Integer.parseInt(txtID.getText())); 
-					lote.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
-					lote.setDataValidade(txtTempoVida.getText());
-					lote.setDataEntrada(txtdataEntrada.getText());
-					ControleLote.inserirLoteProduto(lote);
-					limparCampos();
-				}
-			}
-	}
-	
-	
+
 	public void responsividadeLista() {
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LoteProduto>() {
 			@Override
 			public void changed(ObservableValue<? extends LoteProduto> arg0, LoteProduto arg1, LoteProduto arg2) {
-				
+				lote = arg2;
 			}
 		});
 	}
