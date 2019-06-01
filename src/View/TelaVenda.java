@@ -358,7 +358,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	
 	
 	public void responsividadeLista() {
-		
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProdutoVendido>() {
 			@Override
 			public void changed(ObservableValue<? extends ProdutoVendido> arg0, ProdutoVendido selecaoAntes, ProdutoVendido selecaoDepois) {

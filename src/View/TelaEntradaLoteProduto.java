@@ -17,6 +17,8 @@ import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -103,6 +105,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		marginPaine();
 		adicionandoEstiloElementos();
 		definirColunas();
+		responsividadeLista();
 				
 		ObservableList<Produto> data = comboNome.getItems();	
 		for(Produto x: controlProd.getListaProd()) 	{data.add(x);}
@@ -138,7 +141,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		p2.setPreco(50);
 		controlProd.inserirProduto(p2);
 		Produto p3= new Produto();
-		p3.setId(1);
+		p3.setId(3);
 		p3.setNome("Larajna");
 		p3.setDescricao("Produto Laranja de 100 gramas");
 		p3.setQtdMax(12);
@@ -147,7 +150,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		p3.setPreco(400);
 		controlProd.inserirProduto(p3);
 		Produto p4= new Produto();
-		p4.setId(2);
+		p4.setId(4);
 		p4.setNome("Abacaxi");
 		p4.setDescricao("xxxxxxxxxxxxxxxxxxxxxxxx");
 		p4.setQtdMax(12);
@@ -158,27 +161,27 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 	
 		LoteProduto lote1 = new LoteProduto();
-		lote1.setDataEntrada("31/05/2019");
-		lote1.setDataValidade("10/06/2019");
-		lote1.setId(1);
 		lote1.setProduto(p1);
+		lote1.setId(1);
 		lote1.setQuantidade(50);
+		lote1.setDataValidade ("10/06/2019");
+		lote1.setDataEntrada  ("31/05/2019");
 		ControleLote.inserirLoteProduto(lote1);
 		
 		LoteProduto lote2 = new LoteProduto();
-		lote1.setDataEntrada("31/05/2019");
-		lote1.setDataValidade("10/06/2019");
-		lote1.setId(2);
-		lote1.setProduto(p1);
-		lote1.setQuantidade(50);
+		lote2.setProduto(p1);
+		lote2.setId(2);
+		lote2.setQuantidade(50);
+		lote2.setDataEntrada("31/05/2019");
+		lote2.setDataValidade("10/06/2019");	
 		ControleLote.inserirLoteProduto(lote2);
 		
 		LoteProduto lote3 = new LoteProduto();
-		lote1.setDataEntrada("31/05/2019");
-		lote1.setDataValidade("10/06/2019");
-		lote1.setId(3);
-		lote1.setProduto(p2);
-		lote1.setQuantidade(50);
+		lote3.setDataEntrada("31/05/2019");
+		lote3.setDataValidade("10/06/2019");
+		lote3.setId(3);
+		lote3.setProduto(p2);
+		lote3.setQuantidade(50);
 		ControleLote.inserirLoteProduto(lote3);
 		
 	}
@@ -389,7 +392,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	void limparCampos() 
 	{
 		txtID.setText("");
-		comboNome.setPromptText("");
 		txtDescricao.setText(""); 
 		txtQtdMax.setText("");
 	    txtQtdMin.setText("");
@@ -426,10 +428,25 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		}else 
 			if(e.getTarget() == cadastrar) {
 				if(verificarCampos()) {
-					ControleLote.inserirLoteProduto(loteProduto);
+					LoteProduto lote = new LoteProduto();
+					lote.setProduto(comboNome.getValue());
+					lote.setId(Integer.parseInt(txtID.getText())); 
+					lote.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
+					lote.setDataValidade(txtTempoVida.getText());
+					lote.setDataEntrada(txtdataEntrada.getText());
+					ControleLote.inserirLoteProduto(lote);
 					limparCampos();
 				}
 			}
+	}
+	
+	public void responsividadeLista() {
+		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LoteProduto>() {
+			@Override
+			public void changed(ObservableValue<? extends LoteProduto> arg0, LoteProduto arg1, LoteProduto arg2) {
+				
+			}
+		});
 	}
 	
 	public void definirColunas() {
@@ -451,7 +468,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		table.getColumns().addAll(colunaNome, colunaQuantidade);
 
 		table.setItems(ControleLote.getListItem());
-	
 	}
 	
 }
