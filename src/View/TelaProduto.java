@@ -199,6 +199,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	public void adicionandoEstiloElementos() {
 		painelPrincipal.setStyle("-fx-background-color: #fd8b06;");
 		//painelLateral.setStyle("-fx-background-color: #064490;");
+		//
 		
 		lblId.setFont(new Font(20));
 		lblNome.setFont(new Font(20));
