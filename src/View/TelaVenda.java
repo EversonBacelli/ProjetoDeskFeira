@@ -101,7 +101,8 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			ProdutoVenda.add(x);
 		}
 		
-		
+		mascaraTfData();
+		adicionandoLimiteAoTexto(tfDataVenda, 10);
 		adicionarEventos();
 		adicionandoElementosPaineis();
 		mudandoEstilo();
@@ -243,6 +244,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.tfIdVenda.setMaxSize(50, 50);
 		//this.btnAdicionar.setPrefWidth(20);
 		this.btnRemoverQtd.setMaxWidth(30);
+
 	}
 
 	
@@ -356,6 +358,34 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		cProduto.inserirProduto(p1);
 	}
 	
+	
+	public static void adicionandoLimiteAoTexto(TextField tf, final int maxLength) {
+	    tf.textProperty().addListener(new ChangeListener<String>() {
+	        @Override
+	        public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+	            if (tf.getText().length() > maxLength) {
+	                String cortaTexto = tf.getText().substring(0, maxLength);
+	                tf.setText(cortaTexto);
+	            }
+	        }
+	    });
+	}
+	
+	
+	public void mascaraTfData() {
+		this.tfDataVenda.lengthProperty().addListener(new ChangeListener<Number>() {
+	        @Override
+	        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+	            if (newValue.intValue() < 11) {
+	                String value = tfDataVenda.getText();
+	                value = value.replaceAll("[^0-9]", "");
+	                value = value.replaceFirst("(\\d{2})(\\d)", "$1/$2");
+	                value = value.replaceFirst("(\\d{2})\\/(\\d{2})(\\d)", "$1/$2/$3");
+	                tfDataVenda.setText(value);
+	            }
+	        }
+	    });
+	}
 	
 	public void responsividadeLista() {
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProdutoVendido>() {

@@ -93,6 +93,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		definirColunas();
 		responsividadeLista();
 		
+		
 		stage.setResizable(false);
 		stage.setScene(scn);
 		stage.setTitle("Gerenciamento de produto");
@@ -275,7 +276,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelCentral.setMargin(this.table,  marginBottom);
 
 	}
-
 
 	
 	public Produto viewParaProduto() {

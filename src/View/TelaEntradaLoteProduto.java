@@ -440,6 +440,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 			}
 	}
 	
+	
 	public void responsividadeLista() {
 		this.table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LoteProduto>() {
 			@Override
