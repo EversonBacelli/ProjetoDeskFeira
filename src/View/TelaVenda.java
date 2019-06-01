@@ -397,7 +397,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	}
 
 
-	
 	public void definirColunas() {
 		
 		TableColumn<ProdutoVendido, String> colunaNome = new TableColumn<>("Nome");

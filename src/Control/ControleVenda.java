@@ -30,7 +30,6 @@ public class ControleVenda {
 		return ++this.id_venda;
 	}
 	
-	
 //	public void realizarVenda(Venda venda) {
 //		// criando o metodo para usar a alteração da quantidade dentro do
 //		// estoque
@@ -65,5 +64,4 @@ public class ControleVenda {
 //		//salvando a venda efetuada
 //		lista_venda.add(venda);
 //	}
-	
 }

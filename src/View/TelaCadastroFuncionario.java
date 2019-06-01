@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -35,7 +36,7 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	private TextField tfId = new TextField();
 	private TextField tfNome = new TextField();
 	private TextField tfLogin = new TextField();
-	private TextField tfSenha = new TextField();
+	private PasswordField tfSenha = new PasswordField();
 	private TextField tfCpf = new TextField();
 	private TextField tfRg = new TextField();
 	private TextField tfEmail = new TextField();
