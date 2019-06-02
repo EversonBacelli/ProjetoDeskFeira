@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -21,7 +22,7 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	Label lblLogin;
 	Label lblSenha;
 	TextField txtLogin;
-	TextField txtSenha;
+	PasswordField txtSenha;
 	Button btnEntrar;
 
 	public static void main(String[] args) {
@@ -38,8 +39,8 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		// Elementos da tela
 		lblLogin = new Label(" LOGIN ");
 		lblSenha = new Label(" SENHA ");
-		txtLogin = new TextField("");
-		txtSenha = new TextField("");
+		txtLogin = new TextField();
+		txtSenha = new PasswordField();
 		btnEntrar = new Button(" ENTRAR ");
 
 		// -----------------------------------------------------------

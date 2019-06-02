@@ -83,7 +83,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	@Override
 	public void handle(ActionEvent e) {
 		if (e.getTarget() == item_Funcio_Cad) {
-			Tela_Funcio_Cad tela_Funcio_Cad = new Tela_Funcio_Cad();
+			TelaCadastroFuncionario tela_Funcio_Cad = new TelaCadastroFuncionario();
 			try {
 				tela_Funcio_Cad.start(stageAux);
 			} catch (Exception e1) {
