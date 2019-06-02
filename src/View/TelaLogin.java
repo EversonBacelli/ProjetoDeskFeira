@@ -74,9 +74,9 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 			JOptionPane.showMessageDialog(null, "Insira a Senha");
 		} else {
 			if (txtLogin.getText().equals("adm") && (txtSenha.getText().equals("123"))) {
-				TelaVenda tvenda = new TelaVenda();
+				TelaPrincipal tPrincipal = new TelaPrincipal();
 				try {
-					tvenda.start(stageAux);
+					tPrincipal.start(stageAux);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
