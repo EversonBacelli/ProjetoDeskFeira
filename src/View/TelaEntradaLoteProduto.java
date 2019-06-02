@@ -32,6 +32,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -46,6 +48,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private Produto p;
 	private LoteProduto loteProduto;
 	LoteProduto lote;
+	
+	private ImageView img = new ImageView(new Image("file:Images/entrad_lote_prod.png"));	
 	
 	// Objetos que Fazem parte do Produto
 	private Label lblID;
@@ -337,6 +341,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		panePrincipal.setTop(topo);
 		panePrincipal.setLeft(pane);
 		panePrincipal.setRight(paneRight);
+		panePrincipal.setBottom(img);
 	}
 	
 	
