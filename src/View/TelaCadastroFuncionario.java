@@ -60,15 +60,16 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	
 	ControleDeFuncionario cf = new ControleDeFuncionario();
 	
-//	public static void main(String[] args){
-//		Application.launch(args);
-//	}
+	public static void main(String[] args){
+		Application.launch(args);
+	}
 	
 	public TelaCadastroFuncionario() {
 		
 	}
 	
-	public TelaCadastroFuncionario(Funcionario f) {
+	public TelaCadastroFuncionario(Funcionario f, ControleDeFuncionario cf) {
+		this.cf = cf;
 		funcionarioParaTela(f);
 	}
 	

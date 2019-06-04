@@ -70,6 +70,7 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 		definirColunas();
 		responsividadeLista();
 		teste();
+		cf.preencheLista2();
 	
 		
 		stage.setScene(scn);
@@ -83,13 +84,15 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 		}else if(e.getTarget() == btnExcluir) {
 			excluirFuncionario();
 		}else {
-			
+			cf.pesquisarFuncionario(this.tfPesquisarFunc.getText());
 		}
 	}
 	
 	public void adicionarEventos() {
 		this.btnExcluir.addEventFilter(ActionEvent.ANY, this);
 		this.btnAlterar.addEventFilter(ActionEvent.ANY, this);
+		this.btnPesquisar.addEventHandler(ActionEvent.ANY, this);
+		this.tfPesquisarFunc.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	public void adicionandoElementos() {
@@ -151,7 +154,7 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 	
 	public void alterarFuncionario() {
 		if(func != null) {
-			TelaCadastroFuncionario tcf = new TelaCadastroFuncionario(func);
+			TelaCadastroFuncionario tcf = new TelaCadastroFuncionario(func, this.cf);
 			try {
 				tcf.start(stageAux);
 			} catch (Exception e) {
@@ -198,8 +201,9 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 		colunaTipo.setPrefWidth(100);
 		
 		tab.getColumns().addAll(colunaId, colunaNome, colunaCpf, colunaRg, colunaEmail, colunaTipo);
+		
 
-		tab.setItems(cf.getListaFunc());
+		tab.setItems(cf.getListaFunc2());
 		
 	}
 	
@@ -214,6 +218,39 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 		f.setEmail("heliopinto24@gmail.com");
 		f.setTp(TipoUsuario.ADMINISTRADOR);
 		cf.inserirFuncionario(f);
+		
+		Funcionario f2 = new Funcionario();
+		f2.setId(2);
+		f2.setNome("João Carlos");
+		f2.setLogin("adm");
+		f2.setSenha("adm");
+		f2.setCpf("122321-3");
+		f2.setRg("342423");
+		f2.setEmail("heliopinto24@gmail.com");
+		f2.setTp(TipoUsuario.ADMINISTRADOR);
+		cf.inserirFuncionario(f2);
+		
+		Funcionario f3 = new Funcionario();
+		f3.setId(3);
+		f3.setNome("João Antonio");
+		f3.setLogin("adm");
+		f3.setSenha("adm");
+		f3.setCpf("122321-3");
+		f3.setRg("342423");
+		f3.setEmail("heliopinto24@gmail.com");
+		f3.setTp(TipoUsuario.ADMINISTRADOR);
+		cf.inserirFuncionario(f3);
+		
+		Funcionario f4 = new Funcionario();
+		f4.setId(2);
+		f4.setNome("Lucas Carlos");
+		f4.setLogin("adm");
+		f4.setSenha("adm");
+		f4.setCpf("122321-3");
+		f4.setRg("342423");
+		f4.setEmail("heliopinto24@gmail.com");
+		f4.setTp(TipoUsuario.ADMINISTRADOR);
+		cf.inserirFuncionario(f4);
 	}
 	
 //	Alert dialogoErro = new Alert(Alert.AlertType.ERROR);

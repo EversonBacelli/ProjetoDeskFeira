@@ -14,6 +14,7 @@ public class ControleDeFuncionario {
 
 
 	private ObservableList<Funcionario> listaFunc = FXCollections.observableArrayList();
+	private ObservableList<Funcionario> listaFunc2 = FXCollections.observableArrayList();
 	private ObservableList<TipoUsuario> listaTipo = FXCollections.observableArrayList(TipoUsuario.values());
 	
 	
@@ -82,6 +83,21 @@ public class ControleDeFuncionario {
 		return retornado;
 	}
 	
+	public void preencheLista2() {
+		if(this.listaFunc2.isEmpty()) {
+			this.listaFunc2.setAll(getListaFunc());
+		}
+	}
+	
+	public void pesquisarFuncionario(String value) {
+		this.listaFunc2.clear();
+		for(Funcionario f : this.listaFunc) {
+			if(f.getNome().contains(value)) {
+				this.listaFunc2.add(f);
+			}
+		}
+	}
+	
 	public ObservableList<Funcionario> getListaFunc() {
 		return listaFunc;
 	}
@@ -93,5 +109,12 @@ public class ControleDeFuncionario {
 	}
 	public void setListaTipo(ObservableList<TipoUsuario> listaTipo) {
 		this.listaTipo = listaTipo;
+	}
+	public ObservableList<Funcionario> getListaFunc2() {
+		return listaFunc2;
+	}
+
+	public void setListaFunc2(ObservableList<Funcionario> listaFunc2) {
+		this.listaFunc2 = listaFunc2;
 	}
 }
