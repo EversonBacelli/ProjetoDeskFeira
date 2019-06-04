@@ -53,16 +53,22 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 	
 	private Funcionario func;
 	
+	private static Stage stageAux;
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		stageAux = stage;
+		
 		adicionandoElementos();
 		adicionandoEstilos();
 		adicionandoMargens();
+		adicionarEventos();
 		definirColunas();
+		responsividadeLista();
 		teste();
 	
 		
@@ -72,8 +78,18 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 
 	@Override
 	public void handle(ActionEvent e) {
-		
-		
+		if(e.getTarget() == btnAlterar) {
+			alterarFuncionario();
+		}else if(e.getTarget() == btnExcluir) {
+			excluirFuncionario();
+		}else {
+			
+		}
+	}
+	
+	public void adicionarEventos() {
+		this.btnExcluir.addEventFilter(ActionEvent.ANY, this);
+		this.btnAlterar.addEventFilter(ActionEvent.ANY, this);
 	}
 	
 	public void adicionandoElementos() {
@@ -121,11 +137,28 @@ public class TelaAtualizacaoFuncionario extends Application implements EventHand
 	}
 	
 	public void excluirFuncionario() {
-		
+		if(func != null) {
+			cf.removerFuncionario(func);
+		}
+		setarObjetoNull();
 	}
 	
-	public void adicionarFuncionario() {
-		
+	public void setarObjetoNull() {
+		if(cf.getListaFunc().isEmpty()) {
+			func = null;
+		}
+	}
+	
+	public void alterarFuncionario() {
+		if(func != null) {
+			TelaCadastroFuncionario tcf = new TelaCadastroFuncionario(func);
+			try {
+				tcf.start(stageAux);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void responsividadeLista() {
