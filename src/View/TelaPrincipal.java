@@ -24,11 +24,11 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	private VBox box1;
 	private MenuBar barra_Menu;
 	private Menu menu_Funcio;
-	private Menu menu_Produ;
+	private Menu menu_Produ_Lote;
 	private MenuItem item_Funcio_Cad;
 	private MenuItem item_Funcio_List;
-	private MenuItem item_Produ_Cad;
-	private MenuItem item_Produ_List;
+	private MenuItem item_Produ;
+	private MenuItem item_Lote;
 	// MenuItem menuItem1;
 	// listar funcionario
 	//
@@ -48,22 +48,21 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		barra_Menu = new MenuBar();
 
 		menu_Funcio = new Menu("Funcionário");
-		menu_Produ = new Menu("Produto");
+		menu_Produ_Lote = new Menu("Produto e Lote");
 
 		item_Funcio_Cad = new MenuItem("Cadastrar");
 		item_Funcio_List = new MenuItem("Listar");
-		item_Produ_Cad = new MenuItem("Cadastrar");
-		item_Produ_List = new MenuItem("Listar");
+		item_Produ = new MenuItem("Produto");
+		item_Lote = new MenuItem("Lote");
 
 		// -----------------------------------------------------------
 		menu_Funcio.getItems().add(item_Funcio_Cad);
 		menu_Funcio.getItems().add(item_Funcio_List);
-		menu_Produ.getItems().add(item_Produ_Cad);
-		menu_Produ.getItems().add(item_Produ_List);
-
+		menu_Produ_Lote.getItems().add(item_Produ);
+		menu_Produ_Lote.getItems().add(item_Lote);
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(menu_Funcio);
-		barra_Menu.getMenus().add(menu_Produ);
+		barra_Menu.getMenus().add(menu_Produ_Lote);
 
 		// -----------------------------------------------------------
 		box1.getChildren().add(barra_Menu);
@@ -74,6 +73,8 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 
 		// -----------------------------------------------------------
 		item_Funcio_Cad.addEventHandler(ActionEvent.ANY, this);
+		item_Produ.addEventHandler(ActionEvent.ANY, this);
+		item_Lote.addEventHandler(ActionEvent.ANY, this);
 		item_Funcio_List.addEventHandler(ActionEvent.ANY, this);
 
 		Scene scn = new Scene(borderPane1, 1000, 563);
@@ -91,6 +92,12 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			}else if (e.getTarget() == item_Funcio_List) {
 				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
 				telaListaFuncionario.start(stageAux);
+			}else if (e.getTarget() == item_Produ) {
+				TelaProduto telaProduto = new  TelaProduto();
+				telaProduto.start(stageAux);
+			}else if (e.getTarget() == item_Lote) {
+				TelaEntradaLoteProduto entradaLoteProduto = new TelaEntradaLoteProduto();
+				entradaLoteProduto.start(stageAux);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
