@@ -56,7 +56,7 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 
 		pane.addEventFilter(ActionEvent.ACTION, this);
 		Scene scn = new Scene(pane, 1000, 563);
-		stage.setTitle(" TELA DE CADASTRO DE FUNCIONARIO  ");
+		stage.setTitle("Login");
 		stage.setScene(scn);
 		stage.show();
 	}

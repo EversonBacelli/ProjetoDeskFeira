@@ -60,8 +60,16 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	
 	ControleDeFuncionario cf = new ControleDeFuncionario();
 	
-	public static void main(String[] args){
-		Application.launch(args);
+//	public static void main(String[] args){
+//		Application.launch(args);
+//	}
+	
+	public TelaCadastroFuncionario() {
+		
+	}
+	
+	public TelaCadastroFuncionario(Funcionario f) {
+		funcionarioParaTela(f);
 	}
 	
 	@Override
@@ -191,6 +199,17 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		}
 		
 		return f;
+	}
+	
+	public void funcionarioParaTela(Funcionario f) {
+		this.tfId.setText(Integer.toString(f.getId()));
+		this.tfNome.setText(f.getNome());
+		this.tfLogin.setText(f.getLogin());
+		this.tfSenha.setText(f.getSenha());
+		this.tfEmail.setText(f.getEmail());
+		this.comboTipoUsuario.getSelectionModel().select(f.getTp());
+		this.tfCpf.setText(f.getCpf());
+		this.tfRg.setText(f.getRg());
 	}
 	
 	public void limparCampos() {
