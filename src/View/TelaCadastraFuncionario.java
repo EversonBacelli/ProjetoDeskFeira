@@ -24,7 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class TelaCadastroFuncionario extends Application implements EventHandler<ActionEvent>{
+public class TelaCadastraFuncionario extends Application implements EventHandler<ActionEvent>{
 
 	private Label lblId = new Label("Id");
 	private Label lblNome = new Label("Nome");
@@ -67,11 +67,11 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		Application.launch(args);
 	}
 	
-	public TelaCadastroFuncionario() {
+	public TelaCadastraFuncionario() {
 		
 	}
 	
-	public TelaCadastroFuncionario(Funcionario f, ControleDeFuncionario cf) {
+	public TelaCadastraFuncionario(Funcionario f, ControleDeFuncionario cf) {
 		this.cf = cf;
 		funcionarioParaTela(f);
 	}
