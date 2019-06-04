@@ -18,19 +18,20 @@ import javafx.stage.Stage;
 
 public class TelaPrincipal extends Application implements EventHandler<ActionEvent> {
 
-	static Stage stageAux;
-	BorderPane borderPane1;
-	GridPane gridPane1;
-	VBox box1;
-	MenuBar barra_Menu;
-	Menu menu_Funcio;
-	Menu menu_Produ;
-	MenuItem item_Funcio_Cad;
-	MenuItem item_Funcio_List;
-	MenuItem item_Produ_Cad;
-	MenuItem item_Produ_List;
+	private static Stage stageAux;
+	private BorderPane borderPane1;
+	private GridPane gridPane1;
+	private VBox box1;
+	private MenuBar barra_Menu;
+	private Menu menu_Funcio;
+	private Menu menu_Produ;
+	private MenuItem item_Funcio_Cad;
+	private MenuItem item_Funcio_List;
+	private MenuItem item_Produ_Cad;
+	private MenuItem item_Produ_List;
 	// MenuItem menuItem1;
-	// MenuItem menuItem2;
+	// listar funcionario
+	//
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -45,10 +46,10 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		gridPane1 = new GridPane();
 		box1 = new VBox();
 		barra_Menu = new MenuBar();
-		
+
 		menu_Funcio = new Menu("Funcionário");
 		menu_Produ = new Menu("Produto");
-		
+
 		item_Funcio_Cad = new MenuItem("Cadastrar");
 		item_Funcio_List = new MenuItem("Listar");
 		item_Produ_Cad = new MenuItem("Cadastrar");
@@ -70,47 +71,31 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		// -----------------------------------------------------------
 		borderPane1.setTop(box1);
 		borderPane1.setCenter(gridPane1);
-		
+
 		// -----------------------------------------------------------
 		item_Funcio_Cad.addEventHandler(ActionEvent.ANY, this);
+		item_Funcio_List.addEventHandler(ActionEvent.ANY, this);
 
 		Scene scn = new Scene(borderPane1, 1000, 563);
 		stage.setTitle(" TELA PRINCIPAL ");
 		stage.setScene(scn);
 		stage.show();
 	}
-
+//
 	@Override
 	public void handle(ActionEvent e) {
-		if (e.getTarget() == item_Funcio_Cad) {
-			TelaCadastroFuncionario tela_Funcio_Cad = new TelaCadastroFuncionario();
-			try {
+		try {
+			if (e.getTarget() == item_Funcio_Cad) {
+				TelaCadastroFuncionario tela_Funcio_Cad = new TelaCadastroFuncionario();
 				tela_Funcio_Cad.start(stageAux);
-			} catch (Exception e1) {
-				e1.printStackTrace();
+			}else if (e.getTarget() == item_Funcio_List) {
+				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
+				telaListaFuncionario.start(stageAux);
 			}
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 	}
 
-	public void validarLogin() {
-		// if (txtLogin.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null, "Insira o Login");
-		// } else if (txtSenha.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null, "Insira a Senha");
-		// } else {
-		// if (txtLogin.getText().equals("adm") &&
-		// (txtSenha.getText().equals("123"))) {
-		// TelaVenda tvenda = new TelaVenda();
-		// try {
-		// tvenda.start(stageAux);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// } else {
-		// JOptionPane.showMessageDialog(null, "Senha ou Login
-		// Inválido!!!!!!!!!");
-		// }
-		// }
-	}
 
 }
