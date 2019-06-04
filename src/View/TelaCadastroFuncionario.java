@@ -16,6 +16,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -49,10 +51,11 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	private FlowPane painelCentral4 = new FlowPane();
 	private FlowPane painelCentral5 = new FlowPane();
 	private FlowPane painelBotoes = new FlowPane();
+	private VBox painelTopo = new VBox();
 	
 	private Button botaoSalvar = new Button("Salvar");
 
-
+	private ImageView img = new ImageView(new Image("file:Images/cadfunc.png"));	
 	
 	private Scene scn = new Scene(painelPrincipal, 1000, 563);
 	
@@ -108,6 +111,7 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 	
 	public void adicionandoElementos() {
 		this.painelPrincipal.setCenter(this.painelCentral);
+		this.painelPrincipal.setTop(this.painelTopo);
 		
 		this.painelCentral.getChildren().add(this.painelCentral1);
 		this.painelCentral.getChildren().add(this.painelCentral2);
@@ -139,12 +143,13 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		this.painelCentral5.getChildren().add(this.lblEmail);
 		this.painelCentral5.getChildren().add(this.tfEmail);
 		
+		this.painelTopo.getChildren().add(img);
 		this.painelBotoes.getChildren().add(this.botaoSalvar);
 	}
 	
 	
 	public void adicionandoMargens() {
-		Insets marginPainelCentro = new Insets(100, 0, 0, 130);
+		Insets marginPainelCentro = new Insets(20, 0, 0, 130);
 		Insets marginBotaoSalvar = new Insets(0,0,0,260);
 		this.painelCentral1.setHgap(20);
 		this.painelCentral2.setHgap(20);
@@ -154,10 +159,13 @@ public class TelaCadastroFuncionario extends Application implements EventHandler
 		
 		this.painelBotoes.setMargin(this.botaoSalvar, marginBotaoSalvar);
 		
+		this.painelTopo.setMargin(img, new Insets(0, 0, 0, 80));
 		this.painelPrincipal.setMargin(this.painelCentral, marginPainelCentro);
 	}
 	
 	public void adicionandoEstilos() {
+		this.painelPrincipal.setStyle("-fx-background-color: #96BD63;");
+		
 		this.lblId.setFont(new Font(30));
 		this.lblNome.setFont(new Font(30));
 		this.lblLogin.setFont(new Font(30));

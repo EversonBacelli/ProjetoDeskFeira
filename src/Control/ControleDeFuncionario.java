@@ -38,22 +38,30 @@ public class ControleDeFuncionario {
 	}
 	
 	public void alterarFuncionario(Funcionario func) {
+		Funcionario alterado = null;
 		for(Funcionario f : listaFunc) {
 			if(f.getNome().equals(func.getNome())) {
-				listaFunc.remove(f);
-				listaFunc.add(func);
+				alterado = f;
 				JOptionPane.showMessageDialog(null,  "Funcionario alterado com sucesso");
 			}
+		}
+		if(alterado != null) {
+			this.listaFunc.remove(alterado);
+			this.listaFunc.add(func);
 		}
 	}
 	
 	public void removerFuncionario(Funcionario func) {
+		Funcionario removido = null;
 		for(Funcionario f : listaFunc) {
 			if(f.getNome().equals(func.getNome())) {
-				listaFunc.remove(f);
+				removido = f;
 				JOptionPane.showMessageDialog(null,  "Funcionario removido com sucesso");
 				break;
 			}
+		}
+		if(removido != null) {
+			this.listaFunc.remove(removido);
 		}
 	}
 	
