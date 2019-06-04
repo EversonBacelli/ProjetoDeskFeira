@@ -39,6 +39,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -95,6 +97,13 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private BorderPane panePrincipal;
 	private GridPane topo;
 	private VBox paneRight;
+	private VBox paneTop;
+	private VBox paneBot;
+	private FlowPane paneLinhaTop;
+	private FlowPane paneLinhaBot;
+	//
+	private Line linha1 = new Line();
+	private Line linha2 = new Line();
 	
 	public static void main(String[] args) 
 	{
@@ -238,9 +247,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 
 	// --------------- METODOS  --------------------//
 
+	@SuppressWarnings("static-access")
 	private void marginPaine() {
 		Insets marginPane = new Insets(0, 20, 20, 20);
-		Insets margin = new Insets(20, 20, 60, 20);
+		Insets margin = new Insets(20, 20, 30, 20);
 		Insets marginRight = new Insets(0, 120, 40,20);
 		
 		topo.setMargin(lblNome, margin);
@@ -249,6 +259,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.setMargin(txtID, margin);
 		topo.setMargin(lblDescricao, margin);
 		topo.setMargin(txtDescricao, margin);
+		paneLinhaTop.setMargin(linha1,margin);
+		paneLinhaBot.setMargin(linha2, margin);
 		pane.setMargin(lblQtdMax, marginPane);
 		pane.setMargin(txtQtdMax, marginPane);
 		pane.setMargin(lblQtdMin, marginPane);
@@ -288,7 +300,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 
 	
 	public void adicionandoEstiloElementos() {
-
+		panePrincipal.setStyle("-fx-background-color: #ADFF2F;");
 		lblID.setFont(new Font(12));
 		lblNome.setFont(new Font(12));
 		lblDescricao.setFont(new Font(12));
@@ -299,6 +311,17 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		txtID.setFont(new Font(12));
 		txtDescricao.setFont(new Font(12));
+		
+		this.linha1.setStroke(Color.LIGHTSKYBLUE);
+        this.linha1.setStrokeWidth(10.0f);
+        this.linha1.setStartX(0);
+		this.linha1.setEndX(900);
+        
+		this.linha2.setStroke(Color.LIGHTSKYBLUE);
+        this.linha2.setStrokeWidth(10.0f);
+        this.linha2.setStartX(0);
+		this.linha2.setEndX(900);
+        
 		
 		//cadastrar.setStyle("-fx-font-weight: bold");
 		//cadastrar.setFont(new Font(20));
@@ -313,6 +336,9 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.add(comboNome         , 3, 0);
 		topo.add(lblDescricao      , 4, 0);
 		topo.add(txtDescricao      , 5, 0);
+		
+		paneLinhaTop.getChildren().add(linha1);
+
 		//---------------------------------
 		
 		//Objetos da Direita
@@ -336,12 +362,16 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		// Obsjeto da Direita
 		paneRight.getChildren().add(table);
+		paneTop.getChildren().add(topo);
+		paneTop.getChildren().add(paneLinhaTop);
+		paneBot.getChildren().add(linha2);
+		paneBot.getChildren().add(img);
 		
 		// inserir objetos na tela
-		panePrincipal.setTop(topo);
+		panePrincipal.setTop(paneTop);
 		panePrincipal.setLeft(pane);
 		panePrincipal.setRight(paneRight);
-		panePrincipal.setBottom(img);
+		panePrincipal.setBottom(paneBot);
 	}
 	
 	
@@ -365,6 +395,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		panePrincipal = new BorderPane();
 		topo = new GridPane();
 		paneRight = new VBox();
+		paneTop = new VBox();
+		paneBot = new VBox();
+		paneLinhaTop = new FlowPane();
+		paneLinhaBot = new FlowPane();
 		
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
@@ -483,10 +517,16 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	public void definirColunas() {
 		
+		TableColumn<LoteProduto, Number> colunaID = new TableColumn<>("ID");
+		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
+		colunaID.setPrefWidth(50);
+
+		
 		TableColumn<LoteProduto, String> colunaNome = new TableColumn<>("Nome");
 		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
-		colunaNome.setPrefWidth(250);
+		colunaNome.setPrefWidth(200);
 
+		
 		TableColumn<LoteProduto, Number> colunaQuantidade = new TableColumn<>("Quantidade");
 		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
 		colunaQuantidade.setPrefWidth(90);
@@ -497,7 +537,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		colunaPreco.setPrefWidth(80);
 		*/
 		
-		table.getColumns().addAll(colunaNome, colunaQuantidade);
+		table.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
 
 		table.setItems(ControleLote.getListItem());
 	}
