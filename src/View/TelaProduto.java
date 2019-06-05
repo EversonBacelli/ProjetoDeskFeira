@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent>{
 	private TableView<Produto> table = new TableView<>();
-	private ImageView img = new ImageView(new Image("file:Images/gerenciamento_prod.png"));		
+	private ImageView img = new ImageView(new Image("file:Images/gerenciamento_prod.png"));
 	private BorderPane painelPrincipal = new BorderPane();
 	
 	private VBox painelTopo = new VBox();

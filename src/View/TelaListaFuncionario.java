@@ -162,7 +162,7 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 
 	public void alterarFuncionario() {
 		if (func != null) {
-			TelaCadastraFuncionario tcf = new TelaCadastraFuncionario(func, this.cf);
+			Tela_Funcionario_Cadastro tcf = new Tela_Funcionario_Cadastro(func);
 			try {
 				tcf.start(stageAux);
 			} catch (Exception e) {
