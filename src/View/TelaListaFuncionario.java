@@ -69,7 +69,6 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 		adicionarEventos();
 		definirColunas();
 		responsividadeLista();
-		teste();
 		cf.preencheLista2();
 
 		stage.setScene(scn);
@@ -213,51 +212,6 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 
 	}
 
-	public void teste() {
-		Funcionario f = new Funcionario();
-		f.setId(1);
-		f.setNome("Helio Pinto");
-		f.setLogin("adm");
-		f.setSenha("adm");
-		f.setCpf("122321-3");
-		f.setRg("342423");
-		f.setEmail("heliopinto24@gmail.com");
-		f.setTp(TipoUsuario.ADMINISTRADOR);
-		cf.inserirFuncionario(f);
-
-		Funcionario f2 = new Funcionario();
-		f2.setId(2);
-		f2.setNome("João Carlos");
-		f2.setLogin("adm");
-		f2.setSenha("adm");
-		f2.setCpf("122321-3");
-		f2.setRg("342423");
-		f2.setEmail("heliopinto24@gmail.com");
-		f2.setTp(TipoUsuario.ADMINISTRADOR);
-		cf.inserirFuncionario(f2);
-
-		Funcionario f3 = new Funcionario();
-		f3.setId(3);
-		f3.setNome("João Antonio");
-		f3.setLogin("adm");
-		f3.setSenha("adm");
-		f3.setCpf("122321-3");
-		f3.setRg("342423");
-		f3.setEmail("heliopinto24@gmail.com");
-		f3.setTp(TipoUsuario.ADMINISTRADOR);
-		cf.inserirFuncionario(f3);
-
-		Funcionario f4 = new Funcionario();
-		f4.setId(2);
-		f4.setNome("Lucas Carlos");
-		f4.setLogin("adm");
-		f4.setSenha("adm");
-		f4.setCpf("122321-3");
-		f4.setRg("342423");
-		f4.setEmail("heliopinto24@gmail.com");
-		f4.setTp(TipoUsuario.ADMINISTRADOR);
-		cf.inserirFuncionario(f4);
-	}
 
 	// Alert dialogoErro = new Alert(Alert.AlertType.ERROR);
 	// dialogoErro.setTitle("Diálogo de Error");

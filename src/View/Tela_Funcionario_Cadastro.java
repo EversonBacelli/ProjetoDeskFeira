@@ -66,9 +66,9 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 
 	private static Stage stageAux;
 
-//	public static void main(String[] args) {
-//		Application.launch(args);
-//	}
+	// public static void main(String[] args) {
+	// Application.launch(args);
+	// }
 
 	public Tela_Funcionario_Cadastro() {
 
@@ -97,18 +97,25 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 	public void handle(ActionEvent e) {
 		if (e.getTarget() == botaoSalvar) {
 			Funcionario f = telaParaFuncionario();
-			if (f.getId() != 0) {
-				if (!cf.funcionarioExiste(f)) {
-					cf.inserirFuncionario(f);
-				} else {
-					cf.alterarFuncionario(f);
+			if (f.getId() == 0) {
+				cf.inserirFuncionario(f);
+				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
+				try {
+					telaListaFuncionario.start(stageAux);
+				} catch (Exception e1) {
+					e1.printStackTrace();
 				}
-				limparCampos();
 			} else {
-				System.out.println("não foi possivel adicionar esse funcionario");
+				cf.alterarFuncionario(f);
+				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
+				try {
+					telaListaFuncionario.start(stageAux);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		} else if (e.getTarget() == botaoVoltar) {
-			TelaPrincipal telaPrincipal = new  TelaPrincipal();
+			TelaPrincipal telaPrincipal = new TelaPrincipal();
 			try {
 				telaPrincipal.start(stageAux);
 			} catch (Exception e1) {
@@ -203,7 +210,9 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 	public Funcionario telaParaFuncionario() {
 		Funcionario f = new Funcionario();
 		try {
-			f.setId(Integer.parseInt(tfId.getText()));
+			if (!tfId.getText().equals("")) {
+				f.setId(Integer.parseInt(tfId.getText()));
+			}
 			f.setNome(tfNome.getText());
 			f.setLogin(tfLogin.getText());
 			f.setSenha(tfSenha.getText());

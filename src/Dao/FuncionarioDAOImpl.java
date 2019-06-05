@@ -17,28 +17,28 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 	}
 
 	@Override
-	public void adicionar(Funcionario f) throws DAOException {
+	public void inserir(Funcionario f) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
 			System.out.println("Conectado no servidor");
-			String sql = "INSERT INTO funcionario" + " (id, nome, cpf, rg, "
-					+ "email, tp, login, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO funcionario" + " ( nome, cpf, rg, "
+					+ "email, tp, login, senha) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
 			System.out.println("Query de inserção: " + sql);
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setLong(1, f.getId());
-			stmt.setString(2, f.getNome());
-			stmt.setString(3, f.getCpf());
-			stmt.setString(4, f.getRg());
-			stmt.setString(5, f.getEmail());
-			stmt.setInt(6, f.getTp().getValor());
-			stmt.setString(7, f.getLogin());
-			stmt.setString(8, f.getSenha());
+			stmt.setString(1, f.getNome());
+			stmt.setString(2, f.getCpf());
+			stmt.setString(3, f.getRg());
+			stmt.setString(4, f.getEmail());
+			stmt.setInt(5, f.getTp().getValor());
+			stmt.setString(6, f.getLogin());
+			stmt.setString(7, f.getSenha());
 			stmt.execute();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DAOException(e);
 		}
+		System.out.println("Funcionario salvo com sucesso!");
 	}
 	
 	@Override
@@ -60,7 +60,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 	public void alterar(Funcionario f) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "update funcionario set nome = ?, cpf = ?, rg = ?, email = ?, tp = ?, login = ?, sennha = ? where id = ?";
+			String sql = "update funcionario set nome = ?, cpf = ?, rg = ?, email = ?, tp = ?, login = ?, senha = ? where id = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, f.getNome());
 			stmt.setString(2, f.getCpf());
@@ -79,7 +79,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 	}
 
 	@Override
-	public List<Funcionario> listar(Funcionario f) throws DAOException {
+	public List<Funcionario> listar() throws DAOException {
 		List<Funcionario> lista = new ArrayList<>();
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
@@ -87,6 +87,7 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+				Funcionario f = new Funcionario();
 				f.setId(rs.getInt("id"));
 				f.setNome(rs.getString("nome"));
 				f.setCpf(rs.getString("cpf"));

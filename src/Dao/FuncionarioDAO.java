@@ -6,9 +6,9 @@ import Model.Funcionario;
 
 public interface FuncionarioDAO {
 	
-	void adicionar(Funcionario f) throws DAOException;
+	void inserir(Funcionario f) throws DAOException;
 
-	List<Funcionario> listar(Funcionario f) throws DAOException;
+	List<Funcionario> listar() throws DAOException;
 
 	void excluir(Funcionario f) throws DAOException;
 

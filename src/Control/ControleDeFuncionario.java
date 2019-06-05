@@ -1,5 +1,8 @@
 package Control;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import Dao.DAOException;
@@ -20,11 +23,10 @@ public class ControleDeFuncionario {
 		this.listaFunc.add(f);
 		FuncionarioDAO fDao = new FuncionarioDAOImpl();
 		try {
-			fDao.adicionar(f);
+			fDao.inserir(f);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
-		JOptionPane.showMessageDialog(null, "Funcionario adicionado com sucesso");
 	}
 
 	public Funcionario pesquisarFuncionarioNome(Funcionario func) {
@@ -41,17 +43,15 @@ public class ControleDeFuncionario {
 		return retornado;
 	}
 
-	public void alterarFuncionario(Funcionario func) {
-		Funcionario alterado = null;
-		for (Funcionario f : listaFunc) {
-			if (f.getNome().equals(func.getNome())) {
-				alterado = f;
-				JOptionPane.showMessageDialog(null, "Funcionario alterado com sucesso");
+	public void alterarFuncionario(Funcionario f) {
+		if (f.getId() != 0) {
+			FuncionarioDAO fDao = new FuncionarioDAOImpl();
+			try {
+				fDao.alterar(f);
+			} catch (DAOException e) {
+				e.printStackTrace();
 			}
-		}
-		if (alterado != null) {
-			this.listaFunc.remove(alterado);
-			this.listaFunc.add(func);
+			JOptionPane.showMessageDialog(null, "Funcionario alterado com sucesso");
 		}
 	}
 
@@ -109,6 +109,12 @@ public class ControleDeFuncionario {
 	}
 
 	public ObservableList<Funcionario> getListaFunc() {
+		FuncionarioDAO fDAO = new FuncionarioDAOImpl();
+		try {
+			listaFunc.addAll(fDAO.listar());
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		return listaFunc;
 	}
 
