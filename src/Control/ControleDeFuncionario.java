@@ -3,7 +3,8 @@ package Control;
 import javax.swing.JOptionPane;
 
 import Dao.DAOException;
-import Dao.FucionarioDAOImpl;
+import Dao.FuncionarioDAOImpl;
+import Dao.FuncionarioDAO;
 import Model.Funcionario;
 import Model.TipoUsuario;
 import javafx.collections.FXCollections;
@@ -17,7 +18,7 @@ public class ControleDeFuncionario {
 
 	public void inserirFuncionario(Funcionario f) {
 		this.listaFunc.add(f);
-		FucionarioDAOImpl fDao = new FucionarioDAOImpl();
+		FuncionarioDAO fDao = new FuncionarioDAOImpl();
 		try {
 			fDao.adicionar(f);
 		} catch (DAOException e) {

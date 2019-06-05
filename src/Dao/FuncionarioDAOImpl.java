@@ -9,13 +9,14 @@ import java.util.List;
 
 import ConnectionFactory.GerenciamentoConexao;
 import Model.Funcionario;
-import Model.Produto;
 import Model.TipoUsuario;
 
-public class FucionarioDAOImpl  {
-	public FucionarioDAOImpl() {
+public class FuncionarioDAOImpl implements FuncionarioDAO {
+
+	public FuncionarioDAOImpl() {
 	}
 
+	@Override
 	public void adicionar(Funcionario f) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
@@ -39,7 +40,8 @@ public class FucionarioDAOImpl  {
 			throw new DAOException(e);
 		}
 	}
-
+	
+	@Override
 	public void excluir(Funcionario f) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
@@ -54,6 +56,7 @@ public class FucionarioDAOImpl  {
 		}
 	}
 
+	@Override
 	public void alterar(Funcionario f) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
@@ -75,6 +78,7 @@ public class FucionarioDAOImpl  {
 		}
 	}
 
+	@Override
 	public List<Funcionario> listar(Funcionario f) throws DAOException {
 		List<Funcionario> lista = new ArrayList<>();
 		try {

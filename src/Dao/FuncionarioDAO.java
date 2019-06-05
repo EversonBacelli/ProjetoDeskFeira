@@ -3,7 +3,6 @@ package Dao;
 import java.util.List;
 
 import Model.Funcionario;
-import Model.Produto;
 
 public interface FuncionarioDAO {
 	
