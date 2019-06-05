@@ -19,6 +19,7 @@ import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -49,7 +50,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
 	private Produto p;
 	private LoteProduto loteProduto;
-	LoteProduto lote;
+	private LoteProduto lote;
+	private ObservableList<Model.EstoqueResumo> resumo = FXCollections.observableArrayList();
 	
 	private ImageView img = new ImageView(new Image("file:Images/entrad_lote_prod.png"));	
 	
@@ -65,6 +67,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private TextArea txtDescricao;
 	//
 	private TableView<LoteProduto> table = new TableView<>();
+	private TableView<Model.EstoqueResumo> table1 = new TableView<>();
 	// ----------------------------------
 	// Objetos que fazem parte do Lote Produto
 	private Label lblQtdMax;
@@ -90,17 +93,21 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	//
 	private Button cadastrar;
 	private Button excluir;
+	private Button EstoqueResumo;
+	private Button EstoqueDetalhes;
 	//---------------------------
 	
 	// Estrutura
 	private GridPane pane;
 	private BorderPane panePrincipal;
 	private GridPane topo;
-	private VBox paneRight;
+	private VBox paneDetalhes;
+	private VBox paneResumo;
 	private VBox paneTop;
 	private VBox paneBot;
 	private FlowPane paneLinhaTop;
 	private FlowPane paneLinhaBot;
+	private FlowPane masterDetalhe;
 	//
 	private Line linha1 = new Line();
 	private Line linha2 = new Line();
@@ -120,8 +127,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		marginPaine();
 		adicionandoEstiloElementos();
 		definirColunas();
+		definirColunasResumo();
 		responsividadeLista();
-				
+		calcularResumo();
+		
 		ObservableList<Produto> listProduto = comboNome.getItems();	
 		for(Produto x: controlProd.getListaProd()) 	{listProduto.add(x);}
 		
@@ -132,6 +141,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		comboNome.addEventHandler(ActionEvent.ANY, this);
 		
 		table.addEventHandler(ActionEvent.ANY, this);
+		
+		EstoqueResumo.addEventHandler(ActionEvent.ANY, this);
+		
+		EstoqueDetalhes.addEventHandler(ActionEvent.ANY, this);
 		
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
@@ -174,6 +187,17 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 			{
 				ControleLote.removerLoteProduto(lote);
 			}
+		}
+		
+		if(e.getTarget() == EstoqueResumo) 
+		{
+			panePrincipal.setRight(paneResumo);
+			
+		}
+		
+		if(e.getTarget() == EstoqueDetalhes) 
+		{
+			panePrincipal.setRight(paneDetalhes);
 		}
 	}	
 	
@@ -275,7 +299,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.setMargin(txtdataEntrada, marginPane);
 		pane.setMargin(lblvalidade, marginPane);
 		pane.setMargin(txtvalidade, marginPane);
-		paneRight.setMargin(table, marginRight);
+		paneDetalhes.setMargin(table, marginRight);
+		paneResumo.setMargin(table1, marginRight);
 	}
 	
 	public void telaParaLoteProduto() {
@@ -336,7 +361,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.add(comboNome         , 3, 0);
 		topo.add(lblDescricao      , 4, 0);
 		topo.add(txtDescricao      , 5, 0);
-		
 		paneLinhaTop.getChildren().add(linha1);
 
 		//---------------------------------
@@ -360,8 +384,12 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.add(excluir           ,2 ,9);
 		//---------------------------------
 		
+		masterDetalhe.getChildren().add(EstoqueResumo);
+		masterDetalhe.getChildren().add(EstoqueDetalhes);
+		
 		// Obsjeto da Direita
-		paneRight.getChildren().add(table);
+		paneDetalhes.getChildren().add(table);
+		paneResumo.getChildren().add(table1);
 		paneTop.getChildren().add(topo);
 		paneTop.getChildren().add(paneLinhaTop);
 		paneBot.getChildren().add(linha2);
@@ -370,7 +398,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		// inserir objetos na tela
 		panePrincipal.setTop(paneTop);
 		panePrincipal.setLeft(pane);
-		panePrincipal.setRight(paneRight);
+		panePrincipal.setCenter(masterDetalhe);
+		panePrincipal.setRight(paneDetalhes);
 		panePrincipal.setBottom(paneBot);
 	}
 	
@@ -394,11 +423,14 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane = new GridPane();
 		panePrincipal = new BorderPane();
 		topo = new GridPane();
-		paneRight = new VBox();
+		paneDetalhes = new VBox();
+		paneResumo = new VBox();
 		paneTop = new VBox();
 		paneBot = new VBox();
 		paneLinhaTop = new FlowPane();
 		paneLinhaBot = new FlowPane();
+		masterDetalhe = new FlowPane();
+		
 		
 		// Objetos da Tela
 		lblNome = new Label("Nome do Produto");
@@ -441,6 +473,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		//
 		cadastrar = new Button("Cadastrar");
 		excluir   = new Button(" Excluir ");
+		EstoqueResumo   = new Button("Resumo");
+		EstoqueDetalhes = new Button("Detalhes"); 
 		// ------------------------------------------------------
 	}
 	
@@ -542,4 +576,53 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		table.setItems(ControleLote.getListItem());
 	}
 	
+	public void definirColunasResumo() {
+		
+		TableColumn<Model.EstoqueResumo, Number> colunaID = new TableColumn<>("ID");
+		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getP().getId()));
+		colunaID.setPrefWidth(50);
+
+		
+		TableColumn<Model.EstoqueResumo, String> colunaNome = new TableColumn<>("Nome");
+		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getP().getNome()));
+		colunaNome.setPrefWidth(200);
+
+		
+		TableColumn<Model.EstoqueResumo, Number> colunaQuantidade = new TableColumn<>("Quantidade");
+		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQtd()));
+		colunaQuantidade.setPrefWidth(90);
+		
+		/*
+		TableColumn<LoteProduto, Number> colunaPreco = new TableColumn<>("Preco");
+		colunaPreco.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getValorTortal()));
+		colunaPreco.setPrefWidth(80);
+		*/
+		
+		table1.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
+
+		table1.setItems(getResumo());
+	}
+	
+	public void calcularResumo()
+	{
+		for(Produto x: controlProd.getListaProd()) 
+		{
+			Model.EstoqueResumo rProduto = new Model.EstoqueResumo();
+			rProduto.setP(x);
+			
+			for(LoteProduto l: ControleLote.getListItem()) 
+			{
+				if(x == l.getProduto()) 
+				{
+					rProduto.setQtd(rProduto.getQtd() + l.getQuantidade());
+				}
+			}
+			resumo.add(rProduto);
+		}
+	}
+	
+	public ObservableList<Model.EstoqueResumo> getResumo()
+	{
+		return resumo;
+	}
 }
