@@ -176,6 +176,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 					ControleLote.inserirLoteProduto(lote);
 					limparCampos();
 	      	    }
+				resumo.clear();
+				calcularResumo();
+				table1.setItems(getResumo());
+				
 		}
 		
 		if(e.getTarget() == excluir) 
@@ -399,7 +403,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		panePrincipal.setTop(paneTop);
 		panePrincipal.setLeft(pane);
 		panePrincipal.setCenter(masterDetalhe);
-		panePrincipal.setRight(paneDetalhes);
+		panePrincipal.setRight(paneResumo);
 		panePrincipal.setBottom(paneBot);
 	}
 	
