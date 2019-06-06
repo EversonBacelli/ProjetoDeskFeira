@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import ConnectionFactory.GerenciamentoConexao;
 import Model.Produto;
 
@@ -19,17 +21,16 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
 			System.out.println("Conectado no servidor");
 			String sql = "INSERT INTO produto"
-					+ " (id, nome, descricao, qtdMax, "
-					+ "qtdMin, qtdTempoVida, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ " (nome, descricao, qtdMax, "
+					+ "qtdMin, qtdTempoVida, preco) VALUES (?, ?, ?, ?, ?, ?)";
 			System.out.println("Query de inserção: " + sql);
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setLong(1, p.getId());
-			stmt.setString(2, p.getNome());
-			stmt.setString(3, p.getDescricao());
-			stmt.setInt(4,  p.getQtdMax());
-			stmt.setInt(5, p.getQtdMin());
-			stmt.setInt(6,  p.getQtdTempoVida());
-			stmt.setDouble(7,  p.getPreco());
+			stmt.setString(1, p.getNome());
+			stmt.setString(2, p.getDescricao());
+			stmt.setInt(3,  p.getQtdMax());
+			stmt.setInt(4, p.getQtdMin());
+			stmt.setInt(5,  p.getQtdTempoVida());
+			stmt.setDouble(6,  p.getPreco());
 			stmt.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -43,7 +44,7 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 		Produto p = new Produto();
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "SELECT * FROM produto WHERE nome like ?";
+			String sql = "SELECT * FROM produto WHERE nome = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, "%" + nome + "%");
 			ResultSet rs = stmt.executeQuery();
@@ -52,7 +53,7 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 				p.setNome(rs.getString("nome"));
 				p.setDescricao(rs.getString("descricao"));
 				p.setQtdMax(rs.getInt("qtdMax"));
-				p.setQtdMin(rs.getInt("atdMin"));
+				p.setQtdMin(rs.getInt("qtdMin"));
 				p.setQtdTempoVida(rs.getInt("qtdTempoVida"));
 				p.setPreco(rs.getInt("preco"));
 			}
@@ -69,7 +70,7 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 		Produto p = new Produto();
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "SELECT * FROM produto WHERE nome like ?";
+			String sql = "SELECT * FROM produto WHERE id = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
@@ -78,7 +79,7 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 				p.setNome(rs.getString("nome"));
 				p.setDescricao(rs.getString("descricao"));
 				p.setQtdMax(rs.getInt("qtdMax"));
-				p.setQtdMin(rs.getInt("atdMin"));
+				p.setQtdMin(rs.getInt("qtdMin"));
 				p.setQtdTempoVida(rs.getInt("qtdTempoVida"));
 				p.setPreco(rs.getInt("preco"));
 			}
@@ -127,7 +128,7 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 	}
 
 	@Override
-	public List<Produto> listar(Produto p) throws DAOException {
+	public List<Produto> listar() throws DAOException {
 		List<Produto> lista = new ArrayList<>();
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
@@ -135,11 +136,12 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) { 
+				Produto p = new Produto();
 				p.setId(rs.getInt("id"));
 				p.setNome(rs.getString("nome"));
 				p.setDescricao(rs.getString("descricao"));
 				p.setQtdMax(rs.getInt("qtdMax"));
-				p.setQtdMin(rs.getInt("atdMin"));
+				p.setQtdMin(rs.getInt("qtdMin"));
 				p.setQtdTempoVida(rs.getInt("qtdTempoVida"));
 				p.setPreco(rs.getInt("preco"));
 				lista.add(p);
@@ -150,6 +152,27 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 			throw new DAOException(e);
 		}
 		return lista;
+	}
+
+	@Override
+	public int proximoId() throws DAOException {
+		Connection con;
+		int proxId = 1;
+		try {
+			con = GerenciamentoConexao.getInstance().getConnection();
+			String sql = "select max(id) + 1 AS proximo_id from produto";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				proxId = rs.getInt("proximo_id");
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return proxId;
 	}
 
 }

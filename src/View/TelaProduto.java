@@ -188,7 +188,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		try {
 			int id = Integer.parseInt(tfPesquisar.getText());
 			p.setId(id);
-			p = cp.pesquisarProdutoNomeId(p);
+			p = cp.pesquisarProdutoId(p);
 		} catch (NumberFormatException e) {
 			p.setNome(tfPesquisar.getText());
 			p = cp.pesquisarProdutoNome(p);

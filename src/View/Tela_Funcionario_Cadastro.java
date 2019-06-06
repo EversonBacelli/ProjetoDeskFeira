@@ -99,20 +99,11 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 			Funcionario f = telaParaFuncionario();
 			if (f.getId() == 0) {
 				cf.inserirFuncionario(f);
-				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
-				try {
-					telaListaFuncionario.start(stageAux);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				limparCampos();
 			} else {
 				cf.alterarFuncionario(f);
 				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
-				try {
-					telaListaFuncionario.start(stageAux);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
+				limparCampos();
 			}
 		} else if (e.getTarget() == botaoVoltar) {
 			TelaPrincipal telaPrincipal = new TelaPrincipal();

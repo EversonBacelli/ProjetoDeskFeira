@@ -11,9 +11,11 @@ public interface ProdutoDAO {
 
 	Produto pesquisarId(int id) throws DAOException;
 
-	List<Produto> listar(Produto p) throws DAOException;
+	List<Produto> listar() throws DAOException;
 
 	void excluir(Produto produto) throws DAOException;
 
 	void alterar(Produto p) throws DAOException;
+	
+	int proximoId() throws DAOException;
 }
