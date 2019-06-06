@@ -37,6 +37,22 @@ public class ControleDeLoteProduto {
 		return lista;
 	}
 	
+
+	public ObservableList<LoteProduto> getProdutoAdicionados() {
+		return produtoAdicionados;
+	}
+
+	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
+		this.produtoAdicionados = produtoAdicionados;
+	}
+	
+	public ObservableList<LoteProduto> getListItem() {
+		return listItem;
+	}
+
+	public void setListItem(ObservableList<LoteProduto> listItem) {
+		this.listItem = listItem;
+	}
 	public void alterarEstoque(LoteProduto prodLote, int usuario) 
 	{
 		// reduzir do estoque
@@ -79,20 +95,4 @@ public class ControleDeLoteProduto {
 		}
 		
 	}
-	public ObservableList<LoteProduto> getProdutoAdicionados() {
-		return produtoAdicionados;
-	}
-
-	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
-		this.produtoAdicionados = produtoAdicionados;
-	}
-	
-	public ObservableList<LoteProduto> getListItem() {
-		return listItem;
-	}
-
-	public void setListItem(ObservableList<LoteProduto> listItem) {
-		this.listItem = listItem;
-	}
-
 }

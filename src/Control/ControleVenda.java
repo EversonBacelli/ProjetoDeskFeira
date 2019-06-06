@@ -3,8 +3,11 @@ package Control;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Model.LoteProduto;
 import Model.Produto;
+import Model.ProdutoVendido;
 import Model.Venda;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,14 +15,23 @@ import javafx.collections.ObservableList;
 public class ControleVenda {
 	int id_venda = 0;
 	
-	private ObservableList<Venda> listaProd = FXCollections.observableArrayList();	
+	private ObservableList<Venda> listaVenda = FXCollections.observableArrayList();	
+
 	
 	public void realizarVenda(Venda v) {
-		this.listaProd.add(v);
+		if(validarVenda()) {
+			this.listaVenda.add(v);
+		}
 	}
 	
+//	public void realizarVenda(Venda v) {
+//		if(validarVenda()) {
+//			this.listaVenda.add(v);
+//		}
+//	}
+	
 	public void removerVenda(Venda v) {
-		this.listaProd.remove(v);
+		this.listaVenda.remove(v);
 	}
 	
 	public boolean validarVenda() {
@@ -28,6 +40,55 @@ public class ControleVenda {
 	
 	public int proximoId() {
 		return ++this.id_venda;
+	}
+	
+	public boolean validarVenda(Venda v) {
+		ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
+		List<LoteProduto>listaLote = cLoteProd.getListItem();
+		
+		Boolean compraValidada = true;
+		
+		for(ProdutoVendido pVendido : v.getListaProdutoVendido()) {
+			if(compraValidada) {
+			int quantidade = pVendido.getQuantidade();
+				for(LoteProduto lProduto : listaLote) {
+					if(pVendido.getProduto().equals(lProduto.getProduto()) && quantidade != 0) {
+						if(quantidade > 0) {
+							if(pVendido.getQuantidade() < lProduto.getQuantidade()) {
+								lProduto.setQuantidade(lProduto.getQuantidade() - quantidade);
+							}else {
+								quantidade = quantidade - lProduto.getQuantidade();
+								lProduto.setQuantidade(0);
+							}
+						}
+					}
+				}
+				if(quantidade > 0) {
+					compraValidada = false;
+				}
+			}
+		}
+		
+		if(compraValidada) {
+			realizarVenda(v);
+			
+		}
+		return validarVenda();
+	}
+	
+	public void abaterLote(List<LoteProduto> listaLote) {
+		ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
+		for(LoteProduto loteProd : listaLote) {
+			if(loteProd.getQuantidade() == 0) {
+				cLoteProd.removerLoteProduto(loteProd);
+			}else {
+				
+			}
+		}
+	}
+	
+	public void quantidadeTotalProd() {
+		
 	}
 	
 //	public void realizarVenda(Venda venda) {
