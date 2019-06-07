@@ -56,16 +56,16 @@ public class ControleDeFuncionario {
 	}
 
 	public void removerFuncionario(Funcionario func) {
-		Funcionario removido = null;
-		for (Funcionario f : listaFunc) {
-			if (f.getNome().equals(func.getNome())) {
-				removido = f;
-				JOptionPane.showMessageDialog(null, "Funcionario removido com sucesso");
-				break;
-			}
-		}
-		if (removido != null) {
-			this.listaFunc.remove(removido);
+		FuncionarioDAO fDao = new FuncionarioDAOImpl();
+		try {
+			fDao.excluir(func);
+			listaFunc.clear();
+			listaFunc.setAll(fDao.listar());
+			listaFunc2.clear();
+			listaFunc2.setAll(listaFunc);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
