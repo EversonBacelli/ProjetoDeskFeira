@@ -269,6 +269,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.linha2.setStartX(0);
 		this.linha2.setEndX(980);
 		
+		this.tfId.setEditable(false);
+		this.tfId.setStyle("-fx-background-color: #999999;");
+		
 	}
 
 	public void adicionandoMarginsPainel() {
