@@ -50,8 +50,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private FlowPane painelLateral7 = new FlowPane();
 	private FlowPane painelButtons = new FlowPane();
 	private FlowPane painelPesquisarElementos = new FlowPane();
-	
-	
+		
 	private Scene scn = new Scene(painelPrincipal, 1000, 563);
 	
 	private Label lblId = new Label("ID");
@@ -62,7 +61,6 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Label lblTempoVida = new Label("Tempo de Vida");
 	private Label lblPreco = new Label("Preco");	
 
-	
 	private TextField tfId = new TextField();
 	private TextField tfNome = new TextField();
 	private TextArea tfDescricao = new TextArea();
@@ -104,8 +102,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		stage.show();
 	}
 	
-	
-	
+
 	@Override
 	public void handle(ActionEvent e) {
 		if(e.getTarget() == btnPesquisar) {
@@ -191,7 +188,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelPesquisarElementos.getChildren().add(this.btnPesquisar);
 		
 		this.painelTopo.getChildren().add(img);
-		this.painelTopo.getChildren().add(linha2);
+		this.painelTopo.getChildren().add(img);
+		this.painelPrincipal.setTop(this.painelTopo);
+		
 
 
 	}
