@@ -191,6 +191,9 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 
 		this.botaoSalvar.setPrefHeight(40);
 		this.botaoSalvar.setPrefWidth(200);
+		
+		this.tfId.setEditable(false);
+		this.tfId.setStyle("-fx-background-color: #e0e0d1;");
 	}
 
 	public void adicionandoEventos() {

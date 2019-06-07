@@ -270,7 +270,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.linha2.setEndX(980);
 		
 		this.tfId.setEditable(false);
-		this.tfId.setStyle("-fx-background-color: #999999;");
+		this.tfId.setStyle("-fx-background-color: #e0e0d1;");
 		
 	}
 
