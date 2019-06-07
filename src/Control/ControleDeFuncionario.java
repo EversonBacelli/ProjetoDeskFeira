@@ -68,7 +68,7 @@ public class ControleDeFuncionario {
 			e.printStackTrace();
 		}
 	}
-
+//
 	public boolean funcionarioExiste(Funcionario func) {
 		boolean existe = false;
 		for (Funcionario f : listaFunc) {
