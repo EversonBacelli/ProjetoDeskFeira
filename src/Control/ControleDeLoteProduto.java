@@ -43,7 +43,6 @@ public class ControleDeLoteProduto {
 		int reduzir = prodLote.getQuantidade();
 		int qtdTotal = 0;
 		
-		
 		// calcular quantidade de produto em estoque
 		for(LoteProduto p: this.listItem) {	qtdTotal += p.getQuantidade();}
 		
@@ -79,6 +78,7 @@ public class ControleDeLoteProduto {
 		}
 		
 	}
+	
 	public ObservableList<LoteProduto> getProdutoAdicionados() {
 		return produtoAdicionados;
 	}

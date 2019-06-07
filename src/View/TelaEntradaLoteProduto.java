@@ -81,9 +81,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	Label lblNome = new Label("Nome do Produto");
 	ComboBox <Produto>comboNome = new ComboBox<Produto>();
 	//
-	Label lblID = new Label("Numero de Identificação");
-	TextField txtID = new TextField();
-	//
 	Label lblDescricao = new Label("Descricao Produto");
 	TextArea txtDescricao = new TextArea();
 	//
@@ -138,7 +135,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		controleResumo.calcularResumo(controlProd, ControleLote);
 		
-		
 		ObservableList<Produto> listProduto = comboNome.getItems();	
 		for(Produto x: controlProd.getListaProd()) 	{listProduto.add(x);}
 		
@@ -178,8 +174,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 				if(verificarCampos()) 
 				{
 					lote = new LoteProduto();
-					lote.setProduto(comboNome.getValue());
-					lote.setId(Integer.parseInt(txtID.getText())); 
+					lote.setProduto(comboNome.getValue()); 
 					lote.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
 					lote.setDataValidade(txtTempoVida.getText());
 					lote.setDataEntrada(txtdataEntrada.getText());
@@ -230,7 +225,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	public void telaParaLoteProduto() 
 	{
 		loteProduto.setProduto(p);
-		loteProduto.setId(Integer.parseInt(txtID.getText()));
 		loteProduto.setDataValidade(txtvalidade.getText());
 		loteProduto.setDataEntrada(txtdataEntrada.getText());
 		loteProduto.setQuantidade(Integer.parseInt(txtQtdDisponivel.getText()));
@@ -238,7 +232,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 
 	public void preencherDadosProdutoSelecionado() 
 	{
-		txtID.setText(Integer.toString(p.getId()));
+		// txtID.setText();
 		txtDescricao.setText(p.getDescricao());
 		txtQtdMax.setText(Integer.toString(p.getQtdMax()));
 		txtQtdMin.setText(Integer.toString(p.getQtdMin()));
@@ -253,8 +247,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private void inserirObjetosTela() 
 	{
 		// Objetos do Topo ------------------
-		topo.add(lblID             , 0, 0);
-		topo.add(txtID             , 1, 0);
 		topo.add(lblNome           ,2, 0 );
 		topo.add(comboNome         , 3, 0);
 		topo.add(lblDescricao      , 4, 0);
@@ -305,17 +297,13 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	public void adicionandoEstiloElementos() 
 	{
 		panePrincipal.setStyle("-fx-background-color: #ADFF2F;");
-		lblID.setFont(new Font(12));
 		lblNome.setFont(new Font(12));
 		lblDescricao.setFont(new Font(12));
 		
-		lblID.setStyle("-fx-font-weight: bold");
 		lblNome.setStyle("-fx-font-weight: bold");
 		lblDescricao.setStyle("-fx-font-weight: bold");
 		btnVoltar.setStyle("-fx-font-weight: bold");
 		
-		
-		txtID.setFont(new Font(12));
 		txtDescricao.setFont(new Font(12));
 		
 		this.linha1.setStroke(Color.LIGHTSKYBLUE);
@@ -410,7 +398,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	// ---------------------------------------------------------------
 	void preencherInformacaoProduto() 
 	{
-		txtID.appendText(Integer.toString(p.getId()));
 		txtDescricao.appendText(p.getDescricao());
 		txtQtdMax.appendText(Integer.toString(p.getQtdMax()));
 		txtQtdMin.appendText(Integer.toString(p.getQtdMin()));
@@ -420,13 +407,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	boolean verificarCampos() 
 	{
-		if(txtID.getText().equals("") ) 
-		{
-			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
-			return false;
-			
-		} else
-		{
 			if(txtQtdDisponivel.getText().equals("")) 
 			{
 				JOptionPane.showMessageDialog(null, "Preencher todos os campos");
@@ -434,8 +414,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 			} else 
 			{
 				return true;
-			}
-		} 
+			}	 
 	}
 	// -----------------------------------------------------------------------
 	
@@ -460,7 +439,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	void editarTamanhoTXT()
 	{
-		txtID.setMaxSize(50,100);
 		comboNome.setMaxSize(400,30);
 		txtDescricao.setMaxSize(200, 100);
 		txtQtdMax.setMaxSize(50,40);
@@ -475,7 +453,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	void limparCampos() 
 	{
 		comboNome.getSelectionModel().clearSelection();
-		txtID.setText("");
 		txtDescricao.setText(""); 
 		txtQtdMax.setText("");
 	    txtQtdMin.setText("");
@@ -494,8 +471,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		topo.setMargin(lblNome, margin);
 		topo.setMargin(comboNome, margin);
-		topo.setMargin(lblID, margin);
-		topo.setMargin(txtID, margin);
 		topo.setMargin(lblDescricao, margin);
 		topo.setMargin(txtDescricao, margin);
 		topo.setMargin(btnVoltar, margin);
@@ -584,12 +559,11 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	public void bloquear() 
 	{
-	txtTempoVida.setEditable(false);
-	txtdataEntrada.setEditable(false);
-	txtPreco.setEditable(false);
-	txtQtdMin.setEditable(false);
-	txtQtdMax.setEditable(false);
-	txtDescricao.setEditable(false);
-	txtID.setEditable(false);
+		txtTempoVida.setEditable(false);
+		txtdataEntrada.setEditable(false);
+		txtPreco.setEditable(false);
+		txtQtdMin.setEditable(false);
+		txtQtdMax.setEditable(false);
+		txtDescricao.setEditable(false);
 	}
 }
