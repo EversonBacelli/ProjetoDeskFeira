@@ -27,10 +27,6 @@ public class ControleDeLoteProduto {
 	
 	public void removerLoteProduto(LoteProduto p) { listItem.remove(p);}
 	
-	public void alterarLoteProduto(LoteProduto p) {
-		
-	}
-	
 	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{
 		List<LoteProduto> lista = new ArrayList();
@@ -41,22 +37,6 @@ public class ControleDeLoteProduto {
 		return lista;
 	}
 	
-
-	public ObservableList<LoteProduto> getProdutoAdicionados() {
-		return produtoAdicionados;
-	}
-
-	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
-		this.produtoAdicionados = produtoAdicionados;
-	}
-	
-	public ObservableList<LoteProduto> getListItem() {
-		return listItem;
-	}
-
-	public void setListItem(ObservableList<LoteProduto> listItem) {
-		this.listItem = listItem;
-	}
 	public void alterarEstoque(LoteProduto prodLote, int usuario) 
 	{
 		// reduzir do estoque
@@ -97,6 +77,25 @@ public class ControleDeLoteProduto {
 				}
 			}
 		}
+		
+	}
+	public ObservableList<LoteProduto> getProdutoAdicionados() {
+		return produtoAdicionados;
+	}
+
+	public void setProdutoAdicionados(ObservableList<LoteProduto> produtoAdicionados) {
+		this.produtoAdicionados = produtoAdicionados;
+	}
+	
+	public ObservableList<LoteProduto> getListItem() {
+		return listItem;
+	}
+
+	public void setListItem(ObservableList<LoteProduto> listItem) {
+		this.listItem = listItem;
+	}
+	
+	public void alterarLoteProduto(LoteProduto p) {
 		
 	}
 }
