@@ -275,7 +275,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	}
 
 	public void adicionandoMarginsPainel() {
-
+//
 		Insets margin = new Insets(20, 20, 20, 20);
 		Insets marginRight = new Insets(0, 50, 0, 0);
 		Insets marginLeft = new Insets(0, 0, 0, 15);
