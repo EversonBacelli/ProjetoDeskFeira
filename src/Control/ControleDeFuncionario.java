@@ -20,10 +20,11 @@ public class ControleDeFuncionario {
 	private ObservableList<TipoUsuario> listaTipo = FXCollections.observableArrayList(TipoUsuario.values());
 
 	public void inserirFuncionario(Funcionario f) {
-		this.listaFunc.add(f);
+		
 		FuncionarioDAO fDao = new FuncionarioDAOImpl();
 		try {
 			fDao.inserir(f);
+			this.listaFunc.add(f);
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}
@@ -61,15 +62,25 @@ public class ControleDeFuncionario {
 			fDao.excluir(func);
 			listaFunc.clear();
 			listaFunc.setAll(fDao.listar());
-			listaFunc2.clear();
-			listaFunc2.setAll(listaFunc);
+			removerFuncionarioLista2(func);
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 //
-
+	public void removerFuncionarioLista2(Funcionario func) {
+		Funcionario removido = null;
+		for(Funcionario f : this.getListaFunc2()) {
+			if(func.getNome().equals(f.getNome())) {
+				removido = f;
+			}
+		}
+		if (removido != null) {
+			this.listaFunc2.remove(removido);
+		}
+	}
+	
 	public void preencheLista2() {
 		if (this.listaFunc2.isEmpty()) {
 			this.listaFunc2.setAll(getListaFunc());
