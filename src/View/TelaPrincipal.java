@@ -25,10 +25,13 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	private MenuBar barra_Menu;
 	private Menu menu_Funcio;
 	private Menu menu_Produ_Lote;
+	private Menu menu_Relatorio;
+	private MenuItem item_Relatorio;
 	private MenuItem item_Funcio_Cad;
 	private MenuItem item_Funcio_List;
 	private MenuItem item_Produ;
 	private MenuItem item_Lote;
+	
 	// MenuItem menuItem1;
 	// listar funcionario
 	//
@@ -46,24 +49,28 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		gridPane1 = new GridPane();
 		box1 = new VBox();
 		barra_Menu = new MenuBar();
-
+		
+		
 		menu_Funcio = new Menu("Funcionário");
-		menu_Produ_Lote = new Menu("Produto e Lote");
-
-		item_Funcio_Cad = new MenuItem("Cadastrar");
-		item_Funcio_List = new MenuItem("Listar");
-		item_Produ = new MenuItem("Produto");
-		item_Lote = new MenuItem("Lote");
-
+		menu_Produ_Lote = new Menu(" Produto e Lote ");
+		menu_Produ_Lote = new Menu(" Produto e Lote ");
+		menu_Relatorio = new Menu (" Relatórios ");
+		
+		item_Funcio_Cad    = new MenuItem(" Cadastrar ");
+		item_Funcio_List   = new MenuItem(" Listar ");
+		item_Produ         = new MenuItem(" Produto ");
+		item_Lote          = new MenuItem(" Lote ");
+		item_Relatorio     = new MenuItem(" Relatório ");
 		// -----------------------------------------------------------
 		menu_Funcio.getItems().add(item_Funcio_Cad);
 		menu_Funcio.getItems().add(item_Funcio_List);
 		menu_Produ_Lote.getItems().add(item_Produ);
 		menu_Produ_Lote.getItems().add(item_Lote);
+		menu_Relatorio.getItems().add(item_Relatorio);
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(menu_Funcio);
 		barra_Menu.getMenus().add(menu_Produ_Lote);
-
+		barra_Menu.getMenus().add(menu_Relatorio);
 		// -----------------------------------------------------------
 		box1.getChildren().add(barra_Menu);
 
@@ -76,7 +83,8 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		item_Produ.addEventHandler(ActionEvent.ANY, this);
 		item_Lote.addEventHandler(ActionEvent.ANY, this);
 		item_Funcio_List.addEventHandler(ActionEvent.ANY, this);
-
+		item_Relatorio.addEventHandler(ActionEvent.ANY, this);
+		
 		Scene scn = new Scene(borderPane1, 1000, 563);
 		stage.setTitle(" TELA PRINCIPAL ");
 		stage.setScene(scn);
@@ -98,11 +106,12 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			}else if (e.getTarget() == item_Lote) {
 				TelaEntradaLoteProduto entradaLoteProduto = new TelaEntradaLoteProduto();
 				entradaLoteProduto.start(stageAux);
-			}
+			} else if (e.getTarget() == item_Relatorio) {
+				TelaRelatorio entradaRelatorio = new TelaRelatorio();
+				entradaRelatorio.start(stageAux);
+			} 
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
-
-
 }

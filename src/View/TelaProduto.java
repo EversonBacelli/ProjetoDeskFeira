@@ -32,6 +32,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaProduto extends Application implements EventHandler<ActionEvent>{
+	private static Stage stageAux;
 	private TableView<Produto> table = new TableView<>();
 	private ImageView img = new ImageView(new Image("file:Images/gerenciamento_prod.png"));
 	private BorderPane painelPrincipal = new BorderPane();
@@ -74,6 +75,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Button btnPesquisar = new Button("PESQUISAR");
 	private Button btnSalvar = new Button("SALVAR");
 	private Button btnExcluir = new Button("EXCLUIR");
+	private Button btnVoltar = new Button();
 	
 	private Line linha = new Line();
 	private Line linha2 = new Line();
@@ -120,14 +122,25 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 			Produto p = viewParaProduto();
 			limparCampos();
 			cp.removerProduto(p);
-
 		}	
+		if(e.getTarget() == btnVoltar) 
+		{
+			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			try {
+				telaPrincipal.start(stageAux);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
-	public void adicionarEventos() {
+	
+	public void adicionarEventos() 
+	{
 		btnPesquisar.addEventHandler(ActionEvent.ANY, this);
 		btnSalvar.addEventHandler(ActionEvent.ANY, this);
 		btnExcluir.addEventHandler(ActionEvent.ANY, this);
+		btnVoltar.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	public void adicionandoFilhosPainel() {

@@ -50,7 +50,7 @@ import javafx.stage.Stage;
 
 
 public class TelaEntradaLoteProduto extends Application implements EventHandler<ActionEvent>{
-	
+	private static Stage stageAux;
 	// Instancia--------------------------------------------------------------
 	private ControleProduto controlProd = new ControleProduto();
 	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
@@ -112,7 +112,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	Button excluir   = new Button(" Excluir ");
 	Button btnEstoqueResumo   = new Button("Resumo");
 	Button btnEstoqueDetalhes = new Button("Detalhes"); 
-
+	Button btnVoltar = new Button("  Voltar  ");
+	
 	private Line linha1 = new Line();
 	private Line linha2 = new Line();
 	
@@ -141,15 +142,17 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		Scene scn = new Scene(panePrincipal, 1100, 563);
 		
-		pane.addEventFilter(ActionEvent.ANY, this);
+		this.pane.addEventFilter(ActionEvent.ANY, this);
 
-		comboNome.addEventHandler(ActionEvent.ANY, this);
+		this.comboNome.addEventHandler(ActionEvent.ANY, this);
 		
-		table.addEventHandler(ActionEvent.ANY, this);
+		this.table.addEventHandler(ActionEvent.ANY, this);
 		
-		btnEstoqueResumo.addEventHandler(ActionEvent.ANY, this);
+		this.btnEstoqueResumo.addEventHandler(ActionEvent.ANY, this);
 		
-		btnEstoqueDetalhes.addEventHandler(ActionEvent.ANY, this);
+		this.btnEstoqueDetalhes.addEventHandler(ActionEvent.ANY, this);
+		
+		this.btnVoltar.addEventHandler(ActionEvent.ANY, this);
 		
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
@@ -186,6 +189,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 				table1.setItems(controleResumo.getListaResumo());
 		}
 		
+		
 		if(e.getTarget() == excluir) 
 		{
 			if(this.lote.equals(null) )
@@ -199,13 +203,21 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		if(e.getTarget() == btnEstoqueResumo) 
 		{
-			panePrincipal.setRight(paneResumo);
-			
+			panePrincipal.setRight(paneResumo);	
 		}
 		
 		if(e.getTarget() == btnEstoqueDetalhes) 
 		{
 			panePrincipal.setRight(paneDetalhes);
+		}
+		
+		if (e.getTarget() == btnVoltar) {
+			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			try {
+				telaPrincipal.start(stageAux);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 	}	
 	
@@ -245,6 +257,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.add(comboNome         , 3, 0);
 		topo.add(lblDescricao      , 4, 0);
 		topo.add(txtDescricao      , 5, 0);
+		topo.add(btnVoltar         , 6, 0);
 		paneLinhaTop.getChildren().add(linha1);
 
 		
@@ -297,6 +310,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		lblID.setStyle("-fx-font-weight: bold");
 		lblNome.setStyle("-fx-font-weight: bold");
 		lblDescricao.setStyle("-fx-font-weight: bold");
+		btnVoltar.setStyle("-fx-font-weight: bold");
+		
 		
 		txtID.setFont(new Font(12));
 		txtDescricao.setFont(new Font(12));
@@ -403,7 +418,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	boolean verificarCampos() 
 	{
-		System.out.println("Passei aqui");
 		if(txtID.getText().equals("") ) 
 		{
 			JOptionPane.showMessageDialog(null, "Preencher todos os campos");
@@ -482,6 +496,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.setMargin(txtID, margin);
 		topo.setMargin(lblDescricao, margin);
 		topo.setMargin(txtDescricao, margin);
+		topo.setMargin(btnVoltar, margin);
 		paneLinhaTop.setMargin(linha1,margin);
 		paneLinhaBot.setMargin(linha2, margin);
 		pane.setMargin(lblQtdMax, marginPane);
