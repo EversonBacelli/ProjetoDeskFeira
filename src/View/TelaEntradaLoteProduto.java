@@ -113,6 +113,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	Button btnEstoqueResumo   = new Button("Resumo");
 	Button btnEstoqueDetalhes = new Button("Detalhes"); 
 	Button btnVoltar = new Button("  Voltar  ");
+
 	
 	private Line linha1 = new Line();
 	private Line linha2 = new Line();
@@ -124,6 +125,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	@Override
 	public void start(Stage tela) throws Exception {
+		stageAux = tela;
 		bloquear();
 		inserirObjetosTela();
 		editarTamanhoTXT();

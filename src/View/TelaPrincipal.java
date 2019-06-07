@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -43,7 +45,8 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	@Override
 	public void start(Stage stage) throws Exception {
 		stageAux = stage;
-
+		ImageView img = new ImageView(new Image("file:Images/entrad_lote_prod.png"));
+		
 		// Inicializar
 		borderPane1 = new BorderPane();
 		gridPane1 = new GridPane();
@@ -77,7 +80,8 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		// -----------------------------------------------------------
 		borderPane1.setTop(box1);
 		borderPane1.setCenter(gridPane1);
-
+		this.borderPane1.setStyle("-fx-background-color: #FDA50F");
+		borderPane1.setBottom(img);
 		// -----------------------------------------------------------
 		item_Funcio_Cad.addEventHandler(ActionEvent.ANY, this);
 		item_Produ.addEventHandler(ActionEvent.ANY, this);

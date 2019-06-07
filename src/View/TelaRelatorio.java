@@ -41,7 +41,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	private ImageView imgEstoque = new ImageView(new Image("file:Images/Estoque.jpg"));
 	private ImageView imgVenda = new ImageView(new Image("file:Images/Venda.png"));
 	private ImageView imgValidade = new ImageView(new Image("file:Images/Validade.png"));
-	
+	Button btnVoltar = new Button("  Voltar  ");
 	
 	MenuBar barra_Menu;
 	Menu rel_venda;
@@ -103,6 +103,15 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 				}
 			}
 		}
+		if(e.getTarget() == btnVoltar) 
+		{
+			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			try {
+				telaPrincipal.start(stageAux);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 	
 	
@@ -145,7 +154,8 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	this.linha1.setEndX(900);
 	}
 	
-	private void relatorioVenda() {
+	private void relatorioVenda() 
+	{
 		paneVenda.getChildren().add(tblVenda);
 	}
 	
@@ -187,7 +197,8 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		box1.getChildren().add(barra_Menu);
 
 		// -----------------------------------------------------------
-		borderPane1.setTop(box1);
+		borderPane1.setCenter(box1);
+		borderPane1.setRight(btnVoltar);
 	}
 	
 	
@@ -196,10 +207,12 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		item_listarVenda.addEventHandler(ActionEvent.ANY, this);
 		item_listarEstoque.addEventHandler(ActionEvent.ANY, this);
 		item_listarVencidos.addEventHandler(ActionEvent.ANY, this);
+		btnVoltar.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	
-	public void definirColunasVenda() {
+	public void definirColunasVenda() 
+	{
 		TableColumn<ProdutoVendido, Number> colunaID = new TableColumn<>("ID");
 		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getIdProduto()));
 		colunaID.setPrefWidth(50);
@@ -221,15 +234,14 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		colunaTotal.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper
 		(itemData.getValue().getQuantidade()*itemData.getValue().getValorTortal()));
 		colunaTotal.setPrefWidth(80);
-		
-				
+					
 		tblVenda.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
 		tblVenda.setItems(cpVendido.getListaProd());
 	}
 
+	
 	public void definirColunasEstoqueQuantidade() 
 	{
-		
 		TableColumn<LoteProduto, Number> colunaID = new TableColumn<>("ID");
 		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
 		colunaID.setPrefWidth(50);
@@ -252,6 +264,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 
 		tblQuantidade.setItems(cLote.getListItem());
 	}
+	
 	
 	public void definirColunasEstoqueVencido() 
 	{

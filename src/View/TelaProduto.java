@@ -40,7 +40,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private VBox painelTopo = new VBox();
 	private VBox painelLateral = new VBox();
 	private VBox painelCentral = new VBox();
-
+	private FlowPane elementosTopo = new FlowPane();
+	
 	private FlowPane painelLateral1 = new FlowPane();
 	private FlowPane painelLateral2 = new FlowPane();
 	private FlowPane painelLateral3 = new FlowPane();
@@ -73,7 +74,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private Button btnPesquisar = new Button("PESQUISAR");
 	private Button btnSalvar = new Button("SALVAR");
 	private Button btnExcluir = new Button("EXCLUIR");
-	private Button btnVoltar = new Button();
+	private Button btnVoltar = new Button(" VOLTAR ");
 	
 	private Line linha = new Line();
 	private Line linha2 = new Line();
@@ -87,15 +88,14 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		
+		stageAux = stage;
 		adicionandoEstiloElementos();
 		adicionandoFilhosPainel();
 		adicionandoMarginsPainel();
 		adicionarEventos();
 		definirColunas();
 		responsividadeLista();
-		
-		
+			
 		stage.setResizable(false);
 		stage.setScene(scn);
 		stage.setTitle("Gerenciamento de produto");
@@ -187,12 +187,10 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelPesquisarElementos.getChildren().add(this.tfPesquisar);
 		this.painelPesquisarElementos.getChildren().add(this.btnPesquisar);
 		
-		this.painelTopo.getChildren().add(img);
-		this.painelTopo.getChildren().add(btnVoltar);
+		this.painelTopo.getChildren().add(elementosTopo);
+		this.elementosTopo.getChildren().add(img);
+		this.elementosTopo.getChildren().add(btnVoltar);
 		this.painelPrincipal.setTop(this.painelTopo);
-		
-
-
 	}
 	
 	public void pesquisarProduto() {
