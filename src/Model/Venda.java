@@ -23,7 +23,7 @@ public class Venda {
 		return listaProdutoVendido;
 	}
 
-	public void setProdutoVendido(List<ProdutoVendido> listaProdutoVendido) {
+	public void setListaProdutoVendido(List<ProdutoVendido> listaProdutoVendido) {
 		this.listaProdutoVendido = listaProdutoVendido;
 	}
 

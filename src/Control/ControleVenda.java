@@ -47,8 +47,10 @@ public class ControleVenda {
 		List<LoteProduto>listaLote = cLoteProd.getListItem();
 		
 		Boolean compraValidada = true;
+		Boolean passou = false;
 		
 		for(ProdutoVendido pVendido : v.getListaProdutoVendido()) {
+			passou = true;
 			if(compraValidada) {
 			int quantidade = pVendido.getQuantidade();
 				for(LoteProduto lProduto : listaLote) {
@@ -56,7 +58,7 @@ public class ControleVenda {
 						if(quantidade > 0) {
 							if(pVendido.getQuantidade() < lProduto.getQuantidade()) {
 								lProduto.setQuantidade(lProduto.getQuantidade() - quantidade);
-							}else {
+							}else if(lProduto.getQuantidade() > 0){
 								quantidade = quantidade - lProduto.getQuantidade();
 								lProduto.setQuantidade(0);
 							}
@@ -69,9 +71,9 @@ public class ControleVenda {
 			}
 		}
 		
-		if(compraValidada) {
+		if(compraValidada && passou) {
 			realizarVenda(v);
-			
+			abaterLote(listaLote);
 		}
 		return validarVenda();
 	}
@@ -82,14 +84,11 @@ public class ControleVenda {
 			if(loteProd.getQuantidade() == 0) {
 				cLoteProd.removerLoteProduto(loteProd);
 			}else {
-				
+				cLoteProd.alterarLoteProduto(loteProd);
 			}
 		}
 	}
 	
-	public void quantidadeTotalProd() {
-		
-	}
 	
 //	public void realizarVenda(Venda venda) {
 //		// criando o metodo para usar a alteração da quantidade dentro do

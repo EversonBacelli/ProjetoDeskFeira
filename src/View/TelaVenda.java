@@ -262,7 +262,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		if(cpv.getListaProd() != null) {
 			v.setId(Integer.parseInt(this.tfIdVenda.getText()));
 			v.setDataVenda(this.tfDataVenda.getText());
-			v.setListaLoteProduto(cpv.getListaProd());
+			v.setListaProdutoVendido(cpv.getListaProd());
 			v.setQtdVenda(Integer.parseInt(this.tfQtdVendida.getText()));
 			v.setValorTotal(Double.parseDouble(this.tfValorTotal.getText()));
 			JOptionPane.showMessageDialog(null, "Venda realizada com sucesso");

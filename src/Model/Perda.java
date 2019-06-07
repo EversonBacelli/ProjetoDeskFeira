@@ -3,7 +3,10 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Perda {
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+public class Perda{
          List<LoteProduto> listPerda = new ArrayList();
 
          int qtdPerda;
@@ -14,6 +17,7 @@ public class Perda {
 			this.qtdPerda = qtdPerda;
 			this.data = data;
 			listPerda.add(item);
-		} 
+		}
+
 }
 

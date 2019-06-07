@@ -27,6 +27,10 @@ public class ControleDeLoteProduto {
 	
 	public void removerLoteProduto(LoteProduto p) { listItem.remove(p);}
 	
+	public void alterarLoteProduto(LoteProduto p) {
+		
+	}
+	
 	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{
 		List<LoteProduto> lista = new ArrayList();
