@@ -69,29 +69,6 @@ public class ControleDeFuncionario {
 		}
 	}
 //
-	public boolean funcionarioExiste(Funcionario func) {
-		boolean existe = false;
-		for (Funcionario f : listaFunc) {
-			if (f.getNome().equals(func.getNome())) {
-				existe = true;
-			}
-		}
-		return existe;
-	}
-
-	public Funcionario pesquisarFuncionarioId(Funcionario func) {
-		Funcionario retornado = new Funcionario();
-		for (Funcionario f : listaFunc) {
-			if (f.getId() == func.getId()) {
-				JOptionPane.showMessageDialog(null, "Funcionario Encontrado");
-				return f;
-			}
-		}
-		if (retornado.getId() == 0) {
-			JOptionPane.showMessageDialog(null, "FUNCIONARIO NÃO ENCONTRADO");
-		}
-		return retornado;
-	}
 
 	public void preencheLista2() {
 		if (this.listaFunc2.isEmpty()) {
