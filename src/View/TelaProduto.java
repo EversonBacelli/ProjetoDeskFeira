@@ -188,7 +188,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		this.painelPesquisarElementos.getChildren().add(this.btnPesquisar);
 		
 		this.painelTopo.getChildren().add(img);
-		this.painelTopo.getChildren().add(img);
+		this.painelTopo.getChildren().add(btnVoltar);
 		this.painelPrincipal.setTop(this.painelTopo);
 		
 
