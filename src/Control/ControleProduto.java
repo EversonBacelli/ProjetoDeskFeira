@@ -17,7 +17,8 @@ public class ControleProduto {
 
 	private ObservableList<Produto> listaProd = FXCollections.observableArrayList();
 
-	public void inserirProduto(Produto p) {
+	public void inserirProduto(Produto p) 
+	{
 		ProdutoDAO pDao = new ProdutoDAOImpl();
 		try {
 			pDao.adicionar(p);
@@ -26,7 +27,10 @@ public class ControleProduto {
 			e.printStackTrace();
 		}
 	}
-	public Produto pesquisarProdutoNome(Produto produtoPesquisado) {
+	
+	
+	public Produto pesquisarProdutoNome(Produto produtoPesquisado) 
+	{
 		ProdutoDAO pDao = new ProdutoDAOImpl();
 		try {
 			produtoPesquisado = (pDao.pesquisarNome(produtoPesquisado.getNome()));
@@ -36,8 +40,9 @@ public class ControleProduto {
 		return produtoPesquisado;
 	}
 	
-	public void alterarProduto(Produto produtoAlterado) {
-
+	
+	public void alterarProduto(Produto produtoAlterado) 
+	{
 		ProdutoDAO pDao = new ProdutoDAOImpl();
 		try {
 			pDao.alterar(produtoAlterado);
@@ -47,7 +52,6 @@ public class ControleProduto {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 	}
 	
 	public void removerProduto(Produto prod) {
@@ -87,7 +91,13 @@ public class ControleProduto {
 	}
 	
 	
-	public ObservableList<Produto> getListaProd() {
+	public ObservableList<Produto> getListaProd() 
+	{
+		return listaProd;
+	}
+	
+	
+	public ObservableList<Produto> getListaProdDAO() {
 		ProdutoDAO pDao = new ProdutoDAOImpl();
 		try {
 			this.listaProd.clear();
@@ -98,6 +108,8 @@ public class ControleProduto {
 		}
 		return listaProd;
 	}
+	
+	
 	public void setListaProd(ObservableList<Produto> listaProd) {
 		this.listaProd = listaProd;
 	}

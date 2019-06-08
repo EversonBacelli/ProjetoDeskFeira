@@ -1,5 +1,6 @@
 package Control;
 
+import java.util.List;
 import java.util.Observer;
 
 import Model.EstoqueResumo;
@@ -23,13 +24,14 @@ public class ControleEstoqueResumo {
 	
 	public void calcularResumo(ControleProduto cProduto, ControleDeLoteProduto cLote)
 	{
+		List<LoteProduto> listaProd = cLote.getListItem();
 		for(Produto x: cProduto.getListaProd()) 
 		{		
 			EstoqueResumo rProduto = new EstoqueResumo();
 			rProduto.setP(x);
 			listaResumo.add(rProduto);
 			
-			for(LoteProduto l: cLote.getListItem()) 
+			for(LoteProduto l: listaProd) 
 			{
 				if(x == l.getProduto()) 
 				{

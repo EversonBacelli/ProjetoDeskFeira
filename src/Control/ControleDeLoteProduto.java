@@ -112,7 +112,12 @@ public class ControleDeLoteProduto {
 	
 	public ObservableList<LoteProduto> getListItem() 
 	{
-		return listItem;
+		if(listItem.isEmpty()) {
+			return getListItemDAO();
+		}else {
+			return listItem;			
+		}
+
 	}
 	
 	
