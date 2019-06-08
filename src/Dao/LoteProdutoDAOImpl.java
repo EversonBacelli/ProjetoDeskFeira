@@ -9,6 +9,7 @@ import java.util.List;
 
 import ConnectionFactory.GerenciamentoConexao;
 import Model.LoteProduto;
+import Model.Produto;
 
 public class LoteProdutoDAOImpl implements LoteProdutoDAO{
 
@@ -21,15 +22,14 @@ public class LoteProdutoDAOImpl implements LoteProdutoDAO{
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
 			System.out.println("Conectado no servidor");
 			String sql = "INSERT INTO loteProduto"
-					+ " (id, quantidade, dataValidade, dataEntrada, "
-					+ "id_produto) VALUES (?, ?, ?, ?, ?)";
+					+ " (quantidade, dataValidade, dataEntrada, "
+					+ "id_produto) VALUES (?, ?, ?, ?)";
 			System.out.println("Query de inserção: " + sql);
 			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setLong(1, lp.getId());
-			stmt.setInt(2, lp.getQuantidade());
-			stmt.setString(3, lp.getDataValidade());
-			stmt.setString(4,  lp.getDataEntrada());
-			stmt.setObject(5, lp.getProduto().getId());
+			stmt.setInt          (1, lp.getQuantidade());
+			stmt.setString       (2, lp.getDataValidade());
+			stmt.setString       (3,  lp.getDataEntrada());
+			stmt.setLong       (4, lp.getProduto().getId());
 			stmt.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
@@ -74,20 +74,34 @@ public class LoteProdutoDAOImpl implements LoteProdutoDAO{
 	}
 
 	@Override
-	public List<LoteProduto> listar(LoteProduto lp) throws DAOException {
+	public List<LoteProduto> listar() throws DAOException {
+		
 		List<LoteProduto> lista = new ArrayList<>();
 		ProdutoDAO produtoDAO = new ProdutoDAOImpl();
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "SELECT * FROM loteProduto";
+			String sql = "select lp.id, lp.quantidade, lp.dataValidade, lp.dataEntrada, pd.id as idProduto, pd.nome, pd.descricao, pd.qtdMax, pd.qtdMin, pd.qtdTempoVida, pd.preco\n" + 
+					"	from loteProduto lp inner join produto pd\n" + 
+					"	on lp.id_produto = pd.id";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
+			// System.out.println(rs+"--"+ rs.getObject(1));
 			while (rs.next()) {
+				Produto p = new Produto();
+				LoteProduto lp = new LoteProduto();
 				lp.setId(rs.getInt("id"));
 				lp.setQuantidade(rs.getInt("quantidade"));
 				lp.setDataValidade(rs.getString("dataValidade"));
 				lp.setDataEntrada(rs.getString("dataEntrada"));
-				lp.setProduto(produtoDAO.pesquisarId(rs.getInt("id_produto")));
+				p.setId(rs.getInt("idProduto"));
+				p.setNome(rs.getString("nome"));
+				p.setDescricao(rs.getString("descricao"));
+				p.setQtdMax(rs.getInt("qtdMax"));
+				p.setQtdMax(rs.getInt("qtdMin"));
+				p.setPreco(rs.getDouble("preco"));
+				p.setQtdTempoVida(rs.getInt("qtdTempoVida"));
+				lp.setProduto(p);
+				//n = GerenciamentoConexao.getInstance().getConnection();
 				lista.add(lp);
 			}
 			con.close();

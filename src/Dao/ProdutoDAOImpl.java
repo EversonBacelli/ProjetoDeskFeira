@@ -146,7 +146,8 @@ public class ProdutoDAOImpl implements ProdutoDAO{
 				p.setPreco(rs.getInt("preco"));
 				lista.add(p);
 			}
-			con.close();
+			rs.close();
+			//con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DAOException(e);

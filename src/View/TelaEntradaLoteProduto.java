@@ -51,6 +51,8 @@ import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application implements EventHandler<ActionEvent>{
 	private static Stage stageAux;
+	
+	
 	// Instancia--------------------------------------------------------------
 	private ControleProduto controlProd = new ControleProduto();
 	private ControleDeLoteProduto ControleLote = new ControleDeLoteProduto(); 
@@ -126,17 +128,15 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		bloquear();
 		inserirObjetosTela();
 		editarTamanhoTXT();
-		adicionandoProdutosTeste();
 		marginPaine();
 		adicionandoEstiloElementos();
 		definirColunas();
 		definirColunasResumo();
 		responsividadeLista();
 		
-		controleResumo.calcularResumo(controlProd, ControleLote);
+        controleResumo.calcularResumo(controlProd, ControleLote);
 		
-		ObservableList<Produto> listProduto = comboNome.getItems();	
-		for(Produto x: controlProd.getListaProd()) 	{listProduto.add(x);}
+		comboNome.getItems().addAll(controlProd.getListaProd());
 		
 		Scene scn = new Scene(panePrincipal, 1100, 563);
 		
@@ -179,6 +179,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 					lote.setDataValidade(txtTempoVida.getText());
 					lote.setDataEntrada(txtdataEntrada.getText());
 					ControleLote.inserirLoteProduto(lote);
+					
 					limparCampos();
 	      	    }
 				controleResumo.limpar();
@@ -435,8 +436,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		return dataFutura;
 	}
 	
-	
-	
 	void editarTamanhoTXT()
 	{
 		comboNome.setMaxSize(400,30);
@@ -494,68 +493,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		paneResumo.setMargin(table1, marginRight);
 	}
 	
-	public void adicionandoProdutosTeste() {
-		Produto p1= new Produto();
-		p1.setId(1);
-		p1.setNome("Banana");
-		p1.setDescricao("Produto amarelo de aproximadamente de 30 gramas");
-		p1.setQtdMax(12);
-		p1.setQtdMin(2);
-		p1.setQtdTempoVida(5);
-		p1.setPreco(100);
-		controlProd.inserirProduto(p1);
-		Produto p2= new Produto();
-		p2.setId(2);
-		p2.setNome("Maça");
-		p2.setDescricao("Fruta vermelha de aparência próxima uma pequena esfera, de aproximadamente de 50 gramas");
-		p2.setQtdMax(12);
-		p2.setQtdMin(2);
-		p2.setQtdTempoVida(5);
-		p2.setPreco(50);
-		controlProd.inserirProduto(p2);
-		Produto p3= new Produto();
-		p3.setId(3);
-		p3.setNome("Larajna");
-		p3.setDescricao("Produto Laranja de 100 gramas");
-		p3.setQtdMax(12);
-		p3.setQtdMin(2);
-		p3.setQtdTempoVida(5);
-		p3.setPreco(400);
-		controlProd.inserirProduto(p3);
-		Produto p4= new Produto();
-		p4.setId(4);
-		p4.setNome("Abacaxi");
-		p4.setDescricao("xxxxxxxxxxxxxxxxxxxxxxxx");
-		p4.setQtdMax(12);
-		p4.setQtdMin(2);
-		p4.setQtdTempoVida(5);
-		p4.setPreco(500);
-		controlProd.inserirProduto(p4);
-		
-		LoteProduto lote1 = new LoteProduto();
-		lote1.setProduto(p1);
-		lote1.setId(1);
-		lote1.setQuantidade(50);
-		lote1.setDataValidade ("5");
-		lote1.setDataEntrada  ("31/05/2019");
-		ControleLote.inserirLoteProduto(lote1);
-		
-		LoteProduto lote2 = new LoteProduto();
-		lote2.setProduto(p1);
-		lote2.setId(2);
-		lote2.setQuantidade(50);
-		lote2.setDataEntrada("31/05/2019");
-		lote2.setDataValidade("10");	
-		ControleLote.inserirLoteProduto(lote2);
-		
-		LoteProduto lote3 = new LoteProduto();
-		lote3.setDataEntrada("31/05/2019");
-		lote3.setDataValidade("15");
-		lote3.setId(3);
-		lote3.setProduto(p2);
-		lote3.setQuantidade(50);
-		ControleLote.inserirLoteProduto(lote3);		
-	}
 	
 	public void bloquear() 
 	{

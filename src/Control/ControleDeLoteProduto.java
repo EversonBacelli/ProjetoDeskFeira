@@ -7,6 +7,9 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import Dao.DAOException;
+import Dao.LoteProdutoDAO;
+import Dao.LoteProdutoDAOImpl;
 import Model.LoteProduto;
 import Model.Produto;
 import javafx.collections.FXCollections;
@@ -21,11 +24,30 @@ public class ControleDeLoteProduto {
 	
 	public void inserirLoteProduto(LoteProduto p) 
 	{ 
-		listItem.add(p);
+		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
+		try {
+			lpDAO.adicionar(p);
+			listItem.add(p);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 	}
 	
-	public void removerLoteProduto(LoteProduto p) { listItem.remove(p);}
+	public void removerLoteProduto(LoteProduto p) 
+	{ 
+		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
+		try {
+			lpDAO.excluir(p);
+			listItem.remove(p);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public List<LoteProduto> pesquisarProduto(LoteProduto p) 
 	{
@@ -87,7 +109,17 @@ public class ControleDeLoteProduto {
 		this.produtoAdicionados = produtoAdicionados;
 	}
 	
-	public ObservableList<LoteProduto> getListItem() {
+	public ObservableList<LoteProduto> getListItem() 
+	{
+		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
+		try {
+			listItem.clear();
+			listItem.setAll(lpDAO.listar());
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return listItem;
 	}
 

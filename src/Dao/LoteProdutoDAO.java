@@ -8,7 +8,7 @@ public interface LoteProdutoDAO {
 	
 	void adicionar(LoteProduto lp) throws DAOException;
 
-	List<LoteProduto> listar(LoteProduto lp) throws DAOException;
+	List<LoteProduto> listar() throws DAOException;
 
 	void excluir(LoteProduto lp) throws DAOException;
 

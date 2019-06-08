@@ -41,7 +41,6 @@ public class ControleEstoqueResumo {
 					rProduto.setQtd(rProduto.getQtd() + l.getQuantidade());
 				}
 			}
-			
 		}
 	}
 }
