@@ -60,9 +60,8 @@ public class ControleDeFuncionario {
 		FuncionarioDAO fDao = new FuncionarioDAOImpl();
 		try {
 			fDao.excluir(func);
-			listaFunc.clear();
-			listaFunc.setAll(fDao.listar());
-			removerFuncionarioLista2(func);
+			this.listaFunc.remove(func);
+			this.listaFunc2.remove(func);
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
