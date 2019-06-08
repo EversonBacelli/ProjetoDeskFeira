@@ -422,7 +422,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 
 		table.getColumns().addAll(colunaId, colunaNome, colunaDescricao, qtdMaxColuna, qtdMinColuna, tempoDeVidaColuna, colunaPreco);
 
-		table.setItems(cp.getListaProd());
+		table.setItems(cp.getListaProdDAO());
 		
 	}
 }

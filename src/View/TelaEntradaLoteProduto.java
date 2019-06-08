@@ -134,6 +134,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		definirColunasResumo();
 		responsividadeLista();
 		
+		
         controleResumo.calcularResumo(controlProd, ControleLote);
 		
 		comboNome.getItems().addAll(controlProd.getListaProd());

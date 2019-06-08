@@ -20,20 +20,20 @@ public class ControleEstoqueResumo {
 	public void limpar() { 	listaResumo.clear();}
 	
 	
-	
-	
 	public void calcularResumo(ControleProduto cProduto, ControleDeLoteProduto cLote)
 	{
-		List<LoteProduto> listaProd = cLote.getListItem();
-		for(Produto x: cProduto.getListaProd()) 
-		{		
+		ObservableList<LoteProduto> loteProduto = cLote.getListItem();
+		ObservableList<Produto> listaProduto = cProduto.getListaProdDAO();
+		
+		for(Produto x: listaProduto) 
+		{
 			EstoqueResumo rProduto = new EstoqueResumo();
 			rProduto.setP(x);
 			listaResumo.add(rProduto);
 			
-			for(LoteProduto l: listaProd) 
+			for(LoteProduto l: loteProduto) 
 			{
-				if(x == l.getProduto()) 
+				if(x.getNome().equals(l.getProduto().getNome())) 
 				{
 					rProduto.setQtd(rProduto.getQtd() + l.getQuantidade());
 				}
