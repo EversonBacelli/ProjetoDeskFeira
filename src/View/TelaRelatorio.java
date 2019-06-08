@@ -262,7 +262,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		
 		tblQuantidade.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
 
-		tblQuantidade.setItems(cLote.getListItem());
+		tblQuantidade.setItems(cLote.getListItemDAO());
 	}
 	
 	
@@ -284,6 +284,6 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	
 		tblVencido.getColumns().addAll(colunaNome, colunaQuantidade);
 
-		tblQuantidade.setItems(cLote.getListItem());
+		tblQuantidade.setItems(cLote.getListItemDAO());
 	}
 }

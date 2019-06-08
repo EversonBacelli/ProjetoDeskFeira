@@ -109,7 +109,14 @@ public class ControleDeLoteProduto {
 		this.produtoAdicionados = produtoAdicionados;
 	}
 	
+	
 	public ObservableList<LoteProduto> getListItem() 
+	{
+		return listItem;
+	}
+	
+	
+	public ObservableList<LoteProduto> getListItemDAO() 
 	{
 		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
 		try {

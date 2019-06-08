@@ -17,7 +17,4 @@ public class EstoqueResumo {
 	public void setQtd(int qtd) {
 		this.qtd = qtd;
 	}
-	
-	
-	
 }

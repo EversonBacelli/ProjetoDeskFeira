@@ -10,13 +10,8 @@ import javafx.collections.ObservableList;
 
 
 public class ControleEstoqueResumo {
-	EstoqueResumo eResumo = new EstoqueResumo();
 	private ObservableList<EstoqueResumo> listaResumo = FXCollections.observableArrayList();
 	
-	public EstoqueResumo geteResumo() {	return eResumo;	}
-
-	public void seteResumo(EstoqueResumo eResumo) {	this.eResumo = eResumo;	}
-
 	public ObservableList<EstoqueResumo> getListaResumo() {return listaResumo;}
 
 	public void setListaResumo(ObservableList<EstoqueResumo> listaResumo) { this.listaResumo = listaResumo;}

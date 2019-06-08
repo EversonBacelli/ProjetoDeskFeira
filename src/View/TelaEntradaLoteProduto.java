@@ -365,7 +365,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		table.getColumns().addAll(colunaID, colunaNome, colunaQuantidade,colunaPreco,colunaTotal, colunaValidade);
 
-		table.setItems(ControleLote.getListItem());
+		table.setItems(ControleLote.getListItemDAO());
 	}
 	
 	public void definirColunasResumo() {
