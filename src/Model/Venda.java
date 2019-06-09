@@ -11,6 +11,7 @@ public class Venda {
 	private double valorTotal;
 	private int qtdVenda;
 
+
 	public int getId() {
 		return id;
 	}

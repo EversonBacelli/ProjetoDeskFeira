@@ -214,7 +214,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	public void definirColunasVenda() 
 	{
 		TableColumn<ProdutoVendido, Number> colunaID = new TableColumn<>("ID");
-		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getIdProduto()));
+		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getProduto().getId()));
 		colunaID.setPrefWidth(50);
 
 		TableColumn<ProdutoVendido, String> colunaNome = new TableColumn<>("Nome");

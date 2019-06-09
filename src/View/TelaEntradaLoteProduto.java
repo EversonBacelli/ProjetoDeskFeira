@@ -107,8 +107,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	Label lblvalidade = new Label("Validade");
 	TextField txtvalidade = new TextField();
 	//
-	Button cadastrar = new Button("Cadastrar");
-	Button excluir   = new Button(" Excluir ");
+	Button btnCadastrar = new Button("Cadastrar");
+	Button btnExcluir   = new Button(" Excluir ");
 	Button btnEstoqueResumo   = new Button("Resumo");
 	Button btnEstoqueDetalhes = new Button("Detalhes"); 
 	Button btnVoltar = new Button("  Voltar  ");
@@ -139,7 +139,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		comboNome.getItems().addAll(controlProd.getListaProd());
 		
-		Scene scn = new Scene(panePrincipal, 1100, 563);
+		Scene scn = new Scene(panePrincipal, 1000, 563);
 		
 		this.pane.addEventFilter(ActionEvent.ANY, this);
 
@@ -153,6 +153,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		this.btnVoltar.addEventHandler(ActionEvent.ANY, this);
 		
+		tela.setResizable(false);
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
 		tela.show();
@@ -170,7 +171,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 			}
 		}
 		
-		if(e.getTarget() == cadastrar) 
+		if(e.getTarget() == btnCadastrar) 
 		{
 				if(verificarCampos()) 
 				{
@@ -189,7 +190,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		}
 		
 		
-		if(e.getTarget() == excluir) 
+		if(e.getTarget() == btnExcluir) 
 		{
 			if(this.lote.equals(null) )
 			{
@@ -255,6 +256,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		topo.add(txtDescricao      , 5, 0);
 		topo.add(btnVoltar         , 6, 0);
 		paneLinhaTop.getChildren().add(linha1);
+		paneLinhaBot.getChildren().add(linha2);
 
 		
 		//Objetos da Direita ----------------
@@ -272,8 +274,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.add(txtdataEntrada    , 3, 7);
 		pane.add(lblvalidade       , 0, 8);
 		pane.add(txtvalidade       , 1, 8);
-		pane.add(cadastrar         , 1, 9);
-		pane.add(excluir           ,2 ,9);
+		pane.add(btnCadastrar      , 1, 9);
+		pane.add(btnExcluir        , 2 ,9);
 		//---------------------------------
 		
 		masterDetalhe.getChildren().add(btnEstoqueResumo);
@@ -284,7 +286,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		paneResumo.getChildren().add(table1);
 		paneTop.getChildren().add(topo);
 		paneTop.getChildren().add(paneLinhaTop);
-		paneBot.getChildren().add(linha2);
+		paneBot.getChildren().add(paneLinhaBot);
 		paneBot.getChildren().add(img);
 		
 		// inserir objetos na tela
@@ -306,17 +308,20 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		lblDescricao.setStyle("-fx-font-weight: bold");
 		btnVoltar.setStyle("-fx-font-weight: bold");
 		
+		this.btnEstoqueResumo.setPrefWidth(80);
+		this.btnEstoqueDetalhes.setPrefWidth(80);
+		
 		txtDescricao.setFont(new Font(12));
 		
 		this.linha1.setStroke(Color.LIGHTSKYBLUE);
         this.linha1.setStrokeWidth(10.0f);
         this.linha1.setStartX(0);
-		this.linha1.setEndX(900);
+		this.linha1.setEndX(980);
         
 		this.linha2.setStroke(Color.LIGHTSKYBLUE);
         this.linha2.setStrokeWidth(10.0f);
         this.linha2.setStartX(0);
-		this.linha2.setEndX(900);
+		this.linha2.setEndX(980);
 	}	
 	
 	
@@ -465,17 +470,19 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	@SuppressWarnings("static-access")
 	private void marginPaine() {
-		Insets marginPane = new Insets(0, 20, 20, 20);
+		Insets marginPane = new Insets(0, 0, 20, 20);
 		Insets margin = new Insets(20, 20, 30, 20);
-		Insets marginRight = new Insets(0, 120, 40,20);
+		Insets marginRight = new Insets(0, 12, 40,20);
+		Insets marginLinhas = new Insets(5, 5, 5, 5);
+		Insets marginLeft = new Insets(0, 0, 0, 20);
 		
 		topo.setMargin(lblNome, margin);
 		topo.setMargin(comboNome, margin);
 		topo.setMargin(lblDescricao, margin);
 		topo.setMargin(txtDescricao, margin);
 		topo.setMargin(btnVoltar, margin);
-		paneLinhaTop.setMargin(linha1,margin);
-		paneLinhaBot.setMargin(linha2, margin);
+		paneLinhaTop.setMargin(linha1, marginLinhas);
+		paneLinhaBot.setMargin(linha2, marginLinhas );
 		pane.setMargin(lblQtdMax, marginPane);
 		pane.setMargin(txtQtdMax, marginPane);
 		pane.setMargin(lblQtdMin, marginPane);
@@ -492,6 +499,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		pane.setMargin(txtvalidade, marginPane);
 		paneDetalhes.setMargin(table, marginRight);
 		paneResumo.setMargin(table1, marginRight);
+		pane.setMargin(btnCadastrar, marginLeft);
 	}
 	
 	

@@ -70,7 +70,8 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 		definirColunas();
 		responsividadeLista();
 		cf.preencheLista2();
-
+		
+		stage.setResizable(false);
 		stage.setScene(scn);
 		stage.show();
 	}

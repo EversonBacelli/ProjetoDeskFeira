@@ -88,6 +88,7 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 
 		comboTipoUsuario.setItems(cf.getListaTipo());
 
+		stage.setResizable(false);
 		stage.setTitle("Cadastro de Funcionario");
 		stage.setScene(scn);
 		stage.show();

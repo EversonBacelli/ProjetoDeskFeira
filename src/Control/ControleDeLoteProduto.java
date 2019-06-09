@@ -138,7 +138,15 @@ public class ControleDeLoteProduto {
 		this.listItem = listItem;
 	}
 	
-	public void alterarLoteProduto(LoteProduto p) {
-		
+	public void alterarLoteProduto(LoteProduto lp) {
+		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
+		try {
+			lpDAO.alterar(lp);
+			listItem.clear();
+			listItem.setAll(lpDAO.listar());
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

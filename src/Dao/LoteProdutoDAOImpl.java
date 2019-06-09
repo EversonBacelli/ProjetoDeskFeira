@@ -53,7 +53,7 @@ public class LoteProdutoDAOImpl implements LoteProdutoDAO{
 			throw new DAOException(e);
 		}
 	}
-
+//update produto set nome = ?, descricao = ?, qtdMax = ?, qtdMin = ?, qtdTempoVida = ?, preco = ? where id = ?
 	@Override
 	public void alterar(LoteProduto lp) throws DAOException {
 		try {
@@ -61,11 +61,11 @@ public class LoteProdutoDAOImpl implements LoteProdutoDAO{
 			String sql = "update loteProduto set quantidade = ?, dataValidade = ?, dataEntrada= ?, id_produto = ? where id = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, lp.getQuantidade());
-			stmt.setString(1, lp.getDataValidade());
-			stmt.setString(2, lp.getDataEntrada());
-			stmt.setInt(3, lp.getProduto().getId());
+			stmt.setString(2, lp.getDataValidade());
+			stmt.setString(3, lp.getDataEntrada());
+			stmt.setInt(4, lp.getProduto().getId());
 			stmt.setInt(5, lp.getId());
-			stmt.executeUpdate();
+			stmt.execute();
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

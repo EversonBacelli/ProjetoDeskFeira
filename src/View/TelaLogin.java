@@ -11,19 +11,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaLogin extends Application implements EventHandler<ActionEvent> {
 
-	static Stage stageAux;
-	GridPane pane;
-	Label lblLogin;
-	Label lblSenha;
-	TextField txtLogin;
-	PasswordField txtSenha;
-	Button btnEntrar;
+	private static Stage stageAux;
+	private BorderPane painelPrincipal;
+	private GridPane pane;
+	private Label lblLogin;
+	private Label lblSenha;
+	private TextField txtLogin;
+	private PasswordField txtSenha;
+	private Button btnEntrar;
+	
+	private ImageView img = new ImageView(new Image("file:Images/DESKFEIRA.png"));
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -33,7 +39,40 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	public void start(Stage stage) throws Exception {
 		stageAux = stage;
 		
+		inicializandoObjetos();
+		adicionandoElementos();
+		adicionarMargem();
+		adicionarEstilo();
+		adicionandoEventos();
+		
+		Scene scn = new Scene(painelPrincipal, 1000, 563);
+		
+		stage.setResizable(false);
+		stage.setTitle("Login");
+		stage.setScene(scn);
+		stage.show();
+	}
+
+	public void adicionandoEventos() {
+		pane.addEventFilter(ActionEvent.ACTION, this);
+	}
+
+	public void adicionandoElementos() {
+		// Inserindo elementos
+		painelPrincipal.setTop(pane);
+		painelPrincipal.setCenter(img);
+		
+		pane.add(lblLogin, 0, 0);
+		pane.add(lblSenha, 0, 1);
+		pane.add(txtLogin, 1, 0);
+		pane.add(txtSenha, 1, 1);
+		pane.add(btnEntrar, 1, 2);
+
+	}
+
+	public void inicializandoObjetos() {
 		// Elementos de Estrutura
+		painelPrincipal = new BorderPane();
 		pane = new GridPane();
 
 		// Elementos da tela
@@ -42,23 +81,6 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		txtLogin = new TextField();
 		txtSenha = new PasswordField();
 		btnEntrar = new Button(" ENTRAR ");
-
-		// -----------------------------------------------------------
-		// Inserindo elementos
-		pane.add(lblLogin, 0, 0);
-		pane.add(lblSenha, 0, 1);
-		pane.add(txtLogin, 1, 0);
-		pane.add(txtSenha, 1, 1);
-		pane.add(btnEntrar, 1, 2);
-		// -----------------------------------------------------------
-		adicionarMargem();
-		adicionarEstilo();
-
-		pane.addEventFilter(ActionEvent.ACTION, this);
-		Scene scn = new Scene(pane, 1000, 563);
-		stage.setTitle("Login");
-		stage.setScene(scn);
-		stage.show();
 	}
 
 	@Override
@@ -93,7 +115,6 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	}
 
 
-	// Estilos dos Objetos ------------------------------------------
 	private void adicionarMargem() {
 		Insets marginTop = new Insets(50, 30, 0, 0);
 		Insets margin1 = new Insets(50, 30, 0, 60);
@@ -105,10 +126,12 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	}
 
 	public void adicionarEstilo() {
-		lblLogin.setFont(new Font(15));
-		lblSenha.setFont(new Font(15));
-		lblLogin.setStyle("-fx-font-weight: bold");
-		lblSenha.setStyle("-fx-font-weight: bold");
+		painelPrincipal.setStyle("-fx-background-color: #fe5f55;");
+		lblLogin.setFont(new Font(20));
+		lblSenha.setFont(new Font(20));
+		lblLogin.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		lblSenha.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+		this.btnEntrar.setPrefWidth(200);
 	}
 
 }

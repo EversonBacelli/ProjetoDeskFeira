@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import Dao.DAOException;
+import Dao.VendaDAO;
+import Dao.VendaDAOImpl;
 import Model.LoteProduto;
 import Model.Produto;
 import Model.ProdutoVendido;
@@ -15,14 +18,10 @@ import javafx.collections.ObservableList;
 public class ControleVenda {
 	int id_venda = 0;
 	
-	private ObservableList<Venda> listaVenda = FXCollections.observableArrayList();	
+	private ObservableList<Venda> listaVenda = FXCollections.observableArrayList();
+	ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
+	private List<LoteProduto>listaLote;
 
-	
-	public void realizarVenda(Venda v) {
-		if(validarVenda()) {
-			this.listaVenda.add(v);
-		}
-	}
 	
 //	public void realizarVenda(Venda v) {
 //		if(validarVenda()) {
@@ -33,19 +32,31 @@ public class ControleVenda {
 	public void removerVenda(Venda v) {
 		this.listaVenda.remove(v);
 	}
-	
-	public boolean validarVenda() {
-		return false;
-	}
-	
+
 	public int proximoId() {
 		return ++this.id_venda;
 	}
 	
-	public boolean validarVenda(Venda v) {
-		ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
-		List<LoteProduto>listaLote = cLoteProd.getListItem();
+	public void realizarVenda(Venda v) {
+		Boolean compraValidada = true;
+		Boolean passou = false;
+		listaLote = cLoteProd.getListItem();
 		
+		compraValidada = validarVenda(v);
+		
+		if(compraValidada) {
+			VendaDAO vDao = new VendaDAOImpl();
+			try {
+				vDao.adicionar(v);
+				abaterLote(this.listaLote);
+			} catch (DAOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
+	public boolean validarVenda(Venda v) {
 		Boolean compraValidada = true;
 		Boolean passou = false;
 		
@@ -53,11 +64,12 @@ public class ControleVenda {
 			passou = true;
 			if(compraValidada) {
 			int quantidade = pVendido.getQuantidade();
-				for(LoteProduto lProduto : listaLote) {
-					if(pVendido.getProduto().equals(lProduto.getProduto()) && quantidade != 0) {
+				for(LoteProduto lProduto : this.listaLote) {
+					if(pVendido.getProduto().getNome().equals(lProduto.getProduto().getNome()) && quantidade != 0) {
 						if(quantidade > 0) {
 							if(pVendido.getQuantidade() < lProduto.getQuantidade()) {
 								lProduto.setQuantidade(lProduto.getQuantidade() - quantidade);
+								quantidade = 0;
 							}else if(lProduto.getQuantidade() > 0){
 								quantidade = quantidade - lProduto.getQuantidade();
 								lProduto.setQuantidade(0);
@@ -67,15 +79,17 @@ public class ControleVenda {
 				}
 				if(quantidade > 0) {
 					compraValidada = false;
+					JOptionPane.showMessageDialog(null, "Venda não realizada, não ha " + pVendido.getProduto().getNome() + "s o suficiente para venda!");
 				}
 			}
 		}
-		
-		if(compraValidada && passou) {
-			realizarVenda(v);
-			abaterLote(listaLote);
+
+		if(passou && compraValidada) {
+			JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
+			return true;
+		}else {
+			return false;
 		}
-		return validarVenda();
 	}
 	
 	public void abaterLote(List<LoteProduto> listaLote) {

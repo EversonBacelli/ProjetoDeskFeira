@@ -95,7 +95,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		adicionarEventos();
 		definirColunas();
 		responsividadeLista();
-			
+		
 		stage.setResizable(false);
 		stage.setScene(scn);
 		stage.setTitle("Gerenciamento de produto");

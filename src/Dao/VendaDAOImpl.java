@@ -9,6 +9,7 @@ import java.util.List;
 
 import ConnectionFactory.GerenciamentoConexao;
 import Model.LoteProduto;
+import Model.ProdutoVendido;
 import Model.Venda;
 
 public class VendaDAOImpl implements VendaDAO{
@@ -18,25 +19,39 @@ public class VendaDAOImpl implements VendaDAO{
 	
 	@Override
 	public void adicionar(Venda v) throws DAOException {
-//		try {
-//			Connection con = GerenciamentoConexao.getInstance().getConnection();
-//			System.out.println("Conectado no servidor");
-//			String sql = "INSERT INTO venda"
-//					+ " (id, quantidade, dataValidade, dataEntrada, "
-//					+ "id_produto) VALUES (?, ?, ?, ?, ?)";
-//			System.out.println("Query de inserção: " + sql);
-//			PreparedStatement stmt = con.prepareStatement(sql);
-//			stmt.setLong(1, lp.getId());
-//			stmt.setInt(2, lp.getQuantidade());
-//			stmt.setString(3, lp.getDataValidade());
-//			stmt.setString(4,  lp.getDataEntrada());
-//			stmt.setObject(5, lp.getProduto().getId());
-//			stmt.executeUpdate();
-//			con.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DAOException(e);
-//		}
+		try {
+			Connection con = GerenciamentoConexao.getInstance().getConnection();
+			String sql = "INSERT INTO venda (dataVenda, valorTotal, qtdVenda) VALUES (?, ?, ?)";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, v.getDataVenda());
+			stmt.setDouble(2, v.getValorTotal());
+			stmt.setInt(3,  v.getQtdVenda());
+			stmt.executeUpdate();
+			
+			String sqlBusca = "SELECT max(venda.id) FROM venda";
+			PreparedStatement stmtBusca = con.prepareStatement(sqlBusca);
+			ResultSet rs = stmtBusca.executeQuery();
+			while (rs.next()) {
+				v.setId(rs.getInt(1));
+			}
+			
+			List<ProdutoVendido> listaLote = v.getListaProdutoVendido();
+			
+			for (ProdutoVendido produtoVendido : listaLote) {				
+			String sql2 = "INSERT INTO produtoVendido (quantidade, id_produto, id_venda) VALUES (?, ?, ?)";
+			PreparedStatement stmt2 = con.prepareStatement(sql2);
+			stmt2.setInt(1, produtoVendido.getQuantidade());
+			stmt2.setInt(2, produtoVendido.getProduto().getId());			
+			stmt2.setInt(3, v.getId());			
+			stmt2.executeUpdate();
+			}
+			
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
 	}
 
 	@Override
