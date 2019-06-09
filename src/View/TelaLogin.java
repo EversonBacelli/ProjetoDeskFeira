@@ -126,12 +126,13 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	}
 
 	public void adicionarEstilo() {
-		painelPrincipal.setStyle("-fx-background-color: #fe5f55;");
+		painelPrincipal.setStyle("-fx-background-color: #58b368;");
 		lblLogin.setFont(new Font(20));
 		lblSenha.setFont(new Font(20));
 		lblLogin.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 		lblSenha.setStyle("-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 		this.btnEntrar.setPrefWidth(200);
+		this.btnEntrar.setStyle("-fx-background-color: #ffffff");
 	}
 
 }
