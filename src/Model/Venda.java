@@ -9,7 +9,7 @@ public class Venda {
 	private String dataVenda;
 	private List<ProdutoVendido> listaProdutoVendido;
 	private double valorTotal;
-	private int qtdVenda;
+
 
 
 	public int getId() {
@@ -44,12 +44,5 @@ public class Venda {
 		this.valorTotal = valorTotal;
 	}
 
-	public int getQtdVenda() {
-		return qtdVenda;
-	}
-
-	public void setQtdVenda(int qtdVenda) {
-		this.qtdVenda = qtdVenda;
-	}
 
 }

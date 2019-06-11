@@ -2,8 +2,10 @@ package View;
 
 import Control.ControleDeLoteProduto;
 import Control.ControleProdutoVendido;
+import Control.ControleVenda;
 import Model.LoteProduto;
 import Model.ProdutoVendido;
+import Model.Venda;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
@@ -22,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,16 +34,14 @@ import javafx.stage.Stage;
 
 public class TelaRelatorio extends Application implements EventHandler<ActionEvent> {
 
-	static Stage stageAux;
-	BorderPane borderPane1;
-	GridPane gridPane1;
-	VBox box1;
-	ControleProdutoVendido cpVendido = new ControleProdutoVendido();
-	ControleDeLoteProduto cLote = new ControleDeLoteProduto();
-	private Line linha1 = new Line();
-	private ImageView imgEstoque = new ImageView(new Image("file:Images/Estoque.jpg"));
-	private ImageView imgVenda = new ImageView(new Image("file:Images/Venda.png"));
-	private ImageView imgValidade = new ImageView(new Image("file:Images/Validade.png"));
+	BorderPane painelPrincipal = new BorderPane();
+	
+	FlowPane paneVenda = new FlowPane();
+	FlowPane paneRelEstoque = new FlowPane();
+	
+	VBox paneVenda1     = new VBox();
+	VBox paneRelEstoque1 = new VBox();
+
 	Button btnVoltar = new Button("  Voltar  ");
 	
 	MenuBar barra_Menu;
@@ -48,16 +49,17 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	Menu rel_estoque;
 	MenuItem item_listarVenda;
 	MenuItem item_listarEstoque;
-	MenuItem item_listarVencidos;
 	
-	VBox paneVenda      = new VBox();
-	VBox paneQuantidade = new VBox();
-	VBox paneVencido    = new VBox();
+	static Stage stageAux;
 	
-	private TableView<LoteProduto>     tblQuantidade = new TableView<>();
-	private TableView<ProdutoVendido>  tblVenda = new TableView<>();
-	private TableView<LoteProduto>     tblVencido = new TableView<>();
+	private ControleVenda cVenda = new ControleVenda();
+	private ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
+
+	private TableView<LoteProduto>     tblEstoque = new TableView<>();
+	private TableView<Venda>  tblVenda = new TableView<>();
+
 	
+	private Scene scn = new Scene(this.painelPrincipal, 1000, 563);
 	
 	public static void main(String[] args) 
 	{
@@ -65,116 +67,54 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	}
 
 	@Override
-	public void start(Stage stage) throws Exception 
-	{
-		stageAux = stage;
-		iniciarObjetos();
-		inserirEventos();
-		borderPane1.setStyle("-fx-background-color: #CC00FF;");
-			
-		Scene scn = new Scene(borderPane1, 1000, 563);
-		stage.setTitle(" Relatório de Venda ");
+	public void start(Stage stage) throws Exception	{
+		iniciarMenu();
+		marginPaine();
+		
+		definirColunasEstoqueQuantidade();
+		mostrarRelatorioEstoque();
+		
+		stage.setResizable(false);
+		stage.setTitle("Relatorios");
 		stage.setScene(scn);
 		stage.show();
 	}
 
 	
 	@Override
-	public void handle(ActionEvent e) 
-	{
-		borderPane1.setCenter(null);
-		
-		if(e.getTarget() == item_listarVenda) 
-		{	
-			borderPane1.setLeft(imgVenda);
-			borderPane1.setCenter(paneVenda);
-		} else 
-		{
-			if(e.getTarget()== item_listarEstoque) 
-			{
-				borderPane1.setLeft(imgEstoque);
-				borderPane1.setCenter(paneQuantidade);
-			} else 
-			{
-				if(e.getTarget() == item_listarVencidos) 
-				{
-					borderPane1.setLeft(imgValidade);
-					borderPane1.setCenter(paneVencido);
-				}
-			}
-		}
-		if(e.getTarget() == btnVoltar) 
-		{
-			TelaPrincipal telaPrincipal = new TelaPrincipal();
-			try {
-				telaPrincipal.start(stageAux);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
-	
-	
-	public void iniciarObjetos() 
-	{
-		iniciarMenu();
-		estiloLinha();
-		//
-		definirColunasVenda();
-		relatorioVenda();
-		//
-		definirColunasEstoqueQuantidade();
-		relatorioEstoqueQuantidade();
-		//
-		definirColunasEstoqueVencido();
-		relatorioVencido();
-		//
-		marginPaine();	
-	}
+	public void handle(ActionEvent e) {
 
-	private void marginPaine() 
-	{
-		Insets marginImage = new Insets(150, 0, 0, 50);
-		Insets margin = new Insets(50, 50, 50, 80);
 	
-		borderPane1.setMargin(paneVenda, margin);
-		borderPane1.setMargin(paneQuantidade, margin);
-		borderPane1.setMargin(paneVencido, margin);
+	}
+	
+	private void marginPaine() {
+		this.painelPrincipal.setMargin(this.barra_Menu, new Insets(0, 30, 0, 0));
+		this.painelPrincipal.setMargin(this.btnVoltar, new Insets(-31, 0, 0, 0));
+		this.painelPrincipal.setMargin(this.paneRelEstoque, new Insets(50, 0, 0, 30));
+
+	}
+	
+	
+
+	public void mostrarRelatorioEstoque() {
+		this.painelPrincipal.setCenter(this.paneRelEstoque);
+		this.paneRelEstoque.getChildren().add(this.paneRelEstoque1);
+		this.paneRelEstoque1.getChildren().add(tblEstoque);
+	}
+	
+	public void mostrarParaRelatorioVenda() {
+		this.painelPrincipal.setLeft(this.paneVenda);
+		this.paneVenda.getChildren().add(this.paneVenda1);
+		this.paneVenda1.getChildren().add(this.tblVenda);
+	}
+	
+	
+	
+
+	
+	public void iniciarMenu() {
 		
-		borderPane1.setMargin(imgEstoque, marginImage);
-		borderPane1.setMargin(imgVenda, marginImage);
-		borderPane1.setMargin(imgValidade, marginImage);
-	}
-	
-	public void estiloLinha() 
-	{
-	this.linha1.setStroke(Color.LIGHTSKYBLUE);
-    this.linha1.setStrokeWidth(10.0f);
-    this.linha1.setStartX(0);
-	this.linha1.setEndX(900);
-	}
-	
-	private void relatorioVenda() 
-	{
-		paneVenda.getChildren().add(tblVenda);
-	}
-	
-	private void relatorioEstoqueQuantidade() {
-		paneQuantidade.getChildren().add(tblQuantidade);
-	}
-	
-	
-	private void relatorioVencido() {
-		paneVenda.getChildren().add(linha1);
-		paneVencido.getChildren().add(tblVencido);
-	}
-	
-	
-	public void iniciarMenu() 
-	{
-		// Inicializar
-		borderPane1 = new BorderPane();
-		box1 = new VBox();
+		
 		barra_Menu = new MenuBar();
 		
 		rel_venda = new Menu(" Relatorio de Venda");
@@ -182,23 +122,23 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		
 		item_listarVenda = new MenuItem("Listar Vendas");
 		item_listarEstoque = new MenuItem("Listar Estoques");
-		item_listarVencidos = new MenuItem("Lista Produtos Vencidos");
 
 		// -----------------------------------------------------------
 		rel_venda.getItems().add(item_listarVenda);
 		rel_estoque.getItems().add(item_listarEstoque);
-		rel_estoque.getItems().add(item_listarVencidos);
+
 
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(rel_venda);
 		barra_Menu.getMenus().add(rel_estoque);
 
-		// -----------------------------------------------------------
-		box1.getChildren().add(barra_Menu);
 
+
+		
+		this.painelPrincipal.setTop(this.barra_Menu);
+		this.painelPrincipal.setRight(this.btnVoltar);
 		// -----------------------------------------------------------
-		borderPane1.setCenter(box1);
-		borderPane1.setRight(btnVoltar);
+		// -----------------------------------------------------------
 	}
 	
 	
@@ -206,37 +146,13 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	{
 		item_listarVenda.addEventHandler(ActionEvent.ANY, this);
 		item_listarEstoque.addEventHandler(ActionEvent.ANY, this);
-		item_listarVencidos.addEventHandler(ActionEvent.ANY, this);
 		btnVoltar.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	
 	public void definirColunasVenda() 
 	{
-		TableColumn<ProdutoVendido, Number> colunaID = new TableColumn<>("ID");
-		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getProduto().getId()));
-		colunaID.setPrefWidth(50);
-
-		TableColumn<ProdutoVendido, String> colunaNome = new TableColumn<>("Nome");
-		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
-		colunaNome.setPrefWidth(200);
-
-		TableColumn<ProdutoVendido, Number> colunaQuantidade = new TableColumn<>("Quantidade");
-		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
-		colunaQuantidade.setPrefWidth(50);
 		
-		
-		TableColumn<LoteProduto, Number> colunaPreco = new TableColumn<>("Preco");
-		colunaPreco.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getValorTortal()));
-		colunaPreco.setPrefWidth(80);
-		
-		TableColumn<LoteProduto, Number> colunaTotal = new TableColumn<>("Valor Total");
-		colunaTotal.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper
-		(itemData.getValue().getQuantidade()*itemData.getValue().getValorTortal()));
-		colunaTotal.setPrefWidth(80);
-					
-		tblVenda.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
-		tblVenda.setItems(cpVendido.getListaProd());
 	}
 
 	
@@ -244,15 +160,15 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	{
 		TableColumn<LoteProduto, Number> colunaID = new TableColumn<>("ID");
 		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
-		colunaID.setPrefWidth(50);
+		colunaID.setPrefWidth(300);
 		
 		TableColumn<LoteProduto, String> colunaNome = new TableColumn<>("Nome");
 		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
-		colunaNome.setPrefWidth(200);
+		colunaNome.setPrefWidth(300);
 		
 		TableColumn<LoteProduto, Number> colunaQuantidade = new TableColumn<>("Quantidade");
 		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
-		colunaQuantidade.setPrefWidth(90);
+		colunaQuantidade.setPrefWidth(300);
 		
 		/*
 		TableColumn<LoteProduto, Number> colunaPreco = new TableColumn<>("Preco");
@@ -260,30 +176,10 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		colunaPreco.setPrefWidth(80);
 		*/
 		
-		tblQuantidade.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
+		tblEstoque.getColumns().addAll(colunaID, colunaNome, colunaQuantidade);
 
-		tblQuantidade.setItems(cLote.getListItemDAO());
+		tblEstoque.setItems(cLoteProd.getListItemDAO());
 	}
 	
-	
-	public void definirColunasEstoqueVencido() 
-	{
-		/*
-		TableColumn<LoteProduto, Number> colunaID = new TableColumn<>("ID");
-		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
-		colunaID.setPrefWidth(50);
-	   */
-		
-		TableColumn<LoteProduto, String> colunaNome = new TableColumn<>("Nome");
-		colunaNome.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getProduto().getNome()));
-		colunaNome.setPrefWidth(200);
-	
-		TableColumn<LoteProduto, Number> colunaQuantidade = new TableColumn<>("Quantidade");
-		colunaQuantidade.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getQuantidade()));
-		colunaQuantidade.setPrefWidth(90);
-	
-		tblVencido.getColumns().addAll(colunaNome, colunaQuantidade);
 
-		tblQuantidade.setItems(cLote.getListItemDAO());
-	}
 }

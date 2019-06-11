@@ -9,6 +9,6 @@ public interface VendaDAO {
 	
 	void adicionar(Venda v) throws DAOException;
 
-	List<LoteProduto> listar(Venda v) throws DAOException;
+	List<Venda> listar() throws DAOException;
 	
 }

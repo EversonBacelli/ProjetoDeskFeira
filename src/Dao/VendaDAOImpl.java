@@ -9,6 +9,7 @@ import java.util.List;
 
 import ConnectionFactory.GerenciamentoConexao;
 import Model.LoteProduto;
+import Model.Produto;
 import Model.ProdutoVendido;
 import Model.Venda;
 
@@ -21,11 +22,10 @@ public class VendaDAOImpl implements VendaDAO{
 	public void adicionar(Venda v) throws DAOException {
 		try {
 			Connection con = GerenciamentoConexao.getInstance().getConnection();
-			String sql = "INSERT INTO venda (dataVenda, valorTotal, qtdVenda) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO venda (dataVenda, valorTotal) VALUES (?, ?)";
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setString(1, v.getDataVenda());
 			stmt.setDouble(2, v.getValorTotal());
-			stmt.setInt(3,  v.getQtdVenda());
 			stmt.executeUpdate();
 			
 			String sqlBusca = "SELECT max(venda.id) FROM venda";
@@ -55,29 +55,57 @@ public class VendaDAOImpl implements VendaDAO{
 	}
 
 	@Override
-	public List<LoteProduto> listar(Venda v) throws DAOException {
-		List<LoteProduto> lista = new ArrayList<>();
-//		ProdutoDAO produtoDAO = new ProdutoDAOImpl();
-//		try {
-//			Connection con = GerenciamentoConexao.getInstance().getConnection();
-//			String sql = "SELECT * FROM loteProduto";
-//			PreparedStatement stmt = con.prepareStatement(sql);
-//			ResultSet rs = stmt.executeQuery();
-//			while (rs.next()) {
-//				lp.setId(rs.getInt("id"));
-//				lp.setQuantidade(rs.getInt("quantidade"));
-//				lp.setDataValidade(rs.getString("dataValidade"));
-//				lp.setDataEntrada(rs.getString("dataEntrada"));
-//				lp.setProduto(produtoDAO.pesquisarId(rs.getInt("id_produto")));
-//				lista.add(lp);
-//			}
-//			con.close();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			throw new DAOException(e);
-//		}
+	public List<Venda> listar() throws DAOException {
+		List<Venda> lista = new ArrayList<>();
+		ProdutoDAO produtoDAO = new ProdutoDAOImpl();
+		try {
+			Connection con = GerenciamentoConexao.getInstance().getConnection();
+			String sql = "select  vd.id, vd.valorTotal, vd.dataVenda from venda vd";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				List<ProdutoVendido> listaProdVend = new ArrayList<ProdutoVendido>();
+				Venda v = new Venda();
+				v.setId(rs.getInt("id"));
+				v.setDataVenda(rs.getString("dataVenda"));
+				v.setValorTotal(rs.getDouble("valorTotal"));
+				String sql2 = "\n" + 
+						"select pv.id_venda, pd.id, pd.descricao, "
+						+ "pd.nome, pd.preco, pd.qtdMax, pd.qtdMin,"
+						+ " pd.qtdTempoVida, pv.quantidade \n" + 
+						"from produtoVendido pv inner join produto pd \n" + 
+						"on pd.id = pv.id_produto \n" + 
+						"where pv.id_venda = ?";
+				PreparedStatement stmt2 = con.prepareStatement(sql2);
+				stmt2.setInt(1, v.getId());
+				ResultSet rs2 = stmt2.executeQuery();
+				while(rs2.next()) {
+					ProdutoVendido pv = new ProdutoVendido();
+					Produto p = new Produto();
+					pv.setIdVenda(rs2.getInt("id_venda"));
+					p.setId(rs2.getInt("id"));
+					p.setNome(rs2.getString("nome"));
+					p.setDescricao(rs2.getString("descricao"));
+					p.setPreco(rs2.getDouble("preco"));
+					p.setQtdMax(rs2.getInt("qtdMax"));
+					p.setQtdMin(rs2.getInt("qtdMin"));
+					p.setQtdTempoVida(rs2.getInt("qtdTempoVida"));
+					pv.setProduto(p);
+					pv.setQuantidade(rs2.getInt("quantidade"));
+					listaProdVend.add(pv);
+				}
+				v.setListaProdutoVendido(listaProdVend);
+				lista.add(v);
+			}
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
 		return lista;
 	}
+	
+	
 
 
 	
