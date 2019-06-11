@@ -34,21 +34,21 @@ import javafx.stage.Stage;
 
 public class TelaRelatorio extends Application implements EventHandler<ActionEvent> {
 
-	BorderPane painelPrincipal = new BorderPane();
+	private BorderPane painelPrincipal = new BorderPane();
 	
-	FlowPane paneVenda = new FlowPane();
-	FlowPane paneRelEstoque = new FlowPane();
+	private FlowPane paneVenda = new FlowPane();
+	private FlowPane paneRelEstoque = new FlowPane();
 	
-	VBox paneVenda1     = new VBox();
-	VBox paneRelEstoque1 = new VBox();
+	private VBox paneVenda1     = new VBox();
+	private VBox paneRelEstoque1 = new VBox();
 
-	Button btnVoltar = new Button("  Voltar  ");
+	private Button btnVoltar = new Button("  Voltar  ");
 	
-	MenuBar barra_Menu;
-	Menu rel_venda;
-	Menu rel_estoque;
-	MenuItem item_listarVenda;
-	MenuItem item_listarEstoque;
+	private MenuBar barra_Menu;
+	private Menu rel_venda;
+	private Menu rel_estoque;
+	private MenuItem item_listarVenda;
+	private MenuItem item_listarEstoque;
 	
 	static Stage stageAux;
 	
@@ -68,11 +68,17 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 
 	@Override
 	public void start(Stage stage) throws Exception	{
+		stageAux = stage;
+		
 		iniciarMenu();
 		marginPaine();
+		inserirEventos();
+		
+		iniciarRelatorioEstoque();
+		iniciarRelatorioVenda();
 		
 		definirColunasEstoqueQuantidade();
-		mostrarRelatorioEstoque();
+		definirColunasVenda();
 		
 		stage.setResizable(false);
 		stage.setTitle("Relatorios");
@@ -83,29 +89,48 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	
 	@Override
 	public void handle(ActionEvent e) {
-
+		if(e.getTarget() == this.item_listarVenda) {
+			mostrarParaRelatorioVenda();
+		}else if(e.getTarget() == this.item_listarEstoque) {
+			mostrarRelatorioEstoque();
+		}else if(e.getTarget() == this.btnVoltar) {
+			voltarParaTelaPrincipal();
+		}
+	}
 	
+	public void voltarParaTelaPrincipal() {
+		TelaPrincipal tPrincipal = new TelaPrincipal();
+		try {
+			tPrincipal.start(stageAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void marginPaine() {
 		this.painelPrincipal.setMargin(this.barra_Menu, new Insets(0, 30, 0, 0));
 		this.painelPrincipal.setMargin(this.btnVoltar, new Insets(-31, 0, 0, 0));
-		this.painelPrincipal.setMargin(this.paneRelEstoque, new Insets(50, 0, 0, 30));
 
 	}
 	
-	
-
-	public void mostrarRelatorioEstoque() {
-		this.painelPrincipal.setCenter(this.paneRelEstoque);
+	public void iniciarRelatorioEstoque() {
 		this.paneRelEstoque.getChildren().add(this.paneRelEstoque1);
 		this.paneRelEstoque1.getChildren().add(tblEstoque);
 	}
 	
-	public void mostrarParaRelatorioVenda() {
-		this.painelPrincipal.setLeft(this.paneVenda);
+	public void iniciarRelatorioVenda() {
 		this.paneVenda.getChildren().add(this.paneVenda1);
 		this.paneVenda1.getChildren().add(this.tblVenda);
+	}
+
+	public void mostrarRelatorioEstoque() {
+		this.painelPrincipal.setCenter(this.paneRelEstoque);
+		this.painelPrincipal.setMargin(this.paneRelEstoque, new Insets(50, 0, 0, 30));
+	}
+	
+	public void mostrarParaRelatorioVenda() {
+		this.painelPrincipal.setCenter(this.paneVenda);
+		this.painelPrincipal.setMargin(this.paneVenda, new Insets(50, 0, 0, 30));
 	}
 	
 	
@@ -152,7 +177,20 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	
 	public void definirColunasVenda() 
 	{
+		TableColumn<Venda, Number> colunaID = new TableColumn<>("ID");
+		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
+		colunaID.setPrefWidth(300);
 		
+		TableColumn<Venda, String> colunaData = new TableColumn<>("ID");
+		colunaData.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDataVenda()));
+		colunaData.setPrefWidth(300);
+		
+		TableColumn<Venda, Number> colunaValorTotal = new TableColumn<>("Valor Total");
+		colunaValorTotal.setCellValueFactory(itemData -> new ReadOnlyDoubleWrapper(itemData.getValue().getValorTotal()));
+		colunaValorTotal.setPrefWidth(300);
+		
+		tblVenda.getColumns().addAll(colunaID, colunaData, colunaValorTotal);
+		tblVenda.setItems(cVenda.getListaVendaDAO());
 	}
 
 	

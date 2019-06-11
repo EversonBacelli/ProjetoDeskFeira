@@ -27,11 +27,13 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	private Menu menu_Funcio;
 	private Menu menu_Produ_Lote;
 	private Menu menu_Relatorio;
+	private Menu menu_Venda;
 	private MenuItem item_Relatorio;
 	private MenuItem item_Funcio_Cad;
 	private MenuItem item_Funcio_List;
 	private MenuItem item_Produ;
 	private MenuItem item_Lote;
+	private MenuItem item_Venda;
 	
 	// MenuItem menuItem1;
 	// listar funcionario
@@ -63,6 +65,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		item_Lote.addEventHandler(ActionEvent.ANY, this);
 		item_Funcio_List.addEventHandler(ActionEvent.ANY, this);
 		item_Relatorio.addEventHandler(ActionEvent.ANY, this);
+		item_Venda.addEventHandler(ActionEvent.ANY, this);
 	}
 
 	public void adicionandoElementos(ImageView img) {
@@ -71,10 +74,12 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		menu_Produ_Lote.getItems().add(item_Produ);
 		menu_Produ_Lote.getItems().add(item_Lote);
 		menu_Relatorio.getItems().add(item_Relatorio);
+		menu_Venda.getItems().add(item_Venda);
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(menu_Funcio);
 		barra_Menu.getMenus().add(menu_Produ_Lote);
 		barra_Menu.getMenus().add(menu_Relatorio);
+		barra_Menu.getMenus().add(menu_Venda);
 		// -----------------------------------------------------------
 		box1.getChildren().add(barra_Menu);
 
@@ -94,12 +99,14 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		menu_Produ_Lote = new Menu(" Produto e Lote ");
 		menu_Produ_Lote = new Menu(" Produto e Lote ");
 		menu_Relatorio = new Menu (" Relatórios ");
+		menu_Venda = new Menu("Venda");
 		
 		item_Funcio_Cad    = new MenuItem(" Cadastrar ");
 		item_Funcio_List   = new MenuItem(" Listar ");
 		item_Produ         = new MenuItem(" Produto ");
 		item_Lote          = new MenuItem(" Lote ");
 		item_Relatorio     = new MenuItem(" Relatório ");
+		item_Venda         = new MenuItem("Realizar Venda");
 	}
 //
 	@Override
@@ -120,7 +127,10 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			} else if (e.getTarget() == item_Relatorio) {
 				TelaRelatorio entradaRelatorio = new TelaRelatorio();
 				entradaRelatorio.start(stageAux);
-			} 
+			} else if (e.getTarget() == item_Venda) {
+				TelaVenda telaVenda = new TelaVenda();
+				telaVenda.start(stageAux);
+			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

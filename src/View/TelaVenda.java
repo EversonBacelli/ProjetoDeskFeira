@@ -49,6 +49,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class TelaVenda extends Application implements EventHandler<ActionEvent>{
+	private static Stage stageAux = new Stage();
+	
 	private VBox topoPainel = new VBox();
 	private VBox painelCentral = new VBox();
 	private TilePane painelBottom = new TilePane();
@@ -78,6 +80,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private Button btnRemoverProduto = new Button("Remover Produto");
 	private Button btnRealizarVenda = new Button("Realizar Venda");
 	private Button btnPesquisarProduto = new Button("?");
+	private Button btnVoltar = new Button("Voltar");
 	
 	private TextField tfQtdVendida = new TextField();
 	private TextField tfValorTotal = new TextField();
@@ -95,9 +98,9 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	
 	@Override
 	public void start(Stage stage) throws Exception {
+		stageAux = stage;
 		
 		comboProd.getItems().setAll(cProduto.getListaProdDAO());
-		
 		
 		adicionarEventos();
 		adicionandoElementosPaineis();
@@ -144,6 +147,8 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 			Venda v = telaParaVenda();
 			this.cVenda.realizarVenda(v);
 			limparCampos();
+		}else if(e.getTarget() == btnVoltar) {
+			voltarParaTelaPrincipal();
 		}
 	}
 	
@@ -170,6 +175,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel.getChildren().add(topoPainel4);
 		
 		this.topoPainel2.add(this.img,0,0);
+		this.topoPainel2.add(this.btnVoltar, 1, 0);
 		
 		this.topoPainel3.add(this.lblProduto, 0, 0);
 		this.topoPainel3.add(this.comboProd, 1, 0);
@@ -215,9 +221,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel.setMargin(this.topoPainel3, marginTop3);
 		this.topoPainel.setMargin(this.topoPainel4, marginTop3);
 		
-		this.topoPainel4.setMargin(this.btnRemoverProduto, new Insets(0, 30, 0, 0));
-		this.topoPainel4.setMargin(this.lblDataVenda, new Insets(0, 10, 0, 0));
-		
 		this.topoPainel3.setMargin(this.lblQtdVendida, marginRight);
 		this.topoPainel3.setMargin(this.tfQtdVendida, marginRight);
 		this.topoPainel3.setMargin(this.lblProduto, marginRight);
@@ -225,6 +228,10 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.topoPainel3.setMargin(this.paneButtons, marginRight);
 		this.topoPainel3.setMargin(this.lblPesquisarProduto, marginRight);
 		
+		this.topoPainel2.setMargin(this.btnVoltar, new Insets(0, 0, 0, 532));
+		
+		this.topoPainel4.setMargin(this.btnRemoverProduto, new Insets(0, 30, 0, 0));
+		this.topoPainel4.setMargin(this.lblDataVenda, new Insets(0, 10, 0, 0));
 		this.topoPainel4.setMargin(this.tfPesquisarProd, new Insets(0, 5, 10, 0));
 		this.topoPainel4.setMargin(this.btnPesquisarProduto, new Insets(0, 0, 10, 0));
 
@@ -249,6 +256,14 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 
 	}
 
+	public void voltarParaTelaPrincipal() {
+		TelaPrincipal tPrincipal = new TelaPrincipal();
+		try {
+			tPrincipal.start(stageAux);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void adicionarEventos() {
 		this.btnAdicionarProduto.addEventHandler(ActionEvent.ANY, this);
@@ -257,6 +272,7 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		this.btnRemoverQtd.addEventHandler(ActionEvent.ANY, this);
 		this.btnRealizarVenda.addEventHandler(ActionEvent.ANY, this);
 		this.btnPesquisarProduto.addEventHandler(ActionEvent.ANY, this);
+		this.btnVoltar.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	public Venda telaParaVenda() {
