@@ -433,7 +433,6 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 		table.getColumns().addAll(colunaNome, colunaQuantidade, colunaPreco);
 
 		table.setItems(cpv.getListaProd());
-		
 	}
 	
 }
