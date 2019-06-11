@@ -73,6 +73,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		iniciarMenu();
 		marginPaine();
 		inserirEventos();
+		adicionandoEstilos();
 		
 		iniciarRelatorioEstoque();
 		iniciarRelatorioVenda();
@@ -105,6 +106,10 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void adicionandoEstilos() {
+		this.painelPrincipal.setStyle("-fx-background-color: #A60525;");
 	}
 	
 	private void marginPaine() {
