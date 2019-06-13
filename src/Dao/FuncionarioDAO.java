@@ -13,4 +13,6 @@ public interface FuncionarioDAO {
 	void excluir(Funcionario f) throws DAOException;
 
 	void alterar(Funcionario f) throws DAOException;
+
+	int verificarLogin(String login, String senha) throws DAOException;
 }

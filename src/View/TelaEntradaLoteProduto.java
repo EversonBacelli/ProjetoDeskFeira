@@ -51,6 +51,7 @@ import javafx.stage.Stage;
 
 public class TelaEntradaLoteProduto extends Application implements EventHandler<ActionEvent>{
 	private static Stage stageAux;
+	private int tipoUser;
 	
 	
 	// Instancia--------------------------------------------------------------
@@ -116,6 +117,10 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	
 	private Line linha1 = new Line();
 	private Line linha2 = new Line();
+	
+	public TelaEntradaLoteProduto(int valor) {
+		tipoUser = valor;
+	}
 	
 	public static void main(String[] args) 
 	{
@@ -212,7 +217,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		}
 		
 		if (e.getTarget() == btnVoltar) {
-			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 			try {
 				telaPrincipal.start(stageAux);
 			} catch (Exception e1) {

@@ -28,17 +28,26 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 	private Menu menu_Produ_Lote;
 	private Menu menu_Relatorio;
 	private Menu menu_Venda;
+	private Menu  menu_Sair;
+	
 	private MenuItem item_Relatorio;
 	private MenuItem item_Funcio_Cad;
 	private MenuItem item_Funcio_List;
 	private MenuItem item_Produ;
 	private MenuItem item_Lote;
 	private MenuItem item_Venda;
+	private MenuItem item_Sair;
+	private int tipoUser;
+	
 	
 	// MenuItem menuItem1;
 	// listar funcionario
 	//
 
+	public TelaPrincipal(int valor) {
+		this.tipoUser = valor;
+	}
+	
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -51,6 +60,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		inicializarObjetos();
 		adicionandoElementos(img);
 		adicionandoEventos();
+		controleAcesso(); 
 		
 		stage.setResizable(false);
 		Scene scn = new Scene(borderPane1, 1000, 563);
@@ -66,6 +76,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		item_Funcio_List.addEventHandler(ActionEvent.ANY, this);
 		item_Relatorio.addEventHandler(ActionEvent.ANY, this);
 		item_Venda.addEventHandler(ActionEvent.ANY, this);
+		item_Sair.addEventHandler(ActionEvent.ANY, this);
 	}
 
 	public void adicionandoElementos(ImageView img) {
@@ -75,11 +86,13 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		menu_Produ_Lote.getItems().add(item_Lote);
 		menu_Relatorio.getItems().add(item_Relatorio);
 		menu_Venda.getItems().add(item_Venda);
+		menu_Sair.getItems().add(item_Sair);
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(menu_Funcio);
 		barra_Menu.getMenus().add(menu_Produ_Lote);
 		barra_Menu.getMenus().add(menu_Relatorio);
 		barra_Menu.getMenus().add(menu_Venda);
+		barra_Menu.getMenus().add(menu_Sair);
 		// -----------------------------------------------------------
 		box1.getChildren().add(barra_Menu);
 
@@ -100,6 +113,9 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		menu_Produ_Lote = new Menu(" Produto e Lote ");
 		menu_Relatorio = new Menu (" Relatórios ");
 		menu_Venda = new Menu("Venda");
+		menu_Sair = new Menu("Logon");
+		
+		item_Sair = new MenuItem("SAIR");
 		
 		item_Funcio_Cad    = new MenuItem(" Cadastrar ");
 		item_Funcio_List   = new MenuItem(" Listar ");
@@ -107,32 +123,55 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		item_Lote          = new MenuItem(" Lote ");
 		item_Relatorio     = new MenuItem(" Relatório ");
 		item_Venda         = new MenuItem("Realizar Venda");
+		item_Sair          = new MenuItem("Sair");
 	}
 //
 	@Override
 	public void handle(ActionEvent e) {
 		try {
 			if (e.getTarget() == item_Funcio_Cad) {
-				Tela_Funcionario_Cadastro tela_Funcio_Cad = new Tela_Funcionario_Cadastro();
+				Tela_Funcionario_Cadastro tela_Funcio_Cad = new Tela_Funcionario_Cadastro(tipoUser);
 				tela_Funcio_Cad.start(stageAux);
 			}else if (e.getTarget() == item_Funcio_List) {
-				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
+				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario(tipoUser);
 				telaListaFuncionario.start(stageAux);
 			}else if (e.getTarget() == item_Produ) {
-				TelaProduto telaProduto = new  TelaProduto();
+				TelaProduto telaProduto = new  TelaProduto(tipoUser);
 				telaProduto.start(stageAux);
 			}else if (e.getTarget() == item_Lote) {
-				TelaEntradaLoteProduto entradaLoteProduto = new TelaEntradaLoteProduto();
+				TelaEntradaLoteProduto entradaLoteProduto = new TelaEntradaLoteProduto(tipoUser);
 				entradaLoteProduto.start(stageAux);
 			} else if (e.getTarget() == item_Relatorio) {
-				TelaRelatorio entradaRelatorio = new TelaRelatorio();
+				TelaRelatorio entradaRelatorio = new TelaRelatorio(tipoUser);
 				entradaRelatorio.start(stageAux);
 			} else if (e.getTarget() == item_Venda) {
 				TelaVenda telaVenda = new TelaVenda();
 				telaVenda.start(stageAux);
+			}else if (e.getTarget() == item_Sair) {
+				TelaLogin tLogin = new TelaLogin();
+				tLogin.start(stageAux);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
+	
+	public void controleAcesso() 
+	{
+		switch (tipoUser) 
+		{
+		case 2:
+			menu_Funcio.setVisible(false);
+			menu_Relatorio.setVisible(false);
+			menu_Venda.setVisible(false);
+		break;
+		case 3:
+			menu_Funcio.setVisible(false);
+			menu_Produ_Lote.setVisible(false);
+			menu_Produ_Lote.setVisible(false);
+			menu_Relatorio.setVisible(false);
+		break;
+		}
+	}
+	
 }

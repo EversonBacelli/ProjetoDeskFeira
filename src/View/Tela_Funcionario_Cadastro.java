@@ -34,7 +34,9 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 	private Label lblCpf = new Label("CPF");
 	private Label lblRg = new Label("RG");
 	private Label lblEmail = new Label("Email");
+	private int tipoUser;
 
+	
 	private TextField tfId = new TextField();
 	private TextField tfNome = new TextField();
 	private TextField tfLogin = new TextField();
@@ -66,15 +68,16 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 
 	private static Stage stageAux;
 
-//	 public static void main(String[] args) {
-//		 Application.launch(args);
-//	 }
+	 public static void main(String[] args) {
+		 Application.launch(args);
+	 }
 
-	public Tela_Funcionario_Cadastro() {
-		
+	public Tela_Funcionario_Cadastro(int valor) {
+		tipoUser = valor;
 	}
 
-	public Tela_Funcionario_Cadastro(Funcionario f) {
+	public Tela_Funcionario_Cadastro(Funcionario f, int valor) {
+		tipoUser = valor;
 		funcionarioParaTela(f);
 	}
 
@@ -103,11 +106,11 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 				limparCampos();
 			} else {
 				cf.alterarFuncionario(f);
-				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario();
+				TelaListaFuncionario telaListaFuncionario = new TelaListaFuncionario(tipoUser);
 				limparCampos();
 			}
 		} else if (e.getTarget() == botaoVoltar) {
-			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 			try {
 				telaPrincipal.start(stageAux);
 			} catch (Exception e1) {
@@ -212,6 +215,7 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 			f.setLogin(tfLogin.getText());
 			f.setSenha(tfSenha.getText());
 			f.setTp(comboTipoUsuario.getValue());
+			
 			f.setCpf(tfCpf.getText());
 			f.setRg(tfRg.getText());
 			f.setEmail(tfEmail.getText());
@@ -228,7 +232,7 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 		this.tfLogin.setText(f.getLogin());
 		this.tfSenha.setText(f.getSenha());
 		this.tfEmail.setText(f.getEmail());
-		this.comboTipoUsuario.getSelectionModel().select(f.getTp());
+		System.out.println(f.getTp());
 		this.tfCpf.setText(f.getCpf());
 		this.tfRg.setText(f.getRg());
 	}

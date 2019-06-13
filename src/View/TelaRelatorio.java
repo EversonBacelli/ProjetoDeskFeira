@@ -35,6 +35,8 @@ import javafx.stage.Stage;
 public class TelaRelatorio extends Application implements EventHandler<ActionEvent> {
 
 	private BorderPane painelPrincipal = new BorderPane();
+	private int tipoUser;
+
 	
 	private FlowPane paneVenda = new FlowPane();
 	private FlowPane paneRelEstoque = new FlowPane();
@@ -60,6 +62,10 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 
 	
 	private Scene scn = new Scene(this.painelPrincipal, 1000, 563);
+	
+	public TelaRelatorio(int valor) {
+		tipoUser = valor;
+	}
 	
 	public static void main(String[] args) 
 	{
@@ -89,7 +95,8 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 
 	
 	@Override
-	public void handle(ActionEvent e) {
+	public void handle(ActionEvent e) 
+	{
 		if(e.getTarget() == this.item_listarVenda) {
 			mostrarParaRelatorioVenda();
 		}else if(e.getTarget() == this.item_listarEstoque) {
@@ -99,23 +106,25 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		}
 	}
 	
-	public void voltarParaTelaPrincipal() {
-		TelaPrincipal tPrincipal = new TelaPrincipal();
+	public void voltarParaTelaPrincipal() 
+	{
+		TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 		try {
-			tPrincipal.start(stageAux);
+			telaPrincipal.start(stageAux);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void adicionandoEstilos() {
+	public void adicionandoEstilos() 
+	{
 		this.painelPrincipal.setStyle("-fx-background-color: #A60525;");
 	}
 	
-	private void marginPaine() {
+	private void marginPaine() 
+	{
 		this.painelPrincipal.setMargin(this.barra_Menu, new Insets(0, 30, 0, 0));
 		this.painelPrincipal.setMargin(this.btnVoltar, new Insets(-31, 0, 0, 0));
-
 	}
 	
 	public void iniciarRelatorioEstoque() {

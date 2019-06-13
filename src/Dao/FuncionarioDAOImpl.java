@@ -10,6 +10,7 @@ import java.util.List;
 import ConnectionFactory.GerenciamentoConexao;
 import Model.Funcionario;
 import Model.TipoUsuario;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
 public class FuncionarioDAOImpl implements FuncionarioDAO {
 
@@ -111,5 +112,31 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 		}
 		return lista;
 	}
-
+	
+	@Override
+	public int verificarLogin(String login, String senha) throws DAOException 
+	{
+		int tipo = 0;
+		
+		try 
+		{
+			Connection con = GerenciamentoConexao.getInstance().getConnection();
+			String sql = " select funcionario.tp from funcionario where login = ? and senha = ?";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, login);
+			stmt.setString(2, senha);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) 
+			{
+				tipo = rs.getInt("tp");
+			}
+		} catch (SQLException e) 
+		{
+			e.printStackTrace();
+			throw new DAOException(e);
+		}
+		return tipo;
+	}
+	
 }

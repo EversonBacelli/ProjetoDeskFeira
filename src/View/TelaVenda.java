@@ -50,6 +50,7 @@ import javafx.stage.Stage;
 
 public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private static Stage stageAux = new Stage();
+	private int tipoUser;
 	
 	private VBox topoPainel = new VBox();
 	private VBox painelCentral = new VBox();
@@ -257,9 +258,9 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	}
 
 	public void voltarParaTelaPrincipal() {
-		TelaPrincipal tPrincipal = new TelaPrincipal();
+		TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 		try {
-			tPrincipal.start(stageAux);
+			telaPrincipal.start(stageAux);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

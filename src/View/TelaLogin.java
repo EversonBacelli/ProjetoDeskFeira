@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.JOptionPane;
 
+import Control.ControleDeFuncionario;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,8 +29,11 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 	private TextField txtLogin;
 	private PasswordField txtSenha;
 	private Button btnEntrar;
+	private int tipoUser;
 	
 	private ImageView img = new ImageView(new Image("file:Images/DESKFEIRA.png"));
+	
+	ControleDeFuncionario cFunc = new ControleDeFuncionario();
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -96,16 +100,7 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		} else if (txtSenha.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Insira a Senha");
 		} else {
-			if (txtLogin.getText().equals("adm") && (txtSenha.getText().equals("123"))) {
-				TelaPrincipal tPrincipal = new TelaPrincipal();
-				try {
-					tPrincipal.start(stageAux);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Senha ou Login Inválido!!!!!!!!!");
-			}
+			realizarLogin();
 		}
 	}
 
@@ -135,4 +130,18 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		this.btnEntrar.setStyle("-fx-background-color: #ffffff");
 	}
 
+	public void realizarLogin() 
+	{
+		tipoUser = cFunc.verificarLogin(txtLogin.getText(), txtSenha.getText());
+		if(tipoUser != 0) {
+			TelaPrincipal tPrincipal = new TelaPrincipal(tipoUser);
+			try {
+				tPrincipal.start(stageAux);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			JOptionPane.showMessageDialog(null, "Login e/ou senha invalidos!!");
+		}
+	}
 }

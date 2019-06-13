@@ -35,7 +35,7 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 	private VBox painelCenter = new VBox();
 	private FlowPane painelButtons = new FlowPane();
 	private FlowPane painelTop1 = new FlowPane();
-
+	
 	private Scene scn = new Scene(painelPrincipal, 1000, 563);
 
 	private TextField tfPesquisarFunc = new TextField();
@@ -54,6 +54,12 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 	private Funcionario func;
 
 	private static Stage stageAux;
+	
+	private int tipoUser;
+	
+	public TelaListaFuncionario(int valor) {
+		tipoUser = valor;
+	}
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -83,7 +89,7 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 		} else if (e.getTarget() == btnExcluir) {
 			excluirFuncionario();
 		} else if (e.getTarget() == btnVoltar) {
-			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 			try {
 				telaPrincipal.start(stageAux);
 			} catch (Exception e1) {
@@ -162,7 +168,7 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 
 	public void alterarFuncionario() {
 		if (func != null) {
-			Tela_Funcionario_Cadastro tcf = new Tela_Funcionario_Cadastro(func);
+			Tela_Funcionario_Cadastro tcf = new Tela_Funcionario_Cadastro(func, tipoUser);
 			try {
 				tcf.start(stageAux);
 			} catch (Exception e) {

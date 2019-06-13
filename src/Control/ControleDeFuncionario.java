@@ -104,6 +104,18 @@ public class ControleDeFuncionario {
 		}
 		return listaFunc;
 	}
+	
+	public int verificarLogin(String login, String senha) {
+		int valor = 0;
+		FuncionarioDAO fDAO = new FuncionarioDAOImpl();
+		try {
+			valor = fDAO.verificarLogin(login, senha);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return valor;
+	}
 
 	public void setListaFunc(ObservableList<Funcionario> listaFunc) {
 		this.listaFunc = listaFunc;
@@ -124,4 +136,5 @@ public class ControleDeFuncionario {
 	public void setListaFunc2(ObservableList<Funcionario> listaFunc2) {
 		this.listaFunc2 = listaFunc2;
 	}
+	
 }

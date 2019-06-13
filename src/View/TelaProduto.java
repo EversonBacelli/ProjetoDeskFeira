@@ -36,6 +36,8 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	private TableView<Produto> table = new TableView<>();
 	private ImageView img = new ImageView(new Image("file:Images/gerenciamento_prod.png"));
 	private BorderPane painelPrincipal = new BorderPane();
+	private int tipoUser;
+
 	
 	private VBox painelTopo = new VBox();
 	private VBox painelLateral = new VBox();
@@ -81,6 +83,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 	
 	ControleProduto cp = new ControleProduto();
 
+	public TelaProduto(int valor) {
+		tipoUser = valor;
+	}
 	
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -122,7 +127,7 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		}	
 		if(e.getTarget() == btnVoltar) 
 		{
-			TelaPrincipal telaPrincipal = new TelaPrincipal();
+			TelaPrincipal telaPrincipal = new TelaPrincipal(tipoUser);
 			try {
 				telaPrincipal.start(stageAux);
 			} catch (Exception e1) {
