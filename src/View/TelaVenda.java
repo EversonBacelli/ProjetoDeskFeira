@@ -93,8 +93,12 @@ public class TelaVenda extends Application implements EventHandler<ActionEvent>{
 	private ObservableList<Produto> ProdutoVenda;
 	private ProdutoVendido prodVend;
 
-	public static void main(String[] args) {
-		Application.launch(args);
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//	}
+	
+	public TelaVenda(int valor) {
+		this.tipoUser = valor;
 	}
 	
 	@Override

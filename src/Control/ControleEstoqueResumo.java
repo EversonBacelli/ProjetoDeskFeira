@@ -22,6 +22,7 @@ public class ControleEstoqueResumo {
 	
 	public void calcularResumo(ControleProduto cProduto, ControleDeLoteProduto cLote)
 	{
+		limpar();
 		ObservableList<LoteProduto> loteProduto = cLote.getListItem();
 		ObservableList<Produto> listaProduto = cProduto.getListaProdDAO();
 		

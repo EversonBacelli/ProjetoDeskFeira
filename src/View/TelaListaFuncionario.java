@@ -61,9 +61,9 @@ public class TelaListaFuncionario extends Application implements EventHandler<Ac
 		tipoUser = valor;
 	}
 
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//	}
 
 	@Override
 	public void start(Stage stage) throws Exception {

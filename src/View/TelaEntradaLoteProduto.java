@@ -119,13 +119,14 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private Line linha2 = new Line();
 	
 	public TelaEntradaLoteProduto(int valor) {
+		valor = 1;
 		tipoUser = valor;
 	}
 	
-	public static void main(String[] args) 
-	{
-		Application.launch(args);
-	}
+//	public static void main(String[] args) 
+//	{
+//		Application.launch(args);
+//	}
 	
 	@Override
 	public void start(Stage tela) throws Exception {
@@ -143,6 +144,8 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
         controleResumo.calcularResumo(controlProd, ControleLote);
 		
 		comboNome.getItems().addAll(controlProd.getListaProd());
+		
+		this.btnExcluir.setDisable(true);
 		
 		Scene scn = new Scene(panePrincipal, 1000, 563);
 		
@@ -186,33 +189,33 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 					lote.setDataValidade(txtTempoVida.getText());
 					lote.setDataEntrada(txtdataEntrada.getText());
 					ControleLote.inserirLoteProduto(lote);
-					
+					controleResumo.calcularResumo(controlProd, ControleLote);
 					limparCampos();
 	      	    }
-				controleResumo.limpar();
-				controleResumo.calcularResumo(controlProd, ControleLote);
-				table1.setItems(controleResumo.getListaResumo());
 		}
 		
 		
 		if(e.getTarget() == btnExcluir) 
 		{
-			if(this.lote.equals(null) )
+			if(this.lote == null)
 			{
 				JOptionPane.showMessageDialog(null, "Selecione um lote");
 			} else 
 			{
 				ControleLote.removerLoteProduto(lote);
+		        controleResumo.calcularResumo(controlProd, ControleLote);
 			}
 		}
 		
 		if(e.getTarget() == btnEstoqueResumo) 
 		{
+			this.btnExcluir.setDisable(true);
 			panePrincipal.setRight(paneResumo);	
 		}
 		
 		if(e.getTarget() == btnEstoqueDetalhes) 
 		{
+			this.btnExcluir.setDisable(false);
 			panePrincipal.setRight(paneDetalhes);
 		}
 		

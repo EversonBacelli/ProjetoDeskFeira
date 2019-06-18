@@ -87,9 +87,9 @@ public class TelaProduto extends Application implements EventHandler<ActionEvent
 		tipoUser = valor;
 	}
 	
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {

@@ -68,9 +68,9 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 
 	private static Stage stageAux;
 
-	 public static void main(String[] args) {
-		 Application.launch(args);
-	 }
+//	 public static void main(String[] args) {
+//		 Application.launch(args);
+//	 }
 
 	public Tela_Funcionario_Cadastro(int valor) {
 		tipoUser = valor;

@@ -48,9 +48,9 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		this.tipoUser = valor;
 	}
 	
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -145,7 +145,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 				TelaRelatorio entradaRelatorio = new TelaRelatorio(tipoUser);
 				entradaRelatorio.start(stageAux);
 			} else if (e.getTarget() == item_Venda) {
-				TelaVenda telaVenda = new TelaVenda();
+				TelaVenda telaVenda = new TelaVenda(tipoUser);
 				telaVenda.start(stageAux);
 			}else if (e.getTarget() == item_Sair) {
 				TelaLogin tLogin = new TelaLogin();

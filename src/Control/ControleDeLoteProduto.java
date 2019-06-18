@@ -32,8 +32,6 @@ public class ControleDeLoteProduto {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		JOptionPane.showMessageDialog(null, "Produto inserido com sucesso");
 	}
 	
@@ -59,47 +57,7 @@ public class ControleDeLoteProduto {
 		return lista;
 	}
 	
-	public void alterarEstoque(LoteProduto prodLote, int usuario) 
-	{
-		// reduzir do estoque
-		int reduzir = prodLote.getQuantidade();
-		int qtdTotal = 0;
-		
-		// calcular quantidade de produto em estoque
-		for(LoteProduto p: this.listItem) {	qtdTotal += p.getQuantidade();}
-		
-		// verificar se o estoque é suficiente
-		if(qtdTotal< prodLote.getQuantidade()) 
-		{
-			JOptionPane.showMessageDialog(null, "Há apenas" + qtdTotal +" do "+ prodLote.getProduto().getDescricao() +" em estoque");
-			return;
-		}
-		
-		
-		if(listItem.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Não temos " + prodLote.getProduto().getNome() + " em estoque");
-		} else 
-		{
-			// iterar lista até reduzir pedido a 0
-			while(reduzir>0) 
-			{
-				for(LoteProduto p: listItem) 
-				{
-				     if(reduzir >= p.getQuantidade()) 
-				     {
-				    	 reduzir -= p.getQuantidade();
-				    	 p.setQuantidade(0);
-				    	 removerLoteProduto(p);
-				     } else 
-				     {
-				    	 p.setQuantidade(p.getQuantidade() - reduzir);
-				    	 reduzir = 0 ;
-				     }
-				}
-			}
-		}
-		
-	}
+
 	
 	public ObservableList<LoteProduto> getProdutoAdicionados() {
 		return produtoAdicionados;
@@ -148,5 +106,47 @@ public class ControleDeLoteProduto {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void alterarEstoque(LoteProduto prodLote, int usuario) 
+	{
+		// reduzir do estoque
+		int reduzir = prodLote.getQuantidade();
+		int qtdTotal = 0;
+		
+		// calcular quantidade de produto em estoque
+		for(LoteProduto p: this.listItem) {	qtdTotal += p.getQuantidade();}
+		
+		// verificar se o estoque é suficiente
+		if(qtdTotal< prodLote.getQuantidade()) 
+		{
+			JOptionPane.showMessageDialog(null, "Há apenas" + qtdTotal +" do "+ prodLote.getProduto().getDescricao() +" em estoque");
+			return;
+		}
+		
+		
+		if(listItem.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Não temos " + prodLote.getProduto().getNome() + " em estoque");
+		} else 
+		{
+			// iterar lista até reduzir pedido a 0
+			while(reduzir>0) 
+			{
+				for(LoteProduto p: listItem) 
+				{
+				     if(reduzir >= p.getQuantidade()) 
+				     {
+				    	 reduzir -= p.getQuantidade();
+				    	 p.setQuantidade(0);
+				    	 removerLoteProduto(p);
+				     } else 
+				     {
+				    	 p.setQuantidade(p.getQuantidade() - reduzir);
+				    	 reduzir = 0 ;
+				     }
+				}
+			}
+		}
+		
 	}
 }
