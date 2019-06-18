@@ -7,10 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 public class Perda{
-         List<LoteProduto> listPerda = new ArrayList();
-
-         int qtdPerda;
-         String data;
+         private List<LoteProduto> listPerda = new ArrayList();
+         private int qtdPerda;
+         private String data;
          
 	public Perda(LoteProduto item, int qtdPerda, String data) 
 	    {

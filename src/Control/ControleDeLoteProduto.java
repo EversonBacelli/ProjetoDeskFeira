@@ -27,7 +27,8 @@ public class ControleDeLoteProduto {
 		LoteProdutoDAO lpDAO = new LoteProdutoDAOImpl();
 		try {
 			lpDAO.adicionar(p);
-			listItem.add(p);
+			listItem.clear();
+			listItem.setAll(getListItemDAO());
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

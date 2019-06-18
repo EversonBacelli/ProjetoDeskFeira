@@ -22,7 +22,8 @@ public class ControleProduto {
 		ProdutoDAO pDao = new ProdutoDAOImpl();
 		try {
 			pDao.adicionar(p);
-			listaProd.add(p);
+			listaProd.clear();
+			listaProd.setAll(pDao.listar());
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}

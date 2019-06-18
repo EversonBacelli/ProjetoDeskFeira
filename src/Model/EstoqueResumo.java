@@ -1,9 +1,8 @@
 package Model;
 
 public class EstoqueResumo {
-	Produto p = new Produto();
-	int qtd;
-	
+	private Produto p = new Produto();
+	private int qtd;
 	
 	public Produto getP() {
 		return p;

@@ -2,11 +2,11 @@ package Model;
 
 public class LoteProduto
 {
-	Produto produto;
-	int id;
-	int quantidade;
-	String dataValidade;
-	String dataEntrada;
+	private Produto produto;
+	private int id;
+	private int quantidade;
+	private String dataValidade;
+	private String dataEntrada;
 	
 	public int getId() {
 		return id;
