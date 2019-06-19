@@ -171,6 +171,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 			menu_Produ_Lote.setVisible(false);
 			menu_Relatorio.setVisible(false);
 		break;
+		default:
 		}
 	}
 	
