@@ -195,7 +195,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		colunaID.setCellValueFactory(itemData -> new ReadOnlyIntegerWrapper(itemData.getValue().getId()));
 		colunaID.setPrefWidth(300);
 		
-		TableColumn<Venda, String> colunaData = new TableColumn<>("ID");
+		TableColumn<Venda, String> colunaData = new TableColumn<>("Data");
 		colunaData.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDataVenda()));
 		colunaData.setPrefWidth(300);
 		

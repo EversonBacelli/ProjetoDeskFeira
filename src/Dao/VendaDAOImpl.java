@@ -38,7 +38,7 @@ public class VendaDAOImpl implements VendaDAO{
 			List<ProdutoVendido> listaLote = v.getListaProdutoVendido();
 			
 			for (ProdutoVendido produtoVendido : listaLote) {				
-			String sql2 = "INSERT INTO produtoVendido (quantidade, id_produto, id_venda) VALUES (?, ?, ?)";
+			String sql2 = "INSERT INTO produtoVendido (quantidade,id_produto, id_venda) VALUES (?, ?, ?)";
 			PreparedStatement stmt2 = con.prepareStatement(sql2);
 			stmt2.setInt(1, produtoVendido.getQuantidade());
 			stmt2.setInt(2, produtoVendido.getProduto().getId());			

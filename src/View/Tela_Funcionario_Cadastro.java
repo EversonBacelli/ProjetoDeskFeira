@@ -232,6 +232,7 @@ public class Tela_Funcionario_Cadastro extends Application implements EventHandl
 		this.tfLogin.setText(f.getLogin());
 		this.tfSenha.setText(f.getSenha());
 		this.tfEmail.setText(f.getEmail());
+		this.comboTipoUsuario.setValue(f.getTp());
 		System.out.println(f.getTp());
 		this.tfCpf.setText(f.getCpf());
 		this.tfRg.setText(f.getRg());
