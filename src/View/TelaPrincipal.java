@@ -62,7 +62,7 @@ public class TelaPrincipal extends Application implements EventHandler<ActionEve
 		adicionandoEventos();
 		controleAcesso(); 
 		
-		stage.setResizable(false);
+//		stage.setResizable(false);
 		Scene scn = new Scene(borderPane1, 1000, 563);
 		stage.setTitle(" TELA PRINCIPAL ");
 		stage.setScene(scn);

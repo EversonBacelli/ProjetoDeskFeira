@@ -119,7 +119,6 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 	private Line linha2 = new Line();
 	
 	public TelaEntradaLoteProduto(int valor) {
-		valor = 1;
 		tipoUser = valor;
 	}
 	
@@ -161,7 +160,7 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		
 		this.btnVoltar.addEventHandler(ActionEvent.ANY, this);
 		
-		tela.setResizable(false);
+	//	tela.setResizable(false);
 		tela.setTitle("TELA DE ENTRADA DE ESTOQUE");
 		tela.setScene(scn);
 		tela.show();
@@ -372,12 +371,12 @@ public class TelaEntradaLoteProduto extends Application implements EventHandler<
 		colunaEntrada.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDataEntrada()));
 		colunaEntrada.setPrefWidth(80);
 		
-		TableColumn<LoteProduto, String> colunaValidade = new TableColumn<>("DataEntrada");
-		colunaValidade.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDataEntrada()));
+		TableColumn<LoteProduto, String> colunaValidade = new TableColumn<>("Validade");
+		colunaValidade.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getDataValidade()));
 		colunaValidade.setPrefWidth(80);
 		
 		
-		table.getColumns().addAll(colunaID, colunaNome, colunaQuantidade,colunaPreco,colunaTotal, colunaValidade);
+		table.getColumns().addAll(colunaID, colunaNome, colunaQuantidade,colunaPreco,colunaTotal, colunaEntrada, colunaValidade);
 
 		table.setItems(ControleLote.getListItemDAO());
 	}

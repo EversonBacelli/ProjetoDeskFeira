@@ -44,13 +44,15 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	private VBox paneVenda1     = new VBox();
 	private VBox paneRelEstoque1 = new VBox();
 
-	private Button btnVoltar = new Button("  Voltar  ");
 	
 	private MenuBar barra_Menu;
 	private Menu rel_venda;
 	private Menu rel_estoque;
+	private Menu menuVoltar;
+	
 	private MenuItem item_listarVenda;
 	private MenuItem item_listarEstoque;
+	private MenuItem item_voltar;
 	
 	static Stage stageAux;
 	
@@ -101,7 +103,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 			mostrarParaRelatorioVenda();
 		}else if(e.getTarget() == this.item_listarEstoque) {
 			mostrarRelatorioEstoque();
-		}else if(e.getTarget() == this.btnVoltar) {
+		}else if(e.getTarget() == this.item_voltar) {
 			voltarParaTelaPrincipal();
 		}
 	}
@@ -123,8 +125,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	
 	private void marginPaine() 
 	{
-		this.painelPrincipal.setMargin(this.barra_Menu, new Insets(0, 30, 0, 0));
-		this.painelPrincipal.setMargin(this.btnVoltar, new Insets(-31, 0, 0, 0));
+		this.painelPrincipal.setMargin(this.barra_Menu, new Insets(0, 0, 0, 0));
 	}
 	
 	public void iniciarRelatorioEstoque() {
@@ -158,24 +159,27 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 		
 		rel_venda = new Menu(" Relatorio de Venda");
 		rel_estoque = new Menu(" Relatorio de Quantidade");
+		menuVoltar = new Menu("Voltar");
 		
 		item_listarVenda = new MenuItem("Listar Vendas");
 		item_listarEstoque = new MenuItem("Listar Estoques");
+		item_voltar = new MenuItem("Home");
 
 		// -----------------------------------------------------------
 		rel_venda.getItems().add(item_listarVenda);
 		rel_estoque.getItems().add(item_listarEstoque);
+		menuVoltar.getItems().add(item_voltar);
 
 
 		// -----------------------------------------------------------
 		barra_Menu.getMenus().add(rel_venda);
 		barra_Menu.getMenus().add(rel_estoque);
+		barra_Menu.getMenus().add(menuVoltar);
 
 
 
 		
 		this.painelPrincipal.setTop(this.barra_Menu);
-		this.painelPrincipal.setRight(this.btnVoltar);
 		// -----------------------------------------------------------
 		// -----------------------------------------------------------
 	}
@@ -185,7 +189,7 @@ public class TelaRelatorio extends Application implements EventHandler<ActionEve
 	{
 		item_listarVenda.addEventHandler(ActionEvent.ANY, this);
 		item_listarEstoque.addEventHandler(ActionEvent.ANY, this);
-		btnVoltar.addEventHandler(ActionEvent.ANY, this);
+		item_voltar.addEventHandler(ActionEvent.ANY, this);
 	}
 	
 	

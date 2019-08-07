@@ -21,7 +21,8 @@ public class ControleVenda {
 
 	private ObservableList<Venda> listaVenda = FXCollections.observableArrayList();
 	ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
-	private List<LoteProduto>listaLote;
+	private List<LoteProduto> listaLote;
+	private int validacaoQuantidadeVendida [];
 
 	
 	public void removerVenda(Venda v) {
@@ -36,6 +37,7 @@ public class ControleVenda {
 		Boolean compraValidada = true;
 		Boolean passou = false;
 		listaLote = cLoteProd.getListItem();
+		preencherValidacao();
 		
 		compraValidada = validarVenda(v);
 		
@@ -52,6 +54,15 @@ public class ControleVenda {
 		}
 	}
 
+	public void preencherValidacao() {
+		validacaoQuantidadeVendida = new int[this.listaLote.size()];
+		int i = 0;
+		for(LoteProduto lProduto : this.listaLote) {
+			validacaoQuantidadeVendida[i] = lProduto.getQuantidade();
+			i++;
+		}
+	}
+	
 	public boolean validarVenda(Venda v) {
 		Boolean compraValidada = true;
 		Boolean passou = false;
@@ -89,12 +100,15 @@ public class ControleVenda {
 	}
 	
 	public void abaterLote(List<LoteProduto> listaLote) {
+		int size = this.listaLote.size();
 		ControleDeLoteProduto cLoteProd = new ControleDeLoteProduto();
-		for(LoteProduto loteProd : listaLote) {
-			if(loteProd.getQuantidade() == 0) {
-				cLoteProd.removerLoteProduto(loteProd);
+		for(int i=0;i<size;i++) {
+			if(this.listaLote.get(i).getQuantidade() == 0) {
+				cLoteProd.removerLoteProduto(this.listaLote.get(i));
 			}else {
-				cLoteProd.alterarLoteProduto(loteProd);
+				if(this.listaLote.get(i).getQuantidade() != validacaoQuantidadeVendida[i]) {
+					cLoteProd.alterarLoteProduto(this.listaLote.get(i));
+				}
 			}
 		}
 	}

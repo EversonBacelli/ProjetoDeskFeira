@@ -51,7 +51,7 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 		
 		Scene scn = new Scene(painelPrincipal, 1000, 563);
 		
-		stage.setResizable(false);
+		//stage.setResizable(false);
 		stage.setTitle("Login");
 		stage.setScene(scn);
 		stage.show();
@@ -111,7 +111,7 @@ public class TelaLogin extends Application implements EventHandler<ActionEvent> 
 
 
 	private void adicionarMargem() {
-		Insets marginTop = new Insets(50, 30, 0, 0);
+		Insets marginTop = new Insets(50, 0, 0, 0);
 		Insets margin1 = new Insets(50, 30, 0, 60);
 		pane.setMargin(lblLogin, marginTop);
 		pane.setMargin(lblSenha, marginTop);
